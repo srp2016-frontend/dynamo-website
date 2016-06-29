@@ -1,8 +1,9 @@
-with open('main.html', 'r') as file_input:
-    contents = file_input.read()
-with open('sidebar.html', 'r') as file_input:
-    sidebar = file_input.read()
+#!/usr/bin/python
 import os
-src = os.listdir('src')
-contents = contents.replace("<!--SCRIPTS GO HERE-->", "\n".join(map(lambda name: "<script src='src/" + name + "'></script>", src))).replace("<!--SIDEBAR GOES HERE-->", sidebar)
-open('index.html', 'w').write(contents)
+if not os.path.exists("node_modules"):
+    os.system("npm install")
+if os.name == 'nt':
+    os.system("cd node_modules\\typescript\\bin\\")
+    os.system("tsc ..\\..\\..\\src\\*.ts --outFile bin\\script.js")
+else:
+    os.system("node_modules/typescript/bin/./tsc src/*.ts --outFile bin/script.js")
