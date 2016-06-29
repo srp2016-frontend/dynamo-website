@@ -66,6 +66,8 @@ canvas.onmousedown = (e : MouseEvent) => {
     state.selected = state.getPersonAt(e.offsetX, e.offsetY);
     if(state.selected) {
         handle_hover_person(state.selected);
+    } else {
+        $("#sidebar").empty();
     }
     state.draw(ctx);
 }
@@ -74,6 +76,8 @@ canvas.onmousemove = (e : MouseEvent) => {
         let result = state.getPersonAt(e.offsetX, e.offsetY);
         if(result) {
             handle_hover_person(result)
+        } else {
+            $("#sidebar").empty();
         }
         state.draw(ctx);
     }
