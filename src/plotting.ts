@@ -25,9 +25,12 @@ const radiusSquared = radius * radius;
 class State
 {
     people : Person[];
+    selected : Person;
+
     constructor(people : Person[])
     {
         this.people = people;
+        this.selected = null;
     }
 
     draw(ctx : CanvasRenderingContext2D) : void
@@ -37,6 +40,7 @@ class State
         for(let person of this.people)
         {
             ctx.beginPath();
+            ctx.fillStyle = (person == this.selected) ? "blue" : "red";
             ctx.arc(person.x, person.y, radius, 0, 2 * Math.PI);
             ctx.fill();
         }
@@ -55,12 +59,23 @@ class State
     }
 }
 
-var canvas = <HTMLCanvasElement>$('#position-feed')[0];
+let canvas = <HTMLCanvasElement>$('#position-feed')[0];
+let ctx = canvas.getContext('2d');
 let state = new State([new Person(10, 10, "John", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)])
-canvas.onmousemove = function (e : MouseEvent) {
-    let result = state.getPersonAt(e.offsetX, e.offsetY);
-    if(result) {
-        handle_hover_person(result)
+canvas.onmousedown = (e : MouseEvent) => {
+    state.selected = state.getPersonAt(e.offsetX, e.offsetY);
+    if(state.selected) {
+        handle_hover_person(state.selected);
+    }
+    state.draw(ctx);
+}
+canvas.onmousemove = (e : MouseEvent) => {
+    if(!state.selected) {
+        let result = state.getPersonAt(e.offsetX, e.offsetY);
+        if(result) {
+            handle_hover_person(result)
+        }
+        state.draw(ctx);
     }
 }
 state.draw(canvas.getContext('2d'))
