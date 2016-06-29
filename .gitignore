@@ -2,3 +2,5 @@
 node_modules/
 #Ignore the auto-generated script file(s)
 bin/
+#Ignore all JS files
+*.js
