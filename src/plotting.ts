@@ -1,22 +1,30 @@
 ///<reference path='node.d.ts'/>
 ///<reference path='jquery.d.ts'/>
-function plot_points(ctx : CanvasRenderingContext2D, point_list : Tag[]) {
+///<reference path='hover.ts'/>
+function plot_people(ctx : CanvasRenderingContext2D, people_list : Person[]) 
+{
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.fillStyle = "red";
-    for(var i = 0; i < point_list.length; i++) {
-        var point = point_list[i];
+    
+    for(var i = 0; i < people_list.length; i++)
+    {
+        var person = people_list[i];
         ctx.beginPath();
-        ctx.arc(point.x, point.y, 6, 0, 2 * Math.PI);
+        ctx.arc(person.x, person.y, 6, 0, 2 * Math.PI);
         ctx.fill();
     }
 }
-class Tag {
+
+class Person
+{
     x : number;
     y : number;
     age : number;
     fName : string;
     lName : string;
-    constructor(x : number, y : number, fName: string = "John", lName : string = "Doe", age : number = 18) {
+    
+    constructor(x : number, y : number, fName: string, lName : string, age : number) 
+    {
         this.x = x;
         this.y = y;
         this.fName = fName;
@@ -24,5 +32,11 @@ class Tag {
         this.age = age;
     }
 }
+
+function hover_event_handler(e : MouseEvent) {
+    console.log(e);
+}
+
 var canvas = <HTMLCanvasElement>$('#position-feed')[0];
-plot_points(canvas.getContext('2d'), [new Tag(10, 10), new Tag(50, 32)])
+plot_people(canvas.getContext('2d'), [new Person(10, 10, "John", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)])
+handle_hover_person(new Person(10, 10, "John", "Doe", 30))
