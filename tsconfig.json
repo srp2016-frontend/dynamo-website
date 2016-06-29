@@ -1,0 +1,4 @@
+{
+    "files" : "src/*.ts",
+    "outFile" : "bin/script.js"
+}
