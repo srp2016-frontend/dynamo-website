@@ -1,6 +1,6 @@
 ///<reference path='node.d.ts'/>
 ///<reference path='jquery.d.ts'/>
-function plot_points(ctx, point_list) {
+function plot_points(ctx : CanvasRenderingContext2D, point_list : Tag[]) {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.fillStyle = "red";
     for(var i = 0; i < point_list.length; i++) {
@@ -10,13 +10,19 @@ function plot_points(ctx, point_list) {
         ctx.fill();
     }
 }
-function Tag (x, y, fName, lName, age) 
-{
-    this.x = x;
-    this.y = y;
-    this.fName = fName;
-    this.lName = lName;
-    this.age = age;
+class Tag {
+    x : number;
+    y : number;
+    age : number;
+    fName : string;
+    lName : string;
+    constructor(x : number, y : number, fName: string = "John", lName : string = "Doe", age : number = 18) {
+        this.x = x;
+        this.y = y;
+        this.fName = fName;
+        this.lName = lName;
+        this.age = age;
+    }
 }
-var canvas = $('#position-feed')[0];
-plot_points(canvas.getContext('2d'), [new Point(10, 10), new Point(50, 32)])
+var canvas = <HTMLCanvasElement>$('#position-feed')[0];
+plot_points(canvas.getContext('2d'), [new Tag(10, 10), new Tag(50, 32)])
