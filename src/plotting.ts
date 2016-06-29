@@ -19,6 +19,9 @@ class Person
     }
 }
 
+const radius = 6;
+const radiusSquared = radius * radius;
+
 class State
 {
     people : Person[];
@@ -34,16 +37,30 @@ class State
         for(let person of this.people)
         {
             ctx.beginPath();
-            ctx.arc(person.x, person.y, 6, 0, 2 * Math.PI);
+            ctx.arc(person.x, person.y, radius, 0, 2 * Math.PI);
             ctx.fill();
         }
     }
-}
 
-function hover_event_handler(e : MouseEvent) {
-    console.log(e);
+    getPersonAt(x : number, y : number) : Person
+    {
+        for(let person of this.people)
+        {
+            let dstX = x - person.x;
+            let dstY = y - person.y;
+            if(dstX ** 2 + dstY ** 2 <= radiusSquared)
+                return person;
+        }
+        return null;
+    }
 }
 
 var canvas = <HTMLCanvasElement>$('#position-feed')[0];
 let state = new State([new Person(10, 10, "John", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)])
+canvas.onmousedown = function (e : MouseEvent) {
+    let result = state.getPersonAt(e.offsetX, e.offsetY);
+    if(result) {
+        handle_hover_person(result)
+    }
+}
 state.draw(canvas.getContext('2d'))
