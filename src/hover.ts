@@ -2,8 +2,9 @@
 function handle_hover_person(person : Person) 
 {
     $("#sidebar").empty();
-    $("#sidebar").append("First Name: ", person.fName, "<br>");
-    $("#sidebar").append("Last Name:  ", person.lName, "<br>");
-    $("#sidebar").append("Age: ", person.age, "<br>");
+    $("#sidebar").append("<b>First Name: </b>", person.fName, "<br>");
+    $("#sidebar").append("<b>Last Name:  </b>", person.lName, "<br>");
+    $("#sidebar").append("<b>Age: </b>", person.age, "<br>");
     //$("#sidebar").append(person.age);
 }
+
