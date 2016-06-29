@@ -1,4 +1,4 @@
-#Ignore the index file because it is auto-generated
-index.html 
 #Ignore all the stuff node downloads because they're binary dependencies
 node_modules/
+#Ignore the auto-generated script file(s)
+bin/
