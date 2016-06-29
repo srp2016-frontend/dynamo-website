@@ -57,7 +57,7 @@ class State
 
 var canvas = <HTMLCanvasElement>$('#position-feed')[0];
 let state = new State([new Person(10, 10, "John", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)])
-canvas.onmousedown = function (e : MouseEvent) {
+canvas.onmousemove = function (e : MouseEvent) {
     let result = state.getPersonAt(e.offsetX, e.offsetY);
     if(result) {
         handle_hover_person(result)
