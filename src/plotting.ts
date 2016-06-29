@@ -3,8 +3,8 @@
 function plot_points(ctx : CanvasRenderingContext2D, point_list : Tag[]) {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.fillStyle = "red";
-    for(var i = 0; i < point_list.length; i++) {
-        var point = point_list[i];
+    for(let i = 0; i < point_list.length; i++) {
+        let point = point_list[i];
         ctx.beginPath();
         ctx.arc(point.x, point.y, 6, 0, 2 * Math.PI);
         ctx.fill();
