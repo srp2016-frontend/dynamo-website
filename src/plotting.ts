@@ -10,9 +10,13 @@ function plot_points(ctx, point_list) {
         ctx.fill();
     }
 }
-function Point (x, y) {
+function Tag (x, y, fName, lName, age) 
+{
     this.x = x;
     this.y = y;
+	this.fName = fName;
+	this.lName = lName;
+	this.age = age;
 }
 var canvas = $('#position-feed')[0];
 plot_points(canvas.getContext('2d'), [new Point(10, 10), new Point(50, 32)])
