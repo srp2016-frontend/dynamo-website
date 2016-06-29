@@ -5,10 +5,8 @@ function plot_people(ctx : CanvasRenderingContext2D, people_list : Person[])
 {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.fillStyle = "red";
-    
-    for(var i = 0; i < people_list.length; i++)
-    {
-        var person = people_list[i];
+    for(let i = 0; i < people_list.length; i++) {
+        let person = people_list[i];
         ctx.beginPath();
         ctx.arc(person.x, person.y, 6, 0, 2 * Math.PI);
         ctx.fill();
