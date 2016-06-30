@@ -93,8 +93,8 @@ Handles AJAX requests and caches the results
 */
 var Bridge = (function () {
     function Bridge() {
-        this.messageCache = [JSON.stringify([new Person(30, 30, "John", "Doe", 30), new Person(80, 100, "Brian", "DeLeonardis", 18)]),
-            JSON.stringify([new Person(50, 50, "John", "Doe", 30), new Person(110, 100, "Brian", "DeLeonardis", 18)])];
+        this.messageCache = [JSON.stringify([new Person(30, 30, "Brian", "Doe", 30), new Person(80, 100, "Brian", "DeLeonardis", 18)]),
+            JSON.stringify([new Person(50, 50, "Brian", "Doe", 30), new Person(110, 100, "Brian", "DeLeonardis", 18)])];
     }
     /**
     * Takes a message from the cache or the server and makes it into a State object
@@ -168,7 +168,7 @@ var TimeManager = (function () {
 ///<reference path='time.ts'/>
 var canvas = $('#position-feed')[0];
 var ctx = canvas.getContext('2d');
-var state = new State([new Person(10, 10, "John", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)]);
+var state = new State([new Person(10, 10, "Brian", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)]);
 var bridge = new Bridge();
 var timeManager = new TimeManager(bridge, ctx);
 var next = new State(state.people);
@@ -203,8 +203,41 @@ function search() {
     $("#not-found").css("visibility", state.selected ? "hidden" : "visible");
     state.draw(ctx);
 }
+function setSearchItems(items) {
+    var results = $("#search-results");
+    if (items.length == 0) {
+        results.html("");
+        results.css("border", "0px");
+    }
+    else if (items.length == 1) {
+        results.html("");
+        results.css("border", "0px");
+        input.value = items[0];
+        search();
+    }
+    else {
+        results.html(items.join("<br>"));
+        results.css("border", "1px solid #A5ACB2");
+    }
+}
+function pSearch(check) {
+    if (check.length < 3)
+        return [];
+    var possible = [];
+    for (var i = 0; i < state.people.length; i++) {
+        var name = state.people[i].fName + " " + state.people[i].lName;
+        if (name.indexOf(check) >= 0) {
+            possible.push(name);
+        }
+    }
+    return possible;
+}
 $('#searchbutton').click(function (e) {
     search();
+});
+$('#searchbar').on("input", function (e) {
+    var str = input.value;
+    setSearchItems(pSearch(str));
 });
 $("#searchbar").keypress(function (e) {
     if (e.keyCode === 13) {
