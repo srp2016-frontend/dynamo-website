@@ -77,8 +77,8 @@ var State = (function () {
         if (display) {
             $("#sidebar").empty();
             $("#sidebar").append("<b>First Name: </b>", display.fName, "<br>");
-            $("#sidebar").append("<b>Last Name:  </b>", display, "<br>");
-            $("#sidebar").append("<b>Age: </b>", display, "<br>");
+            $("#sidebar").append("<b>Last Name:  </b>", display.lName, "<br>");
+            $("#sidebar").append("<b>Age: </b>", display.age, "<br>");
         }
         else
             $("#sidebar").empty();
