@@ -13,15 +13,21 @@ canvas.onmousedown = (e : MouseEvent) =>
     state.draw(ctx);
 }
 
+function pause(button : HTMLButtonElement) {
+    let pause = button.innerHTML === "Pause"
+    button.innerHTML = pause ? "Resume" : "Pause"
+    timeManager.paused = pause;
+}
+
 $("#slide").on("input", function(e : Event){
-    console.log(this.value);
+    if(!timeManager.paused) {
+        pause(<HTMLButtonElement>$('#pause')[0])
+    }
 })
 
 $('#pause').click(function(e : Event)
 {
-    let pause = this.innerHTML === "Pause"
-    this.innerHTML = pause ? "Resume" : "Pause"
-    timeManager.paused = pause;
+    pause(this);
 });
 
 canvas.onmousemove = function(e : MouseEvent)
