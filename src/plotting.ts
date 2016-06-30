@@ -1,6 +1,5 @@
 ///<reference path='node.d.ts'/>
 ///<reference path='jquery.d.ts'/>
-///<reference path='hover.ts'/>
 class Person
 {
     x : number;
@@ -57,29 +56,16 @@ class State
         }
         return null;
     }
-}
 
-let canvas = <HTMLCanvasElement>$('#position-feed')[0];
-let ctx = canvas.getContext('2d');
-let state = new State([new Person(10, 10, "John", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)])
-canvas.onmousedown = (e : MouseEvent) => {
-    state.selected = state.getPersonAt(e.offsetX, e.offsetY);
-    if(state.selected) {
-        handle_hover_person(state.selected);
-    } else {
-        $("#sidebar").empty();
-    }
-    state.draw(ctx);
-}
-canvas.onmousemove = (e : MouseEvent) => {
-    if(!state.selected) {
-        let result = state.getPersonAt(e.offsetX, e.offsetY);
-        if(result) {
-            handle_hover_person(result)
-        } else {
-            $("#sidebar").empty();
+    getPersonByName(name : string) : Person
+    {
+        for(let person of this.people)
+        {
+            if(person.fName + " " + person.lName === name)
+            {
+                return person;
+            }
         }
-        state.draw(ctx);
+        return null;
     }
 }
-state.draw(canvas.getContext('2d'))
