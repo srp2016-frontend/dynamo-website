@@ -47,6 +47,24 @@ but.onclick = (e : Event) =>
     }
     state.draw(ctx);
 }
+
+$("#searchbar").keypress(function(e) 
+{
+    if(e.keyCode == 13)
+    {
+         let selected = state.getPersonByName(input.value);
+        if(selected)
+        {
+            state.selected = selected;
+            handle_hover_person(selected);
+        } else
+        {
+            state.selected = null;
+            $("#sidebar").empty();
+        }
+        state.draw(ctx);
+    }
+});
 state.draw(ctx);
 let bridge = new Bridge();
 let next = new State(state.people);
