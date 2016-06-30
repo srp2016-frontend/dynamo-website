@@ -30,6 +30,7 @@ input.oninput = (e : Event) => {
         state.selected = selected;
         handle_hover_person(selected);
     } else {
+        state.selected = null;
         $("#sidebar").empty();
     }
     state.draw(ctx);
