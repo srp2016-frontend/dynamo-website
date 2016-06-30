@@ -1,10 +1,13 @@
 ///<reference path='plotting.ts'/>
 ///<reference path='hover.ts'/>
 ///<reference path='communication.ts'/>
+///<reference path='time.ts'/>
 let canvas = <HTMLCanvasElement>$('#position-feed')[0];
 let ctx = canvas.getContext('2d');
 let state = new State([new Person(10, 10, "John", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)])
-
+let bridge = new Bridge();
+let timeManager = new TimeManager(bridge, ctx)
+let next = new State(state.people)
 canvas.onmousedown = (e : MouseEvent) =>
 {
     state.selected = state.getPersonAt(e.offsetX, e.offsetY);
@@ -21,19 +24,11 @@ function updateSlider(slideAmount) {
 }
 
 let pBut = <HTMLInputElement>$('#pause')[0];
-let paused = false;
 pBut.onclick = (e : Event) =>
 {
-    if(pBut.innerHTML == "Pause")
-    {
-        pBut.innerHTML = "Resume";
-        paused = true;
-    }
-    else
-    {
-        pBut.innerHTML = "Pause";
-        paused = false;
-    }
+    let pause = pBut.innerHTML === "Pause"
+    pBut.innerHTML = pause ? "Resume" : "Pause"
+    timeManager.paused = pause;
 }
 
 canvas.onmousemove = (e : MouseEvent) =>
@@ -86,20 +81,6 @@ $("#searchbar").keypress( (e : KeyboardEvent) =>
     }
 });
 state.draw(ctx);
-let bridge = new Bridge();
-let next = new State(state.people);
-let ticks = 0;
 setInterval(() => {
-    if(!paused)
-    {
-        ticks += 1;
-        next.selected = state.selected;
-        if(ticks == 100)
-        {
-            bridge.tick(next);
-            ticks = 0;
-        }
-        state.update(next, ticks, 100);
-        state.draw(ctx);
-    }
+    timeManager.updateFrame(state, next);
 }, 10);
