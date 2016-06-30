@@ -16,6 +16,10 @@ canvas.onmousedown = (e : MouseEvent) =>
     state.draw(ctx);
 }
 
+function updateSlider(slideAmount) {
+
+}
+
 canvas.onmousemove = (e : MouseEvent) =>
 {
     if(!state.selected)

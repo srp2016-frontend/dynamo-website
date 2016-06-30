@@ -8,12 +8,18 @@
     <body>
         <h1>DYNAMO</h1>
         <div id="searchbar-wrap">
-            <input align = "center" id="searchbar">
+            <input id="searchbar">
             </input>
             <button id = "searchbutton">
                 Search
             </button>
         </div>
+        <div align = "center" id="slider">
+            <b>Initial</b>&nbsp&nbsp<input id="slide" type="range"
+            min="0" max="1000" step="10" value="0"
+            onchange="updateSlider(this.value)" />
+            <b>&nbsp&nbspCurrent</b>
+        </div><br/>
         <br>
         <div id = "sidebar" style="float:left">
         </div>
