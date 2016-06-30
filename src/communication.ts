@@ -10,8 +10,8 @@ class Bridge
 
     constructor()
     {
-        this.messageCache = [JSON.stringify([new Person(30, 30, "John", "Doe", 30), new Person(80, 100, "Brian", "DeLeonardis", 18)]),
-                             JSON.stringify([new Person(50, 50, "John", "Doe", 30), new Person(110, 100, "Brian", "DeLeonardis", 18)])]
+        this.messageCache = [JSON.stringify([new Person(30, 30, "Brian", "Doe", 30), new Person(80, 100, "Brian", "DeLeonardis", 18)]),
+                             JSON.stringify([new Person(50, 50, "Brian", "Doe", 30), new Person(110, 100, "Brian", "DeLeonardis", 18)])]
     }
 
     /**
