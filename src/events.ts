@@ -21,15 +21,18 @@ function updateSlider(slideAmount) {
 }
 
 let pBut = <HTMLInputElement>$('#pause')[0];
+let paused = false;
 pBut.onclick = (e : Event) =>
 {
     if(pBut.innerHTML == "Pause")
     {
         pBut.innerHTML = "Resume";
+        paused = true;
     }
     else
     {
         pBut.innerHTML = "Pause";
+        paused = false;
     }
 }
 
@@ -87,13 +90,16 @@ let bridge = new Bridge();
 let next = new State(state.people);
 let ticks = 0;
 setInterval(() => {
-    ticks += 1;
-    next.selected = state.selected;
-    if(ticks == 100)
+    if(!paused)
     {
-        bridge.tick(next);
-        ticks = 0;
+        ticks += 1;
+        next.selected = state.selected;
+        if(ticks == 100)
+        {
+            bridge.tick(next);
+            ticks = 0;
+        }
+        state.update(next, ticks, 100);
+        state.draw(ctx);
     }
-    state.update(next, ticks, 100);
-    state.draw(ctx);
 }, 10);
