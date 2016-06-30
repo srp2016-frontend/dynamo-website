@@ -35,3 +35,6 @@ h1 {
     text-align: center;
     visibility : hidden;
 }
+#search-results {
+    text-align: center;
+}

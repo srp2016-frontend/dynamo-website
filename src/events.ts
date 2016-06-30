@@ -40,13 +40,16 @@ canvas.onmousemove = function(e : MouseEvent)
         state.draw(ctx);
     }
 }
+
 let input = <HTMLInputElement>$('#searchbar')[0];
-function search() {
+function search()
+{
     state.setSelection(state.getPersonByName(input.value))
     $("#not-found").css("visibility", state.selected ? "hidden" : "visible")
     state.draw(ctx);
 }
-function setSearchItems(items : Person[]) : void
+
+function setSearchItems(items : string[]) : void
 {
     let results = $("#search-results")
     if(items.length == 0)
@@ -55,14 +58,36 @@ function setSearchItems(items : Person[]) : void
         results.css("border", "0px");
     } else
     {
-        results.html(items.map(person => person.fName + " " + person.lName).join("<br>"))
-        results.css("border", "1px");
+        results.html(items.join("<br>"))
+        results.css("border", "1px solid #A5ACB2");
     }
 }
+
+function pSearch(check : string) : string[]
+{
+    var possible = [];
+    for(let i = 0; i < state.people.length; i++)
+    {
+        var name = state.people[i].fName + " " + state.people[i].lName;
+        if(name.indexOf(check) >= 0)
+        {
+            possible.push(name);
+        }
+    }
+    return possible;
+}
+
 $('#searchbutton').click(function (e : Event)
 {
     search();
 })
+
+$('#searchbar').on("input", (e : Event) =>
+{
+    var str = input.value;
+    if(str.length >= 3)
+        setSearchItems(pSearch(str));
+});
 
 $("#searchbar").keypress( (e : KeyboardEvent) =>
 {
