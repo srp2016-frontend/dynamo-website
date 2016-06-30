@@ -1,5 +1,6 @@
 ///<reference path='plotting.ts'/>
 ///<reference path='hover.ts'/>
+///<reference path='communication.ts'/>
 let canvas = <HTMLCanvasElement>$('#position-feed')[0];
 let ctx = canvas.getContext('2d');
 let state = new State([new Person(10, 10, "John", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)])
@@ -35,4 +36,9 @@ input.oninput = (e : Event) => {
     }
     state.draw(ctx);
 }
-state.draw(ctx)
+state.draw(ctx);
+let bridge = new Bridge();
+setInterval(() => {
+    bridge.tick(state);
+    state.draw(ctx);
+}, 1000);
