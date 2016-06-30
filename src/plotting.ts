@@ -94,10 +94,10 @@ class State
 
     updateSelected() : void
     {
-        for(let i = 0; i < state.people.length; i = i + 1)
+        for(let i = 0; i < this.people.length; i = i + 1)
         {
-            if((state.selected != null) && (state.selected.lName == state.people[i].lName && state.selected.fName == state.people[i].fName && state.selected.age == state.people[i].age))
-                state.selected = state.people[i];
+            if((this.selected != null) && (this.selected.lName == this.people[i].lName && this.selected.fName == this.people[i].fName && this.selected.age == this.people[i].age))
+                this.selected = this.people[i];
         }
     }
 
