@@ -46,6 +46,19 @@ function search() {
     $("#not-found").css("visibility", state.selected ? "hidden" : "visible")
     state.draw(ctx);
 }
+function setSearchItems(items : Person[]) : void
+{
+    let results = $("#search-results")
+    if(items.length == 0)
+    {
+        results.html("")
+        results.css("border", "0px");
+    } else
+    {
+        results.html(items.map(person => person.fName + " " + person.lName).join("<br>"))
+        results.css("border", "1px");
+    }
+}
 $('#searchbutton').click(function (e : Event)
 {
     search();
