@@ -65,11 +65,11 @@ but.onclick = (e : Event) =>
     state.draw(ctx);
 }
 
-$("#searchbar").keypress(function(e) 
+$("#searchbar").keypress( (e : KeyboardEvent) =>
 {
-    if(e.keyCode == 13)
+    if(e.keyCode === 13)
     {
-         let selected = state.getPersonByName(input.value);
+        let selected = state.getPersonByName(input.value);
         if(selected)
         {
             state.selected = selected;
