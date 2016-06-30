@@ -101,4 +101,22 @@ class State
         }
     }
 
+    setSelection(selection : Person) : void
+    {
+        this.selected = selection;
+        this.setDisplay(selection);
+    }
+
+    setDisplay(display : Person) : void
+    {
+        if(display)
+        {
+            $("#sidebar").empty();
+            $("#sidebar").append("<b>First Name: </b>", display.fName, "<br>");
+            $("#sidebar").append("<b>Last Name:  </b>", display, "<br>");
+            $("#sidebar").append("<b>Age: </b>", display, "<br>");
+        }
+        else
+            $("#sidebar").empty();
+    }
 }
