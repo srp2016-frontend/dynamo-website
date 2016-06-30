@@ -91,7 +91,14 @@ class State
         }
         return null;
     }
-    
 
-   
+    updateSelected() : void
+    {
+        for(let i = 0; i < state.people.length; i = i + 1)
+        {
+            if((state.selected != null) && (state.selected.lName == state.people[i].lName && state.selected.fName == state.people[i].fName && state.selected.age == state.people[i].age))
+                state.selected = state.people[i];
+        }
+    }
+
 }
