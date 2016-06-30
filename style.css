@@ -30,3 +30,8 @@ h1 {
 #pause{
     width : 65;
 }
+#not-found {
+    color: red;
+    text-align: center;
+    visibility : hidden;
+}

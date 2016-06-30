@@ -41,18 +41,21 @@ canvas.onmousemove = function(e : MouseEvent)
     }
 }
 let input = <HTMLInputElement>$('#searchbar')[0];
+function search() {
+    state.setSelection(state.getPersonByName(input.value))
+    $("#not-found").css("visibility", state.selected ? "hidden" : "visible")
+    state.draw(ctx);
+}
 $('#searchbutton').click(function (e : Event)
 {
-    state.setSelection(state.getPersonByName(input.value))
-    state.draw(ctx);
+    search();
 })
 
 $("#searchbar").keypress( (e : KeyboardEvent) =>
 {
     if(e.keyCode === 13)
     {
-        state.setSelection(state.getPersonByName(input.value));
-        state.draw(ctx);
+        search();
     }
 });
 state.draw(ctx);
