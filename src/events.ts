@@ -23,6 +23,8 @@ $("#slide").on("input", function(e : Event){
     if(!timeManager.paused) {
         pause(<HTMLButtonElement>$('#pause')[0])
     }
+    timeManager.setStateToTick(state, Math.floor(this.value * timeManager.getCurrentTotalTick()))
+    state.draw(ctx)
 })
 
 $('#pause').click(function(e : Event)
