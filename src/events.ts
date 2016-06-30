@@ -3,7 +3,7 @@
 ///<reference path='time.ts'/>
 let canvas = <HTMLCanvasElement>$('#position-feed')[0];
 let ctx = canvas.getContext('2d');
-let state = new State([new Person(10, 10, "John", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)])
+let state = new State([new Person(10, 10, "Brian", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)])
 let bridge = new Bridge();
 let timeManager = new TimeManager(bridge, ctx)
 let next = new State(state.people)
@@ -65,6 +65,8 @@ function setSearchItems(items : string[]) : void
 
 function pSearch(check : string) : string[]
 {
+    if(check.length < 3)
+        return [];
     var possible = [];
     for(let i = 0; i < state.people.length; i++)
     {
@@ -85,8 +87,7 @@ $('#searchbutton').click(function (e : Event)
 $('#searchbar').on("input", (e : Event) =>
 {
     var str = input.value;
-    if(str.length >= 3)
-        setSearchItems(pSearch(str));
+    setSearchItems(pSearch(str));
 });
 
 $("#searchbar").keypress( (e : KeyboardEvent) =>
