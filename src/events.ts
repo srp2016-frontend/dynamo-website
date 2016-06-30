@@ -13,9 +13,9 @@ canvas.onmousedown = (e : MouseEvent) =>
     state.draw(ctx);
 }
 
-function updateSlider(slideAmount) {
-
-}
+$("#slide").on("input", function(e : Event){
+    console.log(this.value);
+})
 
 $('#pause').click(function(e : Event)
 {
