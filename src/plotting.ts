@@ -36,12 +36,20 @@ class State
     {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.fillStyle = "red";
+        
         for(let person of this.people)
         {
             ctx.beginPath();
-            ctx.fillStyle = (person == this.selected) ? "blue" : "red";
+            ctx.fillStyle = "red";
+            ctx.globalAlpha = 0.25;
+            
+            if(person == this.selected || this.selected == null)
+                ctx.globalAlpha = 1.0;
+                
             ctx.arc(person.x, person.y, radius, 0, 2 * Math.PI);
             ctx.fill();
+            
+            
         }
     }
 
