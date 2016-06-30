@@ -20,6 +20,19 @@ function updateSlider(slideAmount) {
 
 }
 
+let pBut = <HTMLInputElement>$('#pause')[0];
+pBut.onclick = (e : Event) =>
+{
+    if(pBut.innerHTML == "Pause")
+    {
+        pBut.innerHTML = "Resume";
+    }
+    else
+    {
+        pBut.innerHTML = "Pause";
+    }
+}
+
 canvas.onmousemove = (e : MouseEvent) =>
 {
     if(!state.selected)

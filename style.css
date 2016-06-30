@@ -19,8 +19,13 @@ h1 {
 }
 
 #slider{
+    margin-left: 8.5%;
     font-family: "Verdana";
 }
 #slide {
     width : 75%;
+}
+
+#pause{
+    width : 65;
 }
