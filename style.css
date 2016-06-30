@@ -17,3 +17,10 @@ h1 {
 #searchbar-wrap {
     width : 100%;
 }
+
+#slider{
+    font-family: "Verdana";
+}
+#slide {
+    width : 75%;
+}
