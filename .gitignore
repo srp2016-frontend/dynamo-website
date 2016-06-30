@@ -1,4 +1,3 @@
 #Ignore all the stuff node downloads because they're binary dependencies
 node_modules/
-#Ignore all JS files
-*.js
+src/*.js
