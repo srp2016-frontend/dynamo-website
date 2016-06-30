@@ -36,21 +36,36 @@ class State
     {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.fillStyle = "red";
-        
+
         for(let person of this.people)
         {
             ctx.beginPath();
             ctx.fillStyle = "red";
             ctx.globalAlpha = 0.25;
-            
+
             if(person == this.selected || this.selected == null)
                 ctx.globalAlpha = 1.0;
-                
+
             ctx.arc(person.x, person.y, radius, 0, 2 * Math.PI);
             ctx.fill();
-            
-            
+
+
         }
+    }
+
+    update(next : State, ticks : number, maxTicks : number) : void
+    {
+        for(let person of this.people)
+        {
+            let equivalent = next.getPersonByName(person.fName + " " + person.lName);
+            person.x = this.scaleByTime(person.x, equivalent.x, ticks, maxTicks);
+            person.y = this.scaleByTime(person.y, equivalent.y, ticks, maxTicks);
+        }
+    }
+
+    scaleByTime(current : number, goal : number, ticks : number, maxTicks : number) : number
+    {
+        return current + (goal - current) / (maxTicks - ticks)
     }
 
     getPersonAt(x : number, y : number) : Person
