@@ -35,6 +35,7 @@ class State
     draw(ctx : CanvasRenderingContext2D) : void
     {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.globalAlpha = 1.0;
         ctx.fillStyle = "grey";
         ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         for(let person of this.people)
