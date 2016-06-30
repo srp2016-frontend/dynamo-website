@@ -17,15 +17,14 @@ function updateSlider(slideAmount) {
 
 }
 
-let pBut = <HTMLInputElement>$('#pause')[0];
-pBut.onclick = (e : Event) =>
+$('#pause').click(function(e : Event)
 {
-    let pause = pBut.innerHTML === "Pause"
-    pBut.innerHTML = pause ? "Resume" : "Pause"
+    let pause = this.innerHTML === "Pause"
+    this.innerHTML = pause ? "Resume" : "Pause"
     timeManager.paused = pause;
-}
+});
 
-canvas.onmousemove = (e : MouseEvent) =>
+canvas.onmousemove = function(e : MouseEvent)
 {
     if(!state.selected)
     {
@@ -34,12 +33,11 @@ canvas.onmousemove = (e : MouseEvent) =>
     }
 }
 let input = <HTMLInputElement>$('#searchbar')[0];
-let but = <HTMLInputElement>$('#searchbutton')[0];
-but.onclick = (e : Event) =>
+$('#searchbutton').click(function (e : Event)
 {
     state.setSelection(state.getPersonByName(input.value))
     state.draw(ctx);
-}
+})
 
 $("#searchbar").keypress( (e : KeyboardEvent) =>
 {
