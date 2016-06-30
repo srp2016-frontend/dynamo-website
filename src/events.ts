@@ -56,6 +56,11 @@ function setSearchItems(items : string[]) : void
     {
         results.html("")
         results.css("border", "0px");
+    } else if(items.length == 1) {
+        results.html("")
+        results.css("border", "0px");
+        input.value = items[0];
+        search();
     } else
     {
         results.html(items.join("<br>"))
