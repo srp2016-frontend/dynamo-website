@@ -24,7 +24,8 @@ canvas.onmousemove = (e : MouseEvent) => {
     }
 }
 let input = <HTMLInputElement>$('#searchbar')[0];
-input.oninput = (e : Event) => {
+let but = <HTMLInputElement>$('#searchbutton')[0];
+but.onclick = (e : Event) => {
     let selected = state.getPersonByName(input.value);
     if(selected) {
         state.selected = selected;
