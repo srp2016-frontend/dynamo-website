@@ -10,9 +10,10 @@ h1 {
     background-color: #DDDDDD;
 }
 #searchbar {
-    width : 75%;
+    width : 50%;
+    margin-left : 25%;
     text-align:  center;
 }
 #searchbar-wrap {
-    text-align: center;
+    width : 100%;
 }
