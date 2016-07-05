@@ -144,13 +144,13 @@ var TimeManager = (function () {
         return JSON.parse(JSON.stringify(this.frames[index]));
     };
     TimeManager.prototype.updateFrame = function () {
-        var _this = this;
         if (!this.paused) {
             if (this.isCurrent) {
                 this.ticks += 1;
                 this.queued.selected = this.state.selected;
                 if (this.ticks == 100) {
-                    this.bridge.tick(this.queued, function () { return _this.frames.push(_this.state.people); });
+                    this.bridge.tick(this.queued);
+                    this.frames.push(JSON.parse(JSON.stringify(this.state.people)));
                     this.ticks = 0;
                 }
                 this.state.update(this.queued, this.ticks, maxTicks);
