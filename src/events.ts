@@ -5,8 +5,8 @@ let canvas = <HTMLCanvasElement>$('#position-feed')[0];
 let ctx = canvas.getContext('2d');
 let state = new State([new Person(10, 10, "Brian", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)])
 let bridge = new Bridge();
-let timeManager = new TimeManager(bridge, ctx)
 let next = new State(state.people)
+let timeManager = new TimeManager(bridge, ctx, state, next)
 canvas.onmousedown = (e : MouseEvent) =>
 {
     state.setSelection(state.getPersonAt(e.offsetX, e.offsetY));
@@ -18,12 +18,24 @@ function pause(button : HTMLButtonElement) {
     button.innerHTML = pause ? "Resume" : "Pause"
     timeManager.paused = pause;
 }
+//TODO: HOOK UP NEW BUTTONS
+$("#back-to-start").click(function(e : Event){
+    timeManager.setStateToFirst()
+    state.draw(ctx)
+})
 
-$("#slide").on("input", function(e : Event){
-    if(!timeManager.paused) {
-        pause(<HTMLButtonElement>$('#pause')[0])
-    }
-    timeManager.setStateToTick(state, Math.floor(this.value * timeManager.getCurrentTotalTick()))
+$("#back-one").click(function(e : Event){
+    timeManager.moveStateBack();
+    state.draw(ctx)
+})
+
+$("#forward-one").click(function(e : Event){
+    timeManager.moveStateForward();
+    state.draw(ctx)
+})
+
+$("#forward-to-now").click(function(e : Event){
+    timeManager.setStateToCurrent();
     state.draw(ctx)
 })
 
@@ -104,5 +116,5 @@ $("#searchbar").keypress( (e : KeyboardEvent) =>
 });
 state.draw(ctx);
 setInterval(() => {
-    timeManager.updateFrame(state, next);
+    timeManager.updateFrame();
 }, 10);
