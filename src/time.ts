@@ -46,7 +46,8 @@ class TimeManager
                 this.queued.selected = this.state.selected;
                 if(this.ticks == 100)
                 {
-                    this.bridge.tick(this.queued, () => this.frames.push(this.state.people));
+                    this.bridge.tick(this.queued);
+                    this.frames.push(JSON.parse(JSON.stringify(this.state.people)));
                     this.ticks = 0;
                 }
                 this.state.update(this.queued, this.ticks, maxTicks);
