@@ -57,13 +57,20 @@ function setSearchItems(items : string[]) : void
         results.html("")
         results.css("border", "0px");
     } else if(items.length == 1) {
-        results.html("")
+        results.html("");
         results.css("border", "0px");
         input.value = items[0];
         search();
     } else
     {
-        results.html(items.join("<br>"))
+        results.html("");
+        for(let i = 0; i < items.length; i++)
+        {
+            var r= $('<input type="button" class = "poss" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
+            results.append(r);
+            //results.append(items[i]);
+            results.append("<br>");
+        }
         results.css("border", "1px solid #A5ACB2");
     }
 }
@@ -88,6 +95,15 @@ $('#searchbutton').click(function (e : Event)
 {
     search();
 })
+
+function autocomplete_button_onclick(button : HTMLButtonElement)
+{
+    let results = $("#search-results")
+    results.html("");
+    results.css("border", "0px");
+    input.value =  button.value;
+    search();
+}
 
 $('#searchbar').on("input", (e : Event) =>
 {
