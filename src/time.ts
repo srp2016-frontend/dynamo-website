@@ -30,6 +30,11 @@ class TimeManager
         this.isCurrent = true;
     }
 
+    private getFrame(index : number) : Person[]
+    {
+        return JSON.parse(JSON.stringify(this.frames[index]))
+    }
+
     updateFrame()
     {
         if(!this.paused)
@@ -62,8 +67,8 @@ class TimeManager
     setStateToCurrent() : void
     {
         this.ticks = 0;
-        this.currentFrame = frames.length - 1;
-        this.state.people = this.frames[this.currentFrame];
+        this.currentFrame = this.frames.length - 1;
+        this.state.people = this.getFrame(this.currentFrame);
         this.state.updateSelected();
         this.isCurrent = true;
     }
@@ -73,11 +78,11 @@ class TimeManager
         if(this.currentFrame == 0) return;
         this.ticks = 0;
         this.currentFrame --;
-        this.state.people = this.frames[this.currentFrame]
+        this.state.people = this.getFrame(this.currentFrame)
         this.state.updateSelected();
         if(this.currentFrame < this.frames.length - 1)
         {
-            this.next.people = this.frames[this.currentFrame + 1];
+            this.next.people = this.getFrame(this.currentFrame + 1);
             this.next.updateSelected();
         }
         this.isCurrent = false;
@@ -88,11 +93,11 @@ class TimeManager
         if(this.currentFrame == this.frames.length - 1) return;
         this.ticks = 0;
         this.currentFrame ++;
-        this.state.people = this.frames[this.currentFrame]
+        this.state.people = this.getFrame(this.currentFrame)
         this.state.updateSelected();
         if(this.currentFrame < this.frames.length - 1)
         {
-            this.next.people = this.frames[this.currentFrame + 1];
+            this.next.people = this.getFrame(this.currentFrame + 1);
             this.next.updateSelected();
             this.isCurrent = false;
         } else 
@@ -106,11 +111,11 @@ class TimeManager
     {
         this.currentFrame = 0;
         this.ticks = 0;
-        this.state.people = this.frames[this.currentFrame];
+        this.state.people = this.getFrame(this.currentFrame);
         this.state.updateSelected();
         if(this.currentFrame < this.frames.length - 1)
         {
-            this.next.people = this.frames[this.currentFrame + 1];
+            this.next.people = this.getFrame(this.currentFrame + 1);
             this.next.updateSelected();
         }
         this.isCurrent = false;
