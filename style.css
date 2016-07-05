@@ -42,6 +42,18 @@ h1 {
     left:25%;
     width:50%;
 }
+
 .time-button {
     width:20%;
+}
+
+.poss {
+    font-family : "Source Code Pro";
+    background-color:white;
+    width:100%;
+}
+
+.poss:hover{
+    background-color:#1832b6;
+    color:white;
 }
