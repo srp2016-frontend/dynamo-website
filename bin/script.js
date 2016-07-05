@@ -94,7 +94,10 @@ Handles AJAX requests and caches the results
 var Bridge = (function () {
     function Bridge() {
         this.messageCache = [JSON.stringify([new Person(30, 30, "Brian", "Doe", 30), new Person(80, 100, "Brian", "DeLeonardis", 18)]),
-            JSON.stringify([new Person(50, 50, "Brian", "Doe", 30), new Person(110, 100, "Brian", "DeLeonardis", 18)])];
+            JSON.stringify([new Person(50, 50, "Brian", "Doe", 30), new Person(110, 100, "Brian", "DeLeonardis", 18)]),
+            JSON.stringify([new Person(50, 80, "Brian", "Doe", 30), new Person(140, 100, "Brian", "DeLeonardis", 18)]),
+            JSON.stringify([new Person(35, 75, "Brian", "Doe", 30), new Person(200, 100, "Brian", "DeLeonardis", 18)]),
+            JSON.stringify([new Person(50, 50, "Brian", "Doe", 30), new Person(400, 100, "Brian", "DeLeonardis", 18)])];
     }
     /**
     * Takes a message from the cache or the server and makes it into a State object
@@ -120,13 +123,12 @@ var Bridge = (function () {
 }());
 ///<reference path='plotting.ts'/>
 ///<reference path='communication.ts'/>
+///<reference path='events.ts'/>
 var maxTicks = 100;
 var TimeManager = (function () {
-    function TimeManager(bridge, ctx, state, next) {
+    function TimeManager(bridge, ctx, state, next, pause) {
         this.bridge = bridge;
         this.frames = [];
-        this.frames.push([new Person(-30, -30, "Brian", "Doe", 30), new Person(-10, 100, "Brian", "DeLeonardis", 18)]);
-        this.frames.push([new Person(-10, -10, "Brian", "Doe", 30), new Person(20, 100, "Brian", "DeLeonardis", 18)]);
         this.frames.push([new Person(10, 10, "Brian", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)]);
         this.ticks = 0;
         this.paused = false;
@@ -136,6 +138,7 @@ var TimeManager = (function () {
         this.queued = next;
         this.next = new State(this.state.people);
         this.isCurrent = true;
+        this.pauseButton = pause;
     }
     TimeManager.prototype.getFrame = function (index) {
         return JSON.parse(JSON.stringify(this.frames[index]));
@@ -183,6 +186,8 @@ var TimeManager = (function () {
             this.next.updateSelected();
         }
         this.isCurrent = false;
+        if (!this.paused)
+            pause(this.pauseButton);
     };
     TimeManager.prototype.moveStateForward = function () {
         var _this = this;
@@ -196,6 +201,8 @@ var TimeManager = (function () {
             this.next.people = this.getFrame(this.currentFrame + 1);
             this.next.updateSelected();
             this.isCurrent = false;
+            if (!this.paused)
+                pause(this.pauseButton);
         }
         else {
             this.isCurrent = true;
@@ -212,6 +219,8 @@ var TimeManager = (function () {
             this.next.updateSelected();
         }
         this.isCurrent = false;
+        if (!this.paused)
+            pause(this.pauseButton);
     };
     return TimeManager;
 }());
@@ -223,7 +232,7 @@ var ctx = canvas.getContext('2d');
 var state = new State([new Person(10, 10, "Brian", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)]);
 var bridge = new Bridge();
 var next = new State(state.people);
-var timeManager = new TimeManager(bridge, ctx, state, next);
+var timeManager = new TimeManager(bridge, ctx, state, next, $("#pause")[0]);
 canvas.onmousedown = function (e) {
     state.setSelection(state.getPersonAt(e.offsetX, e.offsetY));
     state.draw(ctx);
