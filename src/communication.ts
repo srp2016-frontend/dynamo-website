@@ -18,12 +18,14 @@ class Bridge
     * Takes a message from the cache or the server and makes it into a State object
     * Asynchronous because it may make an AJAX request
     */
-    tick(state : State)
+    tick(state : State, action : () => void = null)
     {
         this.doWithMessage((message : string) =>
         {
             state.people = <Person[]>JSON.parse(message);
             state.updateSelected()
+            if(action)
+                action();
         })
     }
 
