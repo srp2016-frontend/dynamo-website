@@ -6,7 +6,7 @@ let ctx = canvas.getContext('2d');
 let state = new State([new Person(10, 10, "Brian", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)])
 let bridge = new Bridge();
 let next = new State(state.people)
-let timeManager = new TimeManager(bridge, ctx, state, next)
+let timeManager = new TimeManager(bridge, ctx, state, next, <HTMLButtonElement>$("#pause")[0])
 canvas.onmousedown = (e : MouseEvent) =>
 {
     state.setSelection(state.getPersonAt(e.offsetX, e.offsetY));
