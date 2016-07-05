@@ -1,11 +1,11 @@
 #TODO
 
-- Partial Search
-
-- Time slider for moving through time
-
 - Talk to the server for updates
 
-- Autocomplete for search should still allow edits
+- Draw the path of the first responders over a period of time
 
-- Moving backwards in time should work
+- Custom icons for the first responders
+
+- Use configurable identifiers
+
+- A more consistent and effective visual theme
