@@ -19,6 +19,7 @@ class TimeManager
         this.frames = [];
         this.frames.push([new Person(-30, -30, "Brian", "Doe", 30), new Person(-10, 100, "Brian", "DeLeonardis", 18)]);
         this.frames.push([new Person(-10, -10, "Brian", "Doe", 30), new Person(20, 100, "Brian", "DeLeonardis", 18)]);
+        this.frames.push([new Person(10, 10, "Brian", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)]);
         this.ticks = 0;
         this.paused = false;
         this.ctx = ctx;
@@ -39,7 +40,7 @@ class TimeManager
                 this.queued.selected = this.state.selected;
                 if(this.ticks == 100)
                 {
-                    this.bridge.tick(this.queued, () => this.frames.push(this.state.people));
+                    this.bridge.tick(this.queued, () => {this.frames.push(this.state.people); console.log(this.frames); });
                     this.ticks = 0;
                 }
                 this.state.update(this.queued, this.ticks, maxTicks);
@@ -51,6 +52,7 @@ class TimeManager
                 if(this.ticks == 100)
                 {
                    this.moveStateForward();
+                   console.log(this.currentFrame);
                 }
                 this.state.update(this.next, this.ticks, maxTicks);
                 this.state.draw(this.ctx);
@@ -72,12 +74,12 @@ class TimeManager
         if(this.currentFrame == 0) return;
         this.ticks = 0;
         this.currentFrame --;
-        state.people = this.frames[this.currentFrame]
-        state.updateSelected();
+        this.state.people = this.frames[this.currentFrame]
+        this.state.updateSelected();
         if(this.currentFrame < this.frames.length - 1)
         {
-            next.people = this.frames[this.currentFrame + 1];
-            next.updateSelected();
+            this.next.people = this.frames[this.currentFrame + 1];
+            this.next.updateSelected();
         }
         this.isCurrent = false;
     }
@@ -87,12 +89,12 @@ class TimeManager
         if(this.currentFrame == this.frames.length - 1) return;
         this.ticks = 0;
         this.currentFrame ++;
-        state.people = this.frames[this.currentFrame]
-        state.updateSelected();
+        this.state.people = this.frames[this.currentFrame]
+        this.state.updateSelected();
         if(this.currentFrame < this.frames.length - 1)
         {
-            next.people = this.frames[this.currentFrame + 1];
-            next.updateSelected();
+            this.next.people = this.frames[this.currentFrame + 1];
+            this.next.updateSelected();
             this.isCurrent = false;
         } else 
         {
@@ -108,8 +110,8 @@ class TimeManager
         this.state.updateSelected();
         if(this.currentFrame < this.frames.length - 1)
         {
-            next.people = this.frames[this.currentFrame + 1];
-            next.updateSelected();
+            this.next.people = this.frames[this.currentFrame + 1];
+            this.next.updateSelected();
         }
         this.isCurrent = false;
     }
