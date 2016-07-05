@@ -3,10 +3,10 @@
 ///<reference path='time.ts'/>
 let canvas = <HTMLCanvasElement>$('#position-feed')[0];
 let ctx = canvas.getContext('2d');
-let state = new State([new Person(10, 10, "Brian", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)])
+let state = new State([new Person(10, 10, "Brian", "Doe", 30), new Person(15, 20, "Brian", "Dates", 27), new Person(50, 100, "Brian", "DeLeonardis", 18)])
 let bridge = new Bridge();
 let items : string[];
-let count = 0;
+let count = -1;
 let next = new State(state.people)
 let timeManager = new TimeManager(bridge, ctx, state, next, <HTMLButtonElement>$("#pause")[0])
 canvas.onmousedown = (e : MouseEvent) =>
@@ -78,7 +78,7 @@ function setSearchItems(is : string[]) : void
     } */
     else
     {
-        count = 0;
+        count = -1;
         results.html("");
         for(let i = 0; i < items.length; i++)
         {
@@ -131,6 +131,7 @@ $("#searchbar:input").bind( 'keyup change click', (ev : Event) =>
     let e = <KeyboardEvent>ev;
     if(e.keyCode === 13)
     {
+        $("#searchbar").val(items[count])
         search();
     }
     else if(e.keyCode === 38 || e.keyCode === 40)
@@ -139,7 +140,7 @@ $("#searchbar:input").bind( 'keyup change click', (ev : Event) =>
         
         if(e.keyCode === 38 && count > 0)
             count--;        
-        else if(count < items.length)
+        else if(e.keyCode === 40 && count < items.length - 1)
             count++;
             
         results.html("");
