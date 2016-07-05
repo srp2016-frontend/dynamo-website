@@ -1,4 +1,5 @@
 ///<reference path='plotting.ts'/>
+///<reference path='communication.ts'/>
 const maxTicks = 100;
 class TimeManager
 {
@@ -11,8 +12,8 @@ class TimeManager
     constructor(bridge : Bridge, ctx : CanvasRenderingContext2D) {
         this.bridge = bridge;
         this.frames = [];
-        this.frames.push([new Person(-30, -30, "John", "Doe", 30), new Person(-10, 100, "Brian", "DeLeonardis", 18)]);
-        this.frames.push([new Person(-10, -10, "John", "Doe", 30), new Person(20, 100, "Brian", "DeLeonardis", 18)]);
+        this.frames.push([new Person(-30, -30, "Brian", "Doe", 30), new Person(-10, 100, "Brian", "DeLeonardis", 18)]);
+        this.frames.push([new Person(-10, -10, "Brian", "Doe", 30), new Person(20, 100, "Brian", "DeLeonardis", 18)]);
         this.ticks = 0;
         this.paused = false;
         this.ctx = ctx;
@@ -35,7 +36,7 @@ class TimeManager
                 this.ticks = 0;
             }
             state.update(next, this.ticks, maxTicks);
-            state.draw(ctx);
+            state.draw(this.ctx);
         }
     }
 
@@ -50,6 +51,7 @@ class TimeManager
         let currentFrame = this.frames[frameIndex]
         console.log(currentFrame)
         state.people = currentFrame
+        console.log(frameIndex);
         if(frameIndex < this.frames.length - 1)
         {
             let nextFrame = this.frames[frameIndex + 1]
