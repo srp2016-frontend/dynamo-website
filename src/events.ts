@@ -5,8 +5,8 @@ let canvas = <HTMLCanvasElement>$('#position-feed')[0];
 let ctx = canvas.getContext('2d');
 let state = new State([new Person(10, 10, "Brian", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)])
 let bridge = new Bridge();
-let timeManager = new TimeManager(bridge, ctx)
 let next = new State(state.people)
+let timeManager = new TimeManager(bridge, ctx, state, next)
 canvas.onmousedown = (e : MouseEvent) =>
 {
     state.setSelection(state.getPersonAt(e.offsetX, e.offsetY));
@@ -18,12 +18,24 @@ function pause(button : HTMLButtonElement) {
     button.innerHTML = pause ? "Resume" : "Pause"
     timeManager.paused = pause;
 }
+//TODO: HOOK UP NEW BUTTONS
+$("#back-to-start").click(function(e : Event){
+    timeManager.setStateToFirst()
+    state.draw(ctx)
+})
 
-$("#slide").on("input", function(e : Event){
-    if(!timeManager.paused) {
-        pause(<HTMLButtonElement>$('#pause')[0])
-    }
-    timeManager.setStateToTick(state, Math.floor(this.value * timeManager.getCurrentTotalTick()))
+$("#back-one").click(function(e : Event){
+    timeManager.moveStateBack();
+    state.draw(ctx)
+})
+
+$("#forward-one").click(function(e : Event){
+    timeManager.moveStateForward();
+    state.draw(ctx)
+})
+
+$("#forward-to-now").click(function(e : Event){
+    timeManager.setStateToCurrent();
     state.draw(ctx)
 })
 
@@ -57,13 +69,20 @@ function setSearchItems(items : string[]) : void
         results.html("")
         results.css("border", "0px");
     } else if(items.length == 1) {
-        results.html("")
+        results.html("");
         results.css("border", "0px");
         input.value = items[0];
         search();
     } else
     {
-        results.html(items.join("<br>"))
+        results.html("");
+        for(let i = 0; i < items.length; i++)
+        {
+            var r= $('<input type="button" class = "poss" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
+            results.append(r);
+            //results.append(items[i]);
+            results.append("<br>");
+        }
         results.css("border", "1px solid #A5ACB2");
     }
 }
@@ -89,6 +108,15 @@ $('#searchbutton').click(function (e : Event)
     search();
 })
 
+function autocomplete_button_onclick(button : HTMLButtonElement)
+{
+    let results = $("#search-results")
+    results.html("");
+    results.css("border", "0px");
+    input.value =  button.value;
+    search();
+}
+
 $('#searchbar').on("input", (e : Event) =>
 {
     var str = input.value;
@@ -104,5 +132,5 @@ $("#searchbar").keypress( (e : KeyboardEvent) =>
 });
 state.draw(ctx);
 setInterval(() => {
-    timeManager.updateFrame(state, next);
+    timeManager.updateFrame();
 }, 10);
