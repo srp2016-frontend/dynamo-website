@@ -6,7 +6,7 @@ let ctx = canvas.getContext('2d');
 let state = new State([new Person(10, 10, "Brian", "Doe", 30), new Person(15, 20, "Brian", "Dates", 27), new Person(50, 100, "Brian", "DeLeonardis", 18)])
 let bridge = new Bridge();
 let items : string[];
-let count = -1;
+let count = 0;
 let next = new State(state.people)
 let timeManager = new TimeManager(bridge, ctx, state, next, <HTMLButtonElement>$("#pause")[0])
 canvas.onmousedown = (e : MouseEvent) =>
@@ -78,21 +78,30 @@ function setSearchItems(is : string[]) : void
     } */
     else
     {
-        count = -1;
+        count = 0;
         results.html("");
         for(let i = 0; i < items.length; i++)
         {
-            var r= $('<input type="button" class = "poss" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
-            results.append(r);
-            results.append("<br>");
-        }
+            if(i == count)
+            {
+                var r= $('<input type="button" class = "sel" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
+                results.append(r);
+                results.append("<br>");
+            }
+            else
+            {
+                var r= $('<input type="button" class = "poss" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
+                results.append(r);
+                results.append("<br>");
+            }
+        } 
         results.css("border", "1px solid #A5ACB2");
     }
 }
 
 function pSearch(check : string) : string[]
 {
-    if(check.length < 3)
+    if(check.length < 1)
         return [];
     var possible = [];
     for(let i = 0; i < state.people.length; i++)
@@ -129,15 +138,15 @@ $('#searchbar').on("input", (e : Event) =>
 $("#searchbar:input").bind( 'keyup change click', (ev : Event) =>
 {
     let e = <KeyboardEvent>ev;
+    let results = $("#search-results");
     if(e.keyCode === 13)
     {
-        $("#searchbar").val(items[count])
+        $("#searchbar").val(items[count]);
         search();
+        results.html("");
     }
     else if(e.keyCode === 38 || e.keyCode === 40)
-    {
-        let results = $("#search-results");
-        
+    {    
         if(e.keyCode === 38 && count > 0)
             count--;        
         else if(e.keyCode === 40 && count < items.length - 1)
