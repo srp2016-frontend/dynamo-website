@@ -40,7 +40,7 @@ class TimeManager
                 this.queued.selected = this.state.selected;
                 if(this.ticks == 100)
                 {
-                    this.bridge.tick(this.queued, () => {this.frames.push(this.state.people); console.log(this.frames); });
+                    this.bridge.tick(this.queued, () => this.frames.push(this.state.people));
                     this.ticks = 0;
                 }
                 this.state.update(this.queued, this.ticks, maxTicks);
@@ -52,7 +52,6 @@ class TimeManager
                 if(this.ticks == 100)
                 {
                    this.moveStateForward();
-                   console.log(this.currentFrame);
                 }
                 this.state.update(this.next, this.ticks, maxTicks);
                 this.state.draw(this.ctx);
@@ -99,6 +98,7 @@ class TimeManager
         } else 
         {
             this.isCurrent = true;
+            this.bridge.tick(this.queued, () => this.frames.push(this.state.people));
         }
     }
 
