@@ -3,8 +3,10 @@
 ///<reference path='time.ts'/>
 let canvas = <HTMLCanvasElement>$('#position-feed')[0];
 let ctx = canvas.getContext('2d');
-let state = new State([new Person(10, 10, "Brian", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)])
+let state = new State([new Person(10, 10, "Brian", "Doe", 30), new Person(15, 20, "Brian", "Dates", 27), new Person(50, 100, "Brian", "DeLeonardis", 18)])
 let bridge = new Bridge();
+let items : string[];
+let count = -1;
 let next = new State(state.people)
 let timeManager = new TimeManager(bridge, ctx, state, next, <HTMLButtonElement>$("#pause")[0])
 canvas.onmousedown = (e : MouseEvent) =>
@@ -18,7 +20,6 @@ function pause(button : HTMLButtonElement) {
     button.innerHTML = pause ? "Resume" : "Pause"
     timeManager.paused = pause;
 }
-//TODO: HOOK UP NEW BUTTONS
 $("#back-to-start").click(function(e : Event){
     timeManager.setStateToFirst()
     state.draw(ctx)
@@ -61,26 +62,28 @@ function search()
     state.draw(ctx);
 }
 
-function setSearchItems(items : string[]) : void
+function setSearchItems(is : string[]) : void
 {
-    let results = $("#search-results")
+    let results = $("#search-results");
+    items = is;
     if(items.length == 0)
     {
         results.html("")
         results.css("border", "0px");
-    } else if(items.length == 1) {
-        results.html("");
-        results.css("border", "0px");
-        input.value = items[0];
-        search();
-    } else
+    } 
+    /*else if(items.length == 1) 
     {
+        input.value = items[0];
+        input.hover = true;
+    } */
+    else
+    {
+        count = -1;
         results.html("");
         for(let i = 0; i < items.length; i++)
         {
             var r= $('<input type="button" class = "poss" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
             results.append(r);
-            //results.append(items[i]);
             results.append("<br>");
         }
         results.css("border", "1px solid #A5ACB2");
@@ -123,11 +126,40 @@ $('#searchbar').on("input", (e : Event) =>
     setSearchItems(pSearch(str));
 });
 
-$("#searchbar").keypress( (e : KeyboardEvent) =>
+$("#searchbar:input").bind( 'keyup change click', (ev : Event) =>
 {
+    let e = <KeyboardEvent>ev;
     if(e.keyCode === 13)
     {
+        $("#searchbar").val(items[count])
         search();
+    }
+    else if(e.keyCode === 38 || e.keyCode === 40)
+    {
+        let results = $("#search-results");
+        
+        if(e.keyCode === 38 && count > 0)
+            count--;        
+        else if(e.keyCode === 40 && count < items.length - 1)
+            count++;
+            
+        results.html("");
+        
+        for(let i = 0; i < items.length; i++)
+        {
+            if(i == count)
+            {
+                var r= $('<input type="button" class = "sel" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
+                results.append(r);
+                results.append("<br>");
+            }
+            else
+            {
+                var r= $('<input type="button" class = "poss" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
+                results.append(r);
+                results.append("<br>");
+            }
+        }    
     }
 });
 state.draw(ctx);
