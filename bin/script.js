@@ -93,11 +93,7 @@ Handles AJAX requests and caches the results
 */
 var Bridge = (function () {
     function Bridge() {
-        this.messageCache = [JSON.stringify([new Person(30, 30, "Brian", "Doe", 30), new Person(80, 100, "Brian", "DeLeonardis", 18)]),
-            JSON.stringify([new Person(50, 50, "Brian", "Doe", 30), new Person(110, 100, "Brian", "DeLeonardis", 18)]),
-            JSON.stringify([new Person(50, 80, "Brian", "Doe", 30), new Person(140, 100, "Brian", "DeLeonardis", 18)]),
-            JSON.stringify([new Person(35, 75, "Brian", "Doe", 30), new Person(200, 100, "Brian", "DeLeonardis", 18)]),
-            JSON.stringify([new Person(50, 50, "Brian", "Doe", 30), new Person(400, 100, "Brian", "DeLeonardis", 18)])];
+        this.messageCache = [];
     }
     /**
     * Takes a message from the cache or the server and makes it into a State object
@@ -229,8 +225,10 @@ var TimeManager = (function () {
 ///<reference path='time.ts'/>
 var canvas = $('#position-feed')[0];
 var ctx = canvas.getContext('2d');
-var state = new State([new Person(10, 10, "Brian", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)]);
+var state = new State([new Person(10, 10, "Brian", "Doe", 30), new Person(15, 20, "Brian", "Dates", 27), new Person(50, 100, "Brian", "DeLeonardis", 18)]);
 var bridge = new Bridge();
+var items;
+var count = -1;
 var next = new State(state.people);
 var timeManager = new TimeManager(bridge, ctx, state, next, $("#pause")[0]);
 canvas.onmousedown = function (e) {
@@ -242,7 +240,6 @@ function pause(button) {
     button.innerHTML = pause ? "Resume" : "Pause";
     timeManager.paused = pause;
 }
-//TODO: HOOK UP NEW BUTTONS
 $("#back-to-start").click(function (e) {
     timeManager.setStateToFirst();
     state.draw(ctx);
@@ -274,24 +271,19 @@ function search() {
     $("#not-found").css("visibility", state.selected ? "hidden" : "visible");
     state.draw(ctx);
 }
-function setSearchItems(items) {
+function setSearchItems(is) {
     var results = $("#search-results");
+    items = is;
     if (items.length == 0) {
         results.html("");
         results.css("border", "0px");
     }
-    else if (items.length == 1) {
-        results.html("");
-        results.css("border", "0px");
-        input.value = items[0];
-        search();
-    }
     else {
+        count = -1;
         results.html("");
         for (var i = 0; i < items.length; i++) {
             var r = $('<input type="button" class = "poss" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
             results.append(r);
-            //results.append(items[i]);
             results.append("<br>");
         }
         results.css("border", "1px solid #A5ACB2");
@@ -323,9 +315,31 @@ $('#searchbar').on("input", function (e) {
     var str = input.value;
     setSearchItems(pSearch(str));
 });
-$("#searchbar").keypress(function (e) {
+$("#searchbar:input").bind('keyup change click', function (ev) {
+    var e = ev;
     if (e.keyCode === 13) {
+        $("#searchbar").val(items[count]);
         search();
+    }
+    else if (e.keyCode === 38 || e.keyCode === 40) {
+        var results = $("#search-results");
+        if (e.keyCode === 38 && count > 0)
+            count--;
+        else if (e.keyCode === 40 && count < items.length - 1)
+            count++;
+        results.html("");
+        for (var i = 0; i < items.length; i++) {
+            if (i == count) {
+                var r = $('<input type="button" class = "sel" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
+                results.append(r);
+                results.append("<br>");
+            }
+            else {
+                var r = $('<input type="button" class = "poss" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
+                results.append(r);
+                results.append("<br>");
+            }
+        }
     }
 });
 state.draw(ctx);
