@@ -100,10 +100,13 @@ var Bridge = (function () {
     * Takes a message from the cache or the server and makes it into a State object
     * Asynchronous because it may make an AJAX request
     */
-    Bridge.prototype.tick = function (state) {
+    Bridge.prototype.tick = function (state, action) {
+        if (action === void 0) { action = null; }
         this.doWithMessage(function (message) {
             state.people = JSON.parse(message);
             state.updateSelected();
+            if (action)
+                action();
         });
     };
     Bridge.prototype.doWithMessage = function (callback) {
@@ -116,50 +119,99 @@ var Bridge = (function () {
     return Bridge;
 }());
 ///<reference path='plotting.ts'/>
+///<reference path='communication.ts'/>
 var maxTicks = 100;
 var TimeManager = (function () {
-    function TimeManager(bridge, ctx) {
+    function TimeManager(bridge, ctx, state, next) {
         this.bridge = bridge;
         this.frames = [];
-        this.frames.push([new Person(-30, -30, "John", "Doe", 30), new Person(-10, 100, "Brian", "DeLeonardis", 18)]);
-        this.frames.push([new Person(-10, -10, "John", "Doe", 30), new Person(20, 100, "Brian", "DeLeonardis", 18)]);
+        this.frames.push([new Person(-30, -30, "Brian", "Doe", 30), new Person(-10, 100, "Brian", "DeLeonardis", 18)]);
+        this.frames.push([new Person(-10, -10, "Brian", "Doe", 30), new Person(20, 100, "Brian", "DeLeonardis", 18)]);
+        this.frames.push([new Person(10, 10, "Brian", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)]);
         this.ticks = 0;
         this.paused = false;
         this.ctx = ctx;
+        this.currentFrame = 0;
+        this.state = state;
+        this.queued = next;
+        this.next = new State(this.state.people);
+        this.isCurrent = true;
     }
-    TimeManager.prototype.updateFrame = function (state, next) {
+    TimeManager.prototype.getFrame = function (index) {
+        return JSON.parse(JSON.stringify(this.frames[index]));
+    };
+    TimeManager.prototype.updateFrame = function () {
+        var _this = this;
         if (!this.paused) {
-            this.ticks += 1;
-            next.selected = state.selected;
-            if (this.ticks == 100) {
-                this.bridge.tick(next);
-                if (state.people !== next.people) {
-                    this.frames.push(state.people);
-                    console.log("Pushed frame");
+            if (this.isCurrent) {
+                this.ticks += 1;
+                this.queued.selected = this.state.selected;
+                if (this.ticks == 100) {
+                    this.bridge.tick(this.queued, function () { return _this.frames.push(_this.state.people); });
+                    this.ticks = 0;
                 }
-                this.ticks = 0;
+                this.state.update(this.queued, this.ticks, maxTicks);
+                this.state.draw(this.ctx);
             }
-            state.update(next, this.ticks, maxTicks);
-            state.draw(ctx);
+            else {
+                this.ticks += 1;
+                this.next.selected = this.state.selected;
+                if (this.ticks == 100) {
+                    this.moveStateForward();
+                }
+                this.state.update(this.next, this.ticks, maxTicks);
+                this.state.draw(this.ctx);
+            }
         }
     };
-    TimeManager.prototype.setStateToCurrent = function (state, next) {
-        state.update(next, this.ticks, maxTicks);
+    TimeManager.prototype.setStateToCurrent = function () {
+        this.ticks = 0;
+        this.currentFrame = this.frames.length - 1;
+        this.state.people = this.getFrame(this.currentFrame);
+        this.state.updateSelected();
+        this.isCurrent = true;
     };
-    TimeManager.prototype.setStateToTick = function (state, ticks) {
-        var frameIndex = Math.floor(ticks / maxTicks);
-        var currentFrame = this.frames[frameIndex];
-        console.log(currentFrame);
-        state.people = currentFrame;
-        if (frameIndex < this.frames.length - 1) {
-            var nextFrame = this.frames[frameIndex + 1];
-            var targetState = new State(nextFrame);
-            state.update(targetState, ticks % maxTicks, maxTicks);
+    TimeManager.prototype.moveStateBack = function () {
+        if (this.currentFrame == 0)
+            return;
+        this.ticks = 0;
+        this.currentFrame--;
+        this.state.people = this.getFrame(this.currentFrame);
+        this.state.updateSelected();
+        if (this.currentFrame < this.frames.length - 1) {
+            this.next.people = this.getFrame(this.currentFrame + 1);
+            this.next.updateSelected();
         }
-        //state.updateSelected()
+        this.isCurrent = false;
     };
-    TimeManager.prototype.getCurrentTotalTick = function () {
-        return maxTicks * this.frames.length;
+    TimeManager.prototype.moveStateForward = function () {
+        var _this = this;
+        if (this.currentFrame == this.frames.length - 1)
+            return;
+        this.ticks = 0;
+        this.currentFrame++;
+        this.state.people = this.getFrame(this.currentFrame);
+        this.state.updateSelected();
+        if (this.currentFrame < this.frames.length - 1) {
+            this.next.people = this.getFrame(this.currentFrame + 1);
+            this.next.updateSelected();
+            this.isCurrent = false;
+        }
+        else {
+            this.isCurrent = true;
+            this.bridge.tick(this.queued, function () { return _this.frames.push(_this.state.people); });
+        }
+    };
+    TimeManager.prototype.setStateToFirst = function () {
+        this.currentFrame = 0;
+        this.ticks = 0;
+        this.state.people = this.getFrame(this.currentFrame);
+        this.state.updateSelected();
+        if (this.currentFrame < this.frames.length - 1) {
+            this.next.people = this.getFrame(this.currentFrame + 1);
+            this.next.updateSelected();
+        }
+        this.isCurrent = false;
     };
     return TimeManager;
 }());
@@ -170,8 +222,8 @@ var canvas = $('#position-feed')[0];
 var ctx = canvas.getContext('2d');
 var state = new State([new Person(10, 10, "Brian", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)]);
 var bridge = new Bridge();
-var timeManager = new TimeManager(bridge, ctx);
 var next = new State(state.people);
+var timeManager = new TimeManager(bridge, ctx, state, next);
 canvas.onmousedown = function (e) {
     state.setSelection(state.getPersonAt(e.offsetX, e.offsetY));
     state.draw(ctx);
@@ -181,11 +233,21 @@ function pause(button) {
     button.innerHTML = pause ? "Resume" : "Pause";
     timeManager.paused = pause;
 }
-$("#slide").on("input", function (e) {
-    if (!timeManager.paused) {
-        pause($('#pause')[0]);
-    }
-    timeManager.setStateToTick(state, Math.floor(this.value * timeManager.getCurrentTotalTick()));
+//TODO: HOOK UP NEW BUTTONS
+$("#back-to-start").click(function (e) {
+    timeManager.setStateToFirst();
+    state.draw(ctx);
+});
+$("#back-one").click(function (e) {
+    timeManager.moveStateBack();
+    state.draw(ctx);
+});
+$("#forward-one").click(function (e) {
+    timeManager.moveStateForward();
+    state.draw(ctx);
+});
+$("#forward-to-now").click(function (e) {
+    timeManager.setStateToCurrent();
     state.draw(ctx);
 });
 $('#pause').click(function (e) {
@@ -216,7 +278,13 @@ function setSearchItems(items) {
         search();
     }
     else {
-        results.html(items.join("<br>"));
+        results.html("");
+        for (var i = 0; i < items.length; i++) {
+            var r = $('<input type="button" class = "poss" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
+            results.append(r);
+            //results.append(items[i]);
+            results.append("<br>");
+        }
         results.css("border", "1px solid #A5ACB2");
     }
 }
@@ -235,6 +303,13 @@ function pSearch(check) {
 $('#searchbutton').click(function (e) {
     search();
 });
+function autocomplete_button_onclick(button) {
+    var results = $("#search-results");
+    results.html("");
+    results.css("border", "0px");
+    input.value = button.value;
+    search();
+}
 $('#searchbar').on("input", function (e) {
     var str = input.value;
     setSearchItems(pSearch(str));
@@ -246,5 +321,5 @@ $("#searchbar").keypress(function (e) {
 });
 state.draw(ctx);
 setInterval(function () {
-    timeManager.updateFrame(state, next);
+    timeManager.updateFrame();
 }, 10);
