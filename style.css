@@ -43,6 +43,10 @@ h1 {
     width:50%;
 }
 
+.time-button {
+    width:20%;
+}
+
 .poss {
     font-family : "Source Code Pro";
     background-color:white;

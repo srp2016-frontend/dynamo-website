@@ -3,12 +3,12 @@
 ///<reference path='time.ts'/>
 let canvas = <HTMLCanvasElement>$('#position-feed')[0];
 let ctx = canvas.getContext('2d');
-let state = new State([new Person(10, 10, "Brian", "Doe", 30), new Person(50, 100, "Brian", "Dates", 18), new Person(50, 100, "Brian", "DeLeonardis", 18)])
+let state = new State([new Person(10, 10, "Brian", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)])
 let bridge = new Bridge();
 let items : string[];
 let count = 0;
-let timeManager = new TimeManager(bridge, ctx)
 let next = new State(state.people)
+let timeManager = new TimeManager(bridge, ctx, state, next, <HTMLButtonElement>$("#pause")[0])
 canvas.onmousedown = (e : MouseEvent) =>
 {
     state.setSelection(state.getPersonAt(e.offsetX, e.offsetY));
@@ -20,12 +20,23 @@ function pause(button : HTMLButtonElement) {
     button.innerHTML = pause ? "Resume" : "Pause"
     timeManager.paused = pause;
 }
+$("#back-to-start").click(function(e : Event){
+    timeManager.setStateToFirst()
+    state.draw(ctx)
+})
 
-$("#slide").on("input", function(e : Event){
-    if(!timeManager.paused) {
-        pause(<HTMLButtonElement>$('#pause')[0])
-    }
-    timeManager.setStateToTick(state, Math.floor(this.value * timeManager.getCurrentTotalTick()))
+$("#back-one").click(function(e : Event){
+    timeManager.moveStateBack();
+    state.draw(ctx)
+})
+
+$("#forward-one").click(function(e : Event){
+    timeManager.moveStateForward();
+    state.draw(ctx)
+})
+
+$("#forward-to-now").click(function(e : Event){
+    timeManager.setStateToCurrent();
     state.draw(ctx)
 })
 
@@ -152,5 +163,5 @@ $("#searchbar:input").bind( 'keyup change click', (ev : Event) =>
 });
 state.draw(ctx);
 setInterval(() => {
-    timeManager.updateFrame(state, next);
+    timeManager.updateFrame();
 }, 10);
