@@ -1,5 +1,6 @@
 ///<reference path='plotting.ts'/>
 ///<reference path='communication.ts'/>
+///<reference path='events.ts'/>
 const maxTicks = 100;
 class TimeManager
 {
@@ -12,13 +13,12 @@ class TimeManager
     private next : State;
     private queued : State;
     private isCurrent : boolean;
+    private pauseButton : HTMLButtonElement;
     public paused : boolean;
 
-    constructor(bridge : Bridge, ctx : CanvasRenderingContext2D, state : State, next : State) {
+    constructor(bridge : Bridge, ctx : CanvasRenderingContext2D, state : State, next : State, pause : HTMLButtonElement) {
         this.bridge = bridge;
         this.frames = [];
-        this.frames.push([new Person(-30, -30, "Brian", "Doe", 30), new Person(-10, 100, "Brian", "DeLeonardis", 18)]);
-        this.frames.push([new Person(-10, -10, "Brian", "Doe", 30), new Person(20, 100, "Brian", "DeLeonardis", 18)]);
         this.frames.push([new Person(10, 10, "Brian", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)]);
         this.ticks = 0;
         this.paused = false;
@@ -28,6 +28,7 @@ class TimeManager
         this.queued = next;
         this.next = new State(this.state.people);
         this.isCurrent = true;
+        this.pauseButton = pause;
     }
 
     private getFrame(index : number) : Person[]
@@ -86,6 +87,8 @@ class TimeManager
             this.next.updateSelected();
         }
         this.isCurrent = false;
+        if(!this.paused)
+            pause(this.pauseButton);
     }
 
     moveStateForward() : void
@@ -100,6 +103,8 @@ class TimeManager
             this.next.people = this.getFrame(this.currentFrame + 1);
             this.next.updateSelected();
             this.isCurrent = false;
+            if(!this.paused)
+                pause(this.pauseButton);
         } else 
         {
             this.isCurrent = true;
@@ -119,5 +124,7 @@ class TimeManager
             this.next.updateSelected();
         }
         this.isCurrent = false;
+        if(!this.paused)
+            pause(this.pauseButton);
     }
 }
