@@ -49,6 +49,13 @@ h1 {
     width:100%;
 }
 
+.sel{
+    font-family : "Source Code Pro";
+    width:100%;
+    background-color:#1832b6;
+    color:white;
+}
+
 .poss:hover{
     background-color:#1832b6;
     color:white;
