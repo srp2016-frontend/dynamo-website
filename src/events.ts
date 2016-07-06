@@ -129,6 +129,7 @@ function getRoster()
     let results = $('#rSidebar');
        
     names = pSearch(" ");
+    names.sort();
        
     for(let i = 0; i < names.length; i++)
     {
