@@ -3,7 +3,7 @@
 ///<reference path='time.ts'/>
 let canvas = <HTMLCanvasElement>$('#position-feed')[0];
 let ctx = canvas.getContext('2d');
-let state = new State([new Person(10, 10, "Brian", "Doe", 30), new Person(15, 20, "Brian", "Dates", 27), new Person(50, 100, "Brian", "DeLeonardis", 18)])
+let state = new State([new Person(40, 40, 'Brian', 'DeLeonardis', 18),new Person(40, 80, 'Jack', 'Dates', 18),new Person(40, 120, 'Anthony', 'Fasano', 18),new Person(40, 160, 'Anthony', 'Hamill', 18),new Person(40, 200, 'Brandon', 'Guglielmo', 18),new Person(40, 240, 'Chase', 'Moran', 18),new Person(40, 280, 'Daniel', 'Collins', 18),new Person(40, 320, 'Kevin', 'DeStefano', 18),new Person(40, 360, 'Matthew', 'Kumar', 18),new Person(40, 400, 'Ryan', 'Goldstein', 18),new Person(40, 440, 'Tina', 'Lu', 18),])
 let bridge = new Bridge();
 let items : string[];
 let count = 0;
