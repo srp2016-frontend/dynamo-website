@@ -9,3 +9,9 @@
 - Use configurable identifiers
 
 - A more consistent and effective visual theme
+
+- Manifest of all known objects / people
+
+- Multi-person selection
+
+- Search by non-name metadata
