@@ -1,16 +1,4 @@
-///<reference path='plotting.ts'/>
-/**
-Bridge between the frontend and backend applications
-
-Handles AJAX requests and caches the results
-*/
-class Bridge
-{
-    private messageCache : string[];
-
-    constructor()
-    {
-        this.messageCache = [
+[
 JSON.stringify([new Person(40, 40, 'Brian', 'DeLeonardis', 18),new Person(40, 80, 'Jack', 'Dates', 18),new Person(40, 120, 'Anthony', 'Fasano', 18),new Person(40, 160, 'Anthony', 'Hamill', 18),new Person(40, 200, 'Brandon', 'Guglielmo', 18),new Person(40, 240, 'Chase', 'Moran', 18),new Person(40, 280, 'Daniel', 'Collins', 18),new Person(40, 320, 'Kevin', 'DeStefano', 18),new Person(40, 360, 'Matthew', 'Kumar', 18),new Person(40, 400, 'Ryan', 'Goldstein', 18),new Person(40, 440, 'Tina', 'Lu', 18),]),
 JSON.stringify([new Person(74.99221452113018, 40.738188937336616, 'Brian', 'DeLeonardis', 18),new Person(78.9921637412827, 80.78177156062297, 'Jack', 'Dates', 18),new Person(65.9953217838428, 120.49319910225766, 'Anthony', 'Fasano', 18),new Person(67.98413758218956, 159.05763925109008, 'Anthony', 'Hamill', 18),new Person(74.96224673215511, 201.6252087373348, 'Brandon', 'Guglielmo', 18),new Person(74.96870635290733, 238.5202784031656, 'Chase', 'Moran', 18),new Person(72.99678602144297, 279.5394435375493, 'Daniel', 'Collins', 18),new Person(66.99899720195897, 320.23270171596124, 'Kevin', 'DeStefano', 18),new Person(79.97383065354217, 361.4466730390564, 'Matthew', 'Kumar', 18),new Person(65.99365757285139, 400.5742525449189, 'Ryan', 'Goldstein', 18),new Person(79.99989225026785, 439.90715622281215, 'Tina', 'Lu', 18),]),
 JSON.stringify([new Person(109.98442904226036, 41.47637787467323, 'Brian', 'DeLeonardis', 18),new Person(117.98432748256539, 81.56354312124594, 'Jack', 'Dates', 18),new Person(91.9906435676856, 120.98639820451533, 'Anthony', 'Fasano', 18),new Person(95.96827516437912, 158.11527850218016, 'Anthony', 'Hamill', 18),new Person(109.92449346431022, 203.25041747466958, 'Brandon', 'Guglielmo', 18),new Person(109.93741270581467, 237.0405568063312, 'Chase', 'Moran', 18),new Person(105.99357204288594, 279.0788870750986, 'Daniel', 'Collins', 18),new Person(93.99799440391794, 320.4654034319225, 'Kevin', 'DeStefano', 18),new Person(119.94766130708433, 362.8933460781128, 'Matthew', 'Kumar', 18),new Person(91.98731514570278, 401.14850508983784, 'Ryan', 'Goldstein', 18),new Person(119.9997845005357, 439.8143124456243, 'Tina', 'Lu', 18),]),
@@ -31,34 +19,3 @@ JSON.stringify([new Person(599.8754323380829, 51.81102299738586, 'Brian', 'DeLeo
 JSON.stringify([new Person(634.8676468592131, 52.54921193472248, 'Brian', 'DeLeonardis', 18),new Person(702.8667836018055, 93.29011653059051, 'Jack', 'Dates', 18),new Person(481.9204703253278, 128.38438473838025, 'Anthony', 'Fasano', 18),new Person(515.7303388972223, 143.97986726853136, 'Anthony', 'Hamill', 18),new Person(634.3581944466368, 227.6285485346914, 'Brandon', 'Guglielmo', 18),new Person(634.4680079994249, 214.8447328538153, 'Chase', 'Moran', 18),new Person(600.9453623645305, 272.1705401383379, 'Daniel', 'Collins', 18),new Person(498.98295243330244, 323.9559291713411, 'Kevin', 'DeStefano', 18),new Person(719.5551211102165, 384.5934416639589, 'Matthew', 'Kumar', 18),new Person(481.8921787384734, 409.76229326362164, 'Ryan', 'Goldstein', 18),new Person(719.9981682545535, 438.4216557878065, 'Tina', 'Lu', 18),]),
 JSON.stringify([new Person(669.8598613803433, 53.287400872059095, 'Brian', 'DeLeonardis', 18),new Person(741.8589473430882, 94.07188809121348, 'Jack', 'Dates', 18),new Person(507.91579210917064, 128.8775838406379, 'Anthony', 'Fasano', 18),new Person(543.7144764794118, 143.03750651962145, 'Anthony', 'Hamill', 18),new Person(669.320441178792, 229.25375727202618, 'Brandon', 'Guglielmo', 18),new Person(669.4367143523323, 213.3650112569809, 'Chase', 'Moran', 18),new Person(633.9421483859735, 271.7099836758872, 'Daniel', 'Collins', 18),new Person(525.9819496352615, 324.18863088730234, 'Kevin', 'DeStefano', 18),new Person(759.5289517637586, 386.0401147030153, 'Matthew', 'Kumar', 18),new Person(507.88583631132474, 410.33654580854056, 'Ryan', 'Goldstein', 18),new Person(759.9980605048214, 438.32881201061866, 'Tina', 'Lu', 18),]),
 JSON.stringify([new Person(704.8520759014735, 54.02558980939571, 'Brian', 'DeLeonardis', 18),new Person(780.8511110843708, 94.85365965183645, 'Jack', 'Dates', 18),new Person(533.9111138930134, 129.37078294289554, 'Anthony', 'Fasano', 18),new Person(571.6986140616013, 142.09514577071153, 'Anthony', 'Hamill', 18),new Person(704.2826879109471, 230.87896600936097, 'Brandon', 'Guglielmo', 18),new Person(704.4054207052396, 211.8852896601465, 'Chase', 'Moran', 18),new Person(666.9389344074165, 271.2494272134365, 'Daniel', 'Collins', 18),new Person(552.9809468372205, 324.4213326032636, 'Kevin', 'DeStefano', 18),new Person(799.5027824173008, 387.4867877420717, 'Matthew', 'Kumar', 18),new Person(533.8794938841761, 410.9107983534595, 'Ryan', 'Goldstein', 18),new Person(799.9979527550893, 438.2359682334308, 'Tina', 'Lu', 18),]),]
-
-;
-    }
-
-    /**
-    * Takes a message from the cache or the server and makes it into a State object
-    * Asynchronous because it may make an AJAX request
-    */
-    tick(state : State, action : () => void = null)
-    {
-        this.doWithMessage((message : string) =>
-        {
-            state.people = <Person[]>JSON.parse(message);
-            state.updateSelected()
-            if(action)
-                action();
-        })
-    }
-
-    private doWithMessage(callback : (string) => void) : void
-    {
-        if(this.messageCache.length > 0)
-        {
-            callback(this.messageCache.shift());
-        }
-        else
-        {
-            //TODO: AJAX requests
-        }
-    }
-}
