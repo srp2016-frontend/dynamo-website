@@ -19,7 +19,6 @@ class TimeManager
     constructor(bridge : Bridge, ctx : CanvasRenderingContext2D, state : State, next : State, pause : HTMLButtonElement) {
         this.bridge = bridge;
         this.frames = [];
-        this.frames.push([new Person(10, 10, "Brian", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)]);
         this.ticks = 0;
         this.paused = false;
         this.ctx = ctx;
@@ -131,8 +130,9 @@ class TimeManager
 
     getPersonInPast(person : Person, timeBack : number) : Person
     {
-        let frame = Math.min(this.currentFrame - timeBack, 0)
+        let frame = Math.max(this.currentFrame - timeBack, 0)
         let temp = new State(this.frames[frame])
+        console.log(this.frames[frame])
         return temp.getPersonByName(person.fName + " " + person.lName)
     }
 }
