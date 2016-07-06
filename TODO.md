@@ -2,7 +2,6 @@
 ##Currently Achievable
 - Custom icons for the first responders
 - Use configurable identifiers
-- Manifest of all known objects / people
 - Multi-person selection
 - Search by non-name metadata
 - Allow the user to select an application area
