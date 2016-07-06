@@ -130,9 +130,16 @@ class TimeManager
 
     getPersonInPast(person : Person, timeBack : number) : Person
     {
-        let frame = Math.max(this.currentFrame - timeBack, 0)
-        let temp = new State(this.frames[frame])
-        console.log(this.frames[frame])
-        return temp.getPersonByName(person.fName + " " + person.lName)
+        if(this.frames.length > 0)
+        {
+            let frame = Math.max(this.currentFrame - timeBack, 0)
+            let temp = new State(this.frames[frame])
+            console.log(this.frames[frame])
+            return temp.getPersonByName(person.fName + " " + person.lName)
+        } 
+        else
+        {
+            return person;
+        }
     }
 }
