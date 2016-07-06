@@ -25,6 +25,7 @@ class State
 {
     people : Person[];
     selected : Person;
+    public time : TimeManager;
 
     constructor(people : Person[])
     {
@@ -38,10 +39,12 @@ class State
         ctx.globalAlpha = 1.0;
         ctx.fillStyle = "grey";
         ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.lineWidth = 2;
         for(let person of this.people)
         {
             ctx.beginPath();
             ctx.fillStyle = "red";
+            ctx.strokeStyle = "blue"
             ctx.globalAlpha = 0.25;
 
             if(person == this.selected || this.selected == null)
@@ -49,8 +52,14 @@ class State
 
             ctx.arc(person.x, person.y, radius, 0, 2 * Math.PI);
             ctx.fill();
-
-
+            ctx.beginPath();
+            ctx.moveTo(person.x, person.y);
+            for(let i = 1; i < 10; i++)
+            {
+                let previous = this.time.getPersonInPast(person, i)
+                ctx.lineTo(previous.x, previous.y)
+            }
+            ctx.stroke()
         }
     }
 

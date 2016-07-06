@@ -9,7 +9,7 @@ let items : string[];
 let count = 0;
 let next = new State(state.people)
 let timeManager = new TimeManager(bridge, ctx, state, next, <HTMLButtonElement>$("#pause")[0])
-
+state.time = timeManager;
 canvas.onmousedown = (e : MouseEvent) =>
 {
     state.setSelection(state.getPersonAt(e.offsetX, e.offsetY));
