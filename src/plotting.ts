@@ -39,11 +39,12 @@ class State
         ctx.globalAlpha = 1.0;
         ctx.fillStyle = "grey";
         ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-        ctx.lineWidth = 4;
+        ctx.lineWidth = 2;
         for(let person of this.people)
         {
             ctx.beginPath();
             ctx.fillStyle = "red";
+            ctx.strokeStyle = "blue"
             ctx.globalAlpha = 0.25;
 
             if(person == this.selected || this.selected == null)
