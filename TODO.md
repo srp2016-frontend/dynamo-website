@@ -1,6 +1,5 @@
 #TODO
 ##Currently Achievable
-- Draw the path of the first responders over a period of time
 - Custom icons for the first responders
 - Use configurable identifiers
 - Manifest of all known objects / people
