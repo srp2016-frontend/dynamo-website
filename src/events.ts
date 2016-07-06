@@ -9,6 +9,7 @@ let items : string[];
 let count = 0;
 let next = new State(state.people)
 let timeManager = new TimeManager(bridge, ctx, state, next, <HTMLButtonElement>$("#pause")[0])
+
 canvas.onmousedown = (e : MouseEvent) =>
 {
     state.setSelection(state.getPersonAt(e.offsetX, e.offsetY));
@@ -99,6 +100,8 @@ function setSearchItems(is : string[]) : void
     }
 }
 
+
+
 function pSearch(check : string) : string[]
 {
     if(check.length < 1)
@@ -119,6 +122,27 @@ $('#searchbutton').click(function (e : Event)
 {
     search();
 })
+
+function getRoster()
+{
+    let names : string[];
+    let results = $('#rSidebar');
+       
+    names = pSearch(" ");
+       
+    for(let i = 0; i < names.length; i++)
+    {
+        console.log(names[i]);
+        var r= $('<input type="button" onclick="selectName(this)" class = "possNames" value ="' + names[i] + '"/>');
+        results.append(r);  
+        results.append("<br>");
+    }
+}
+
+function selectName(button : HTMLButtonElement)
+{
+    state.setSelection(state.getPersonByName(button.value));
+}
 
 function autocomplete_button_onclick(button : HTMLButtonElement)
 {
@@ -175,3 +199,5 @@ state.draw(ctx);
 setInterval(() => {
     timeManager.updateFrame();
 }, 10);
+
+getRoster();
