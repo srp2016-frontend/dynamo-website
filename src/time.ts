@@ -128,4 +128,11 @@ class TimeManager
         if(!this.paused)
             pause(this.pauseButton);
     }
+
+    getPersonInPast(person : Person, timeBack : number) : Person
+    {
+        let frame = Math.min(this.currentFrame - timeBack, 0)
+        let temp = new State(this.frames[frame])
+        return temp.getPersonByName(person.fName + " " + person.lName)
+    }
 }
