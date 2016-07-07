@@ -1,14 +1,17 @@
-/// <reference path="plotting.ts" />
+/// <reference path="state.ts" />
 /// <reference path="jquery.d.ts" />
 
-function setSearchEvents(state : State, ctx : CanvasRenderingContext2D)
+function setSearchEvents(state : State, ctx : CanvasRenderingContext2D) : (string) => string[]
 {
     let input = <HTMLInputElement>$('#searchbar')[0];
     let count = 0;
     let items : string[] = [];
-    function search()
+    function search() : void
     {
-        state.setSelection(state.getPersonByName(input.value))
+        let people : Person[] = [];
+        for(let item of items)
+            people.push(state.getPersonByName(item))
+        state.setSelections(people)
         $("#not-found").css("visibility", state.hasSelection() ? "hidden" : "visible")
         state.draw(ctx);
     }
@@ -48,6 +51,7 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D)
             } 
             results.css("border", "1px solid #A5ACB2");
         }
+        search();
     }
 
 
@@ -60,7 +64,7 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D)
         for(let i = 0; i < state.people.length; i++)
         {
             var name = state.people[i].fName + " " + state.people[i].lName;
-            if(name.indexOf(check) >= 0)
+            if(name.toLowerCase().indexOf(check.toLowerCase()) >= 0)
             {
                 possible.push(name);
             }
@@ -86,6 +90,8 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D)
     {
         var str = input.value;
         setSearchItems(pSearch(str));
+        if(str.length === 0)
+            $("#not-found").css("visibility", "hidden")
     });
 
     $("#searchbar:input").bind( 'keyup change click', (ev : Event) =>

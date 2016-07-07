@@ -1,4 +1,4 @@
-///<reference path='plotting.ts'/>
+///<reference path='state.ts'/>
 ///<reference path='communication.ts'/>
 const maxTicks = 100;
 function pause(button : HTMLButtonElement, time : TimeManager) : void
@@ -138,7 +138,10 @@ class TimeManager
     {
         if(this.frames.length > 0)
         {
-            let frame = Math.max(this.currentFrame - timeBack, 0)
+            let cFrame = this.currentFrame;
+            if(this.isCurrent)
+                cFrame = this.frames.length - 1;
+            let frame = Math.max(cFrame - timeBack, 0)
             let temp = new State(this.frames[frame])
             return temp.getPersonByName(person.fName + " " + person.lName)
         } 
