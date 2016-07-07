@@ -1,4 +1,4 @@
-///<reference path='plotting.ts'/>
+///<reference path='state.ts'/>
 /**
 Bridge between the frontend and backend applications
 

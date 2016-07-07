@@ -1,4 +1,4 @@
-/// <reference path="plotting.ts" />
+/// <reference path="state.ts" />
 
 function setClickEvents(canvas : HTMLCanvasElement, ctx : CanvasRenderingContext2D, state : State) 
 {
