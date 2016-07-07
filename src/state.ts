@@ -132,6 +132,13 @@ class State
         this.updateDisplay();
     }
 
+    setSelections(selection : Person[]) : void
+    {
+        this.selected.length = selection.length;
+        for(let i = 0; i < selection.length; i++)
+            this.selected[i] = selection[i];
+    }
+
     addSelection(selection : Person) : void
     {
         if(selection)
