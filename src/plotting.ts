@@ -127,6 +127,14 @@ class State
             this.selected.length = 0;
     }
 
+    addSelection(selection : Person) : void
+    {
+        if(selection)
+        {
+            this.selected.push(selection);
+        }
+    }
+
     setDisplay(display : Person) : void
     {
         if(display)

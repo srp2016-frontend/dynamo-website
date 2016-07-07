@@ -12,7 +12,10 @@ let timeManager = new TimeManager(bridge, ctx, state, next, <HTMLButtonElement>$
 state.time = timeManager;
 canvas.onmousedown = (e : MouseEvent) =>
 {
-    state.setSelection(state.getPersonAt(e.offsetX, e.offsetY));
+    if(e.shiftKey)
+        state.addSelection(state.getPersonAt(e.offsetX, e.offsetY));
+    else
+        state.setSelection(state.getPersonAt(e.offsetX, e.offsetY));
     state.draw(ctx);
 }
 
