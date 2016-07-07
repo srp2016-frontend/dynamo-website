@@ -1,6 +1,5 @@
 ///<reference path='plotting.ts'/>
 ///<reference path='communication.ts'/>
-///<reference path='events.ts'/>
 const maxTicks = 100;
 function pause(button : HTMLButtonElement, time : TimeManager) : void
 {
