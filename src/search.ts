@@ -1,4 +1,4 @@
-/// <reference path="plotting.ts" />
+/// <reference path="state.ts" />
 /// <reference path="jquery.d.ts" />
 
 function setSearchEvents(state : State, ctx : CanvasRenderingContext2D)
