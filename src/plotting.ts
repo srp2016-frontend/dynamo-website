@@ -132,7 +132,11 @@ class State
     {
         if(selection)
         {
-            this.selected.push(selection);
+            let index = this.selected.indexOf(selection);
+            if(index == -1)
+                this.selected.push(selection);
+            else 
+                this.selected.splice(index, 1)
             this.updateDisplay();
         }
     }
