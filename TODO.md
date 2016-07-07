@@ -1,5 +1,6 @@
 #TODO
 ##Currently Achievable
+- Scale drawing based on canvas size and given locations
 - Custom icons for the first responders
 - Use configurable identifiers
 - Multi-person selection
