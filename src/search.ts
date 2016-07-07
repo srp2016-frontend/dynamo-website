@@ -73,12 +73,6 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D)
         search();
     })
 
-
-    function selectName(button : HTMLButtonElement)
-    {
-        state.setSelection(state.getPersonByName(button.value));
-    }
-
     function autocomplete_button_onclick(button : HTMLButtonElement)
     {
         let results = $("#search-results")
