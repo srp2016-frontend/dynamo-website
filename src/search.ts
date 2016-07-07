@@ -1,7 +1,7 @@
 /// <reference path="state.ts" />
 /// <reference path="jquery.d.ts" />
 
-function setSearchEvents(state : State, ctx : CanvasRenderingContext2D)
+function setSearchEvents(state : State, ctx : CanvasRenderingContext2D) : (string) => string[]
 {
     let input = <HTMLInputElement>$('#searchbar')[0];
     let count = 0;
