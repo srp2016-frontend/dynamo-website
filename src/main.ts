@@ -3,7 +3,6 @@
 /// <reference path='time.ts'/>
 /// <reference path="click_events.ts" />
 /// <reference path="search.ts" />
-
 function main() {
     let canvas = <HTMLCanvasElement>$('#position-feed')[0];
     let ctx = canvas.getContext('2d');
@@ -30,7 +29,13 @@ function main() {
         function generateButton(name : string) : void 
         {
             var r= $('<input type="button" class = "possNames" value ="' + name + '"/>');
-            r.click(function(e : Event) {state.setSelection(state.getPersonByName(r.val()))})
+            r.click(function(e : MouseEvent) {
+                let person = state.getPersonByName(r.val());
+                if(e.shiftKey) 
+                    state.addSelection(person)
+                else
+                    state.setSelection(person);
+            })
             results.append(r);  
             results.append("<br>");
         }
