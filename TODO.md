@@ -8,6 +8,8 @@
 - Allow the user to select an application area
 - Refactor events into more modules that each have a single responsibility
 - Fix the travel lines
+- Fade items in the right bar based on selection
+
 ##Dependent on Other Teams
 - Talk to the server for updates
 
