@@ -19,6 +19,7 @@ function main() {
     setInterval(() => {
         timeManager.updateFrame();
     }, 10);
+
     function getRoster()
     {
         let names : string[];
@@ -26,12 +27,16 @@ function main() {
         
         names = pSearch(" ");
         names.sort();
-        
-        for(let i = 0; i < names.length; i++)
+        function generateButton(name : string) : void 
         {
-            var r= $('<input type="button" onclick="selectName(this)" class = "possNames" value ="' + names[i] + '"/>');
+            var r= $('<input type="button" class = "possNames" value ="' + name + '"/>');
+            r.click(function(e : Event) {state.setSelection(state.getPersonByName(r.val()))})
             results.append(r);  
             results.append("<br>");
+        }
+        for(let i = 0; i < names.length; i++)
+        {
+           generateButton(names[i])
         }
     }
     setClickEvents(canvas, ctx, state);
