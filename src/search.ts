@@ -6,7 +6,7 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D) : (strin
     let input = <HTMLInputElement>$('#searchbar')[0];
     let count = 0;
     let items : string[] = [];
-    function search()
+    function search() : void
     {
         state.setSelection(state.getPersonByName(input.value))
         $("#not-found").css("visibility", state.hasSelection() ? "hidden" : "visible")
@@ -60,7 +60,7 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D) : (strin
         for(let i = 0; i < state.people.length; i++)
         {
             var name = state.people[i].fName + " " + state.people[i].lName;
-            if(name.indexOf(check) >= 0)
+            if(name.toLowerCase().indexOf(check.toLowerCase()) >= 0)
             {
                 possible.push(name);
             }
