@@ -132,7 +132,6 @@ function getRoster()
        
     for(let i = 0; i < names.length; i++)
     {
-        console.log(names[i]);
         var r= $('<input type="button" onclick="selectName(this)" class = "possNames" value ="' + names[i] + '"/>');
         results.append(r);  
         results.append("<br>");
