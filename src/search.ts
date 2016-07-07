@@ -8,7 +8,10 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D) : (strin
     let items : string[] = [];
     function search() : void
     {
-        state.setSelection(state.getPersonByName(input.value))
+        let people : Person[] = [];
+        for(let item of items)
+            people.push(state.getPersonByName(item))
+        state.setSelections(people)
         $("#not-found").css("visibility", state.hasSelection() ? "hidden" : "visible")
         state.draw(ctx);
     }
