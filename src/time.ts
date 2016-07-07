@@ -42,7 +42,7 @@ class TimeManager
             if(this.isCurrent)
             {
                 this.ticks += 1;
-                this.queued.selected = this.state.selected;
+                this.queued.copySelection(state);
                 if(this.ticks == 100)
                 {
                     this.bridge.tick(this.queued);
@@ -54,7 +54,7 @@ class TimeManager
             } else
             {
                 this.ticks += 1;
-                this.next.selected = this.state.selected;
+                this.next.copySelection(state);
                 if(this.ticks == 100)
                 {
                    this.moveStateForward();

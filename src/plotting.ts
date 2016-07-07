@@ -24,13 +24,13 @@ const radiusSquared = radius * radius;
 class State
 {
     people : Person[];
-    selected : Person;
+    private selected : Person[];
     public time : TimeManager;
 
     constructor(people : Person[])
     {
         this.people = people;
-        this.selected = null;
+        this.selected = [];
     }
 
     draw(ctx : CanvasRenderingContext2D) : void
@@ -47,7 +47,7 @@ class State
             ctx.strokeStyle = "blue"
             ctx.globalAlpha = 0.25;
 
-            if(person == this.selected || this.selected == null)
+            if(this.selected.indexOf(person) != -1 || this.selected.length === 0)
                 ctx.globalAlpha = 1.0;
 
             ctx.arc(person.x, person.y, radius, 0, 2 * Math.PI);
@@ -104,17 +104,27 @@ class State
 
     updateSelected() : void
     {
-        for(let i = 0; i < this.people.length; i = i + 1)
+        for(let i = 0; i < this.people.length; i++)
         {
-            if((this.selected != null) && (this.selected.lName == this.people[i].lName && this.selected.fName == this.people[i].fName && this.selected.age == this.people[i].age))
-                this.selected = this.people[i];
+            for(let j = 0; j < this.selected.length; j++)
+            {
+                let person = this.people[i];
+                let selection = this.selected[j];
+                if(selection.lName === person.lName && selection.fName === person.fName && selection.age === person.age)
+                    this.selected[j] = person;
+            }
         }
     }
 
     setSelection(selection : Person) : void
     {
-        this.selected = selection;
-        this.setDisplay(selection);
+        if(selection)
+        {
+            this.selected.length = 1;
+            this.selected[0] = selection;
+        }
+        else
+            this.selected.length = 0;
     }
 
     setDisplay(display : Person) : void
@@ -128,5 +138,17 @@ class State
         }
         else
             $("#sidebar").empty();
+    }
+
+    hasSelection() : boolean 
+    {
+        return this.selected.length > 0
+    }
+
+    copySelection(other : State) : void
+    {
+        this.selected.length = other.selected.length;
+        for(let i = 0; i < this.selected.length; i++)
+            this.selected[i] = other.selected[i];
     }
 }

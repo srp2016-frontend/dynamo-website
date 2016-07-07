@@ -48,7 +48,7 @@ $('#pause').click(function(e : Event)
 
 canvas.onmousemove = function(e : MouseEvent)
 {
-    if(!state.selected)
+    if(!state.hasSelection())
     {
         state.setDisplay(state.getPersonAt(e.offsetX, e.offsetY))
         state.draw(ctx);
@@ -59,7 +59,7 @@ let input = <HTMLInputElement>$('#searchbar')[0];
 function search()
 {
     state.setSelection(state.getPersonByName(input.value))
-    $("#not-found").css("visibility", state.selected ? "hidden" : "visible")
+    $("#not-found").css("visibility", state.hasSelection() ? "hidden" : "visible")
     state.draw(ctx);
 }
 
