@@ -12,39 +12,13 @@ function main() {
     let count = 0;
     let next = new State(state.people)
     let timeManager = new TimeManager(bridge, ctx, state, next, <HTMLButtonElement>$("#pause")[0])
-    let pSearch = setSearchEvents(state, ctx);
+    state.pSearch = setSearchEvents(state, ctx);
     state.time = timeManager;
     state.draw(ctx);
     setInterval(() => {
         timeManager.updateFrame();
     }, 10);
-
-    function getRoster()
-    {
-        let names : string[];
-        let results = $('#rSidebar');
-        
-        names = pSearch(" ");
-        names.sort();
-        function generateButton(name : string) : void 
-        {
-            var r= $('<input type="button" class = "possNames" value ="' + name + '"/>');
-            r.click(function(e : MouseEvent) {
-                let person = state.getPersonByName(r.val());
-                if(e.shiftKey) 
-                    state.addSelection(person)
-                else
-                    state.setSelection(person);
-            })
-            results.append(r);  
-            results.append("<br>");
-        }
-        for(let i = 0; i < names.length; i++)
-        {
-           generateButton(names[i])
-        }
-    }
     setClickEvents(canvas, ctx, state);
-    getRoster();
+    state.getRoster();
 }
 main();

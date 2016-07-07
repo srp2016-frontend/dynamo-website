@@ -1,5 +1,7 @@
 ///<reference path='node.d.ts'/>
 ///<reference path='jquery.d.ts'/>
+/// <reference path="time.ts" />
+
 class Person
 {
     x : number;
@@ -25,11 +27,13 @@ class State
 {
     people : Person[];
     private selected : Person[];
+    public pSearch : (string) => string[];
     public time : TimeManager;
 
     constructor(people : Person[])
     {
         this.people = people;
+
         this.selected = [];
     }
 
@@ -157,6 +161,7 @@ class State
         $("#sidebar").empty();
         for(let person of this.selected)
             this.appendToDisplay(person);
+        this.getRoster();
     }
 
     private appendToDisplay(person : Person) : void
@@ -177,5 +182,35 @@ class State
         this.selected.length = other.selected.length;
         for(let i = 0; i < this.selected.length; i++)
             this.selected[i] = other.selected[i];
+    }
+
+    getRoster() : void
+    {
+        let names : string[];
+        let results = $('#rSidebar');
+        results.empty();
+        names = this.pSearch(" ");
+        names.sort();
+        let state = this;
+        function generateButton(name : string) : void 
+        {
+            let className = "manifest-name"
+            if(state.selected.length > 0 && state.selected.indexOf(state.getPersonByName(name)) == -1)
+                className += "-deselected"
+            var r= $('<input type="button" class = "' + className + '" value ="' + name + '"/>');
+            r.click(function(e : MouseEvent) {
+                let person = state.getPersonByName(r.val());
+                if(e.shiftKey) 
+                    state.addSelection(person)
+                else
+                    state.setSelection(person);
+            })
+            results.append(r);  
+            results.append("<br>");
+        }
+        for(let i = 0; i < names.length; i++)
+        {
+           generateButton(names[i])
+        }
     }
 }
