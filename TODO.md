@@ -7,7 +7,7 @@
     - Shift + click should work on right infobar
 - Search by non-name metadata
 - Allow the user to select an application area
-
+- Refactor events into more modules that each have a single responsibility
 ##Dependent on Other Teams
 - Talk to the server for updates
 
