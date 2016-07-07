@@ -6,7 +6,6 @@
     - Search with non-match should select all possible matches
 - Search by non-name metadata
 - Allow the user to select an application area
-- Fix the travel lines
 
 ##Dependent on Other Teams
 - Talk to the server for updates
