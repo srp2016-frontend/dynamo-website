@@ -142,7 +142,6 @@ class TimeManager
             if(this.isCurrent)
                 cFrame = this.frames.length - 1;
             let frame = Math.max(cFrame - timeBack, 0)
-            console.log(this.currentFrame);
             let temp = new State(this.frames[frame])
             return temp.getPersonByName(person.fName + " " + person.lName)
         } 
