@@ -125,6 +125,7 @@ class State
         }
         else
             this.selected.length = 0;
+        this.updateDisplay();
     }
 
     addSelection(selection : Person) : void
@@ -132,6 +133,7 @@ class State
         if(selection)
         {
             this.selected.push(selection);
+            this.updateDisplay();
         }
     }
 
@@ -140,12 +142,25 @@ class State
         if(display)
         {
             $("#sidebar").empty();
-            $("#sidebar").append("<b>First Name: </b>", display.fName, "<br>");
-            $("#sidebar").append("<b>Last Name:  </b>", display.lName, "<br>");
-            $("#sidebar").append("<b>Age: </b>", display.age, "<br>");
+            this.appendToDisplay(display);
         }
         else
             $("#sidebar").empty();
+    }
+
+    private updateDisplay() : void
+    {
+        $("#sidebar").empty();
+        for(let person of this.selected)
+            this.appendToDisplay(person);
+    }
+
+    private appendToDisplay(person : Person) : void
+    {
+        $("#sidebar").append("<b>First Name: </b>", person.fName, "<br>");
+        $("#sidebar").append("<b>Last Name:  </b>", person.lName, "<br>");
+        $("#sidebar").append("<b>Age: </b>", person.age, "<br>");
+        $("#sidebar").append("<hr style='width:100%;height:1px;'/>");
     }
 
     hasSelection() : boolean 
