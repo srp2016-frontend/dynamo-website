@@ -2,6 +2,12 @@
 ///<reference path='communication.ts'/>
 ///<reference path='events.ts'/>
 const maxTicks = 100;
+function pause(button : HTMLButtonElement, time : TimeManager) : void
+{
+    let pause = button.innerHTML === "Pause"
+    button.innerHTML = pause ? "Resume" : "Pause"
+    time.paused = pause;
+}
 class TimeManager
 {
     private frames : Person[][];
@@ -28,6 +34,7 @@ class TimeManager
         this.next = new State(this.state.people);
         this.isCurrent = true;
         this.pauseButton = pause;
+        this.setupEvents();
     }
 
     private getFrame(index : number) : Person[]
@@ -42,7 +49,7 @@ class TimeManager
             if(this.isCurrent)
             {
                 this.ticks += 1;
-                this.queued.copySelection(state);
+                this.queued.copySelection(this.state);
                 if(this.ticks == 100)
                 {
                     this.bridge.tick(this.queued);
@@ -54,7 +61,7 @@ class TimeManager
             } else
             {
                 this.ticks += 1;
-                this.next.copySelection(state);
+                this.next.copySelection(this.state);
                 if(this.ticks == 100)
                 {
                    this.moveStateForward();
@@ -88,7 +95,7 @@ class TimeManager
         }
         this.isCurrent = false;
         if(!this.paused)
-            pause(this.pauseButton);
+            pause(this.pauseButton, this);
     }
 
     moveStateForward() : void
@@ -104,7 +111,7 @@ class TimeManager
             this.next.updateSelected();
             this.isCurrent = false;
             if(!this.paused)
-                pause(this.pauseButton);
+                pause(this.pauseButton, this);
         } else 
         {
             this.isCurrent = true;
@@ -125,7 +132,7 @@ class TimeManager
         }
         this.isCurrent = false;
         if(!this.paused)
-            pause(this.pauseButton);
+            pause(this.pauseButton, this);
     }
 
     getPersonInPast(person : Person, timeBack : number) : Person
@@ -140,5 +147,35 @@ class TimeManager
         {
             return person;
         }
+    }
+
+    setupEvents() : void
+    {
+        let timeManager = this;
+        let state = this.state;
+        let ctx = this.ctx;
+         $("#back-to-start").click(function(e : Event){
+            timeManager.setStateToFirst()
+            state.draw(ctx)
+        })
+        $("#back-one").click(function(e : Event){
+            timeManager.moveStateBack();
+            state.draw(ctx)
+        })
+
+        $("#forward-one").click(function(e : Event){
+            timeManager.moveStateForward();
+            state.draw(ctx)
+        })
+
+        $("#forward-to-now").click(function(e : Event){
+            timeManager.setStateToCurrent();
+            state.draw(ctx)
+        })
+
+        $('#pause').click(function(e : Event)
+        {
+            pause(this, timeManager);
+        });
     }
 }
