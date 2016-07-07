@@ -1,4 +1,3 @@
-///<reference path='node.d.ts'/>
 ///<reference path='jquery.d.ts'/>
 /// <reference path="time.ts" />
 
@@ -44,6 +43,21 @@ class State
         ctx.fillStyle = "grey";
         ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.lineWidth = 2;
+        let left = this.people[0].x - radius
+        let top = this.people[0].y - radius
+        let right = left
+        let bottom = top
+        for(let person of this.people)
+        {
+            if(person.x - radius < left)
+                left = person.x - radius
+            if(person.x + radius > right)
+                right = person.x + radius 
+            if(person.y - radius < top)
+                top = person.y - radius
+            if(person.y - radius > bottom)
+                bottom = person.y + radius
+        }
         for(let person of this.people)
         {
             ctx.beginPath();
@@ -53,15 +67,16 @@ class State
 
             if(this.selected.indexOf(person) != -1 || this.selected.length === 0)
                 ctx.globalAlpha = 1.0;
-
-            ctx.arc(person.x, person.y, radius, 0, 2 * Math.PI);
+            let x = person.x// - left;
+            let y = person.y// - top;
+            ctx.arc(x, y, radius, 0, 2 * Math.PI);
             ctx.fill();
             ctx.beginPath();
-            ctx.moveTo(person.x, person.y);
+            ctx.moveTo(x, y);
             for(let i = 1; i < 10; i++)
             {
                 let previous = this.time.getPersonInPast(person, i)
-                ctx.lineTo(previous.x, previous.y)
+                ctx.lineTo(previous.x /*- left*/, previous.y /*- top*/)
             }
             ctx.stroke()
         }

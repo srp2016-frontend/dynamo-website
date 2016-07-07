@@ -194,7 +194,6 @@ var TimeManager = (function () {
     };
     return TimeManager;
 }());
-///<reference path='node.d.ts'/>
 ///<reference path='jquery.d.ts'/>
 /// <reference path="time.ts" />
 var Person = (function () {
@@ -220,21 +219,38 @@ var State = (function () {
         ctx.fillStyle = "grey";
         ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.lineWidth = 2;
+        var left = this.people[0].x - radius;
+        var top = this.people[0].y - radius;
+        var right = left;
+        var bottom = top;
         for (var _i = 0, _a = this.people; _i < _a.length; _i++) {
             var person = _a[_i];
+            if (person.x - radius < left)
+                left = person.x - radius;
+            if (person.x + radius > right)
+                right = person.x + radius;
+            if (person.y - radius < top)
+                top = person.y - radius;
+            if (person.y - radius > bottom)
+                bottom = person.y + radius;
+        }
+        for (var _b = 0, _c = this.people; _b < _c.length; _b++) {
+            var person = _c[_b];
             ctx.beginPath();
             ctx.fillStyle = "red";
             ctx.strokeStyle = "blue";
             ctx.globalAlpha = 0.25;
             if (this.selected.indexOf(person) != -1 || this.selected.length === 0)
                 ctx.globalAlpha = 1.0;
-            ctx.arc(person.x, person.y, radius, 0, 2 * Math.PI);
+            var x = person.x; // - left;
+            var y = person.y; // - top;
+            ctx.arc(x, y, radius, 0, 2 * Math.PI);
             ctx.fill();
             ctx.beginPath();
-            ctx.moveTo(person.x, person.y);
+            ctx.moveTo(x, y);
             for (var i = 1; i < 10; i++) {
                 var previous = this.time.getPersonInPast(person, i);
-                ctx.lineTo(previous.x, previous.y);
+                ctx.lineTo(previous.x /*- left*/, previous.y /*- top*/);
             }
             ctx.stroke();
         }
