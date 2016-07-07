@@ -1,7 +1,8 @@
-///<reference path='plotting.ts'/>
-///<reference path='communication.ts'/>
-///<reference path='time.ts'/>
+/// <reference path='plotting.ts'/>
+/// <reference path='communication.ts'/>
+/// <reference path='time.ts'/>
 /// <reference path="click_events.ts" />
+/// <reference path="search.ts" />
 
 function main() {
     let canvas = <HTMLCanvasElement>$('#position-feed')[0];
@@ -12,6 +13,7 @@ function main() {
     let count = 0;
     let next = new State(state.people)
     let timeManager = new TimeManager(bridge, ctx, state, next, <HTMLButtonElement>$("#pause")[0])
+    let pSearch = setSearchEvents(state, ctx);
     state.time = timeManager;
     state.draw(ctx);
     setInterval(() => {
