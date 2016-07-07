@@ -51,6 +51,7 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D) : (strin
             } 
             results.css("border", "1px solid #A5ACB2");
         }
+        search();
     }
 
 
@@ -89,6 +90,8 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D) : (strin
     {
         var str = input.value;
         setSearchItems(pSearch(str));
+        if(str.length === 0)
+            $("#not-found").css("visibility", "hidden")
     });
 
     $("#searchbar:input").bind( 'keyup change click', (ev : Event) =>
