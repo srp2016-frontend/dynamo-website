@@ -16,6 +16,10 @@ h1 {
     float : left;
 }
 
+.infobar h3 {
+    text-align: center;
+}
+
 #searchbar {
     width : 50%;
     margin-left : 25%;
