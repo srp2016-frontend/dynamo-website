@@ -5,6 +5,7 @@
 - Search by non-name metadata
 - Allow the user to select an application area
 - Close-enough searching
+- Zoom / pan with camera
 
 ##Dependent on Other Teams
 - Talk to the server for updates
