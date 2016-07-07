@@ -3,6 +3,8 @@
 - Custom icons for the first responders
 - Use configurable identifiers
 - Multi-person selection
+    - Search with non-match should select all possible matches
+    - Shift + click should work on right infobar
 - Search by non-name metadata
 - Allow the user to select an application area
 
