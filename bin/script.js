@@ -15,22 +15,31 @@ var radiusSquared = radius * radius;
 var State = (function () {
     function State(people) {
         this.people = people;
-        this.selected = null;
+        this.selected = [];
     }
     State.prototype.draw = function (ctx) {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.globalAlpha = 1.0;
         ctx.fillStyle = "grey";
         ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.lineWidth = 2;
         for (var _i = 0, _a = this.people; _i < _a.length; _i++) {
             var person = _a[_i];
             ctx.beginPath();
             ctx.fillStyle = "red";
+            ctx.strokeStyle = "blue";
             ctx.globalAlpha = 0.25;
-            if (person == this.selected || this.selected == null)
+            if (this.selected.indexOf(person) != -1 || this.selected.length === 0)
                 ctx.globalAlpha = 1.0;
             ctx.arc(person.x, person.y, radius, 0, 2 * Math.PI);
             ctx.fill();
+            ctx.beginPath();
+            ctx.moveTo(person.x, person.y);
+            for (var i = 1; i < 10; i++) {
+                var previous = this.time.getPersonInPast(person, i);
+                ctx.lineTo(previous.x, previous.y);
+            }
+            ctx.stroke();
         }
     };
     State.prototype.update = function (next, ticks, maxTicks) {
@@ -64,27 +73,81 @@ var State = (function () {
         return null;
     };
     State.prototype.updateSelected = function () {
-        for (var i = 0; i < this.people.length; i = i + 1) {
-            if ((this.selected != null) && (this.selected.lName == this.people[i].lName && this.selected.fName == this.people[i].fName && this.selected.age == this.people[i].age))
-                this.selected = this.people[i];
+        for (var i = 0; i < this.people.length; i++) {
+            for (var j = 0; j < this.selected.length; j++) {
+                var person = this.people[i];
+                var selection = this.selected[j];
+                if (selection.lName === person.lName && selection.fName === person.fName && selection.age === person.age)
+                    this.selected[j] = person;
+            }
         }
     };
     State.prototype.setSelection = function (selection) {
-        this.selected = selection;
-        this.setDisplay(selection);
+        if (selection) {
+            this.selected.length = 1;
+            this.selected[0] = selection;
+        }
+        else
+            this.selected.length = 0;
+        this.updateDisplay();
+    };
+    State.prototype.addSelection = function (selection) {
+        if (selection) {
+            var index = this.selected.indexOf(selection);
+            if (index == -1)
+                this.selected.push(selection);
+            else
+                this.selected.splice(index, 1);
+            this.updateDisplay();
+        }
     };
     State.prototype.setDisplay = function (display) {
         if (display) {
             $("#sidebar").empty();
-            $("#sidebar").append("<b>First Name: </b>", display.fName, "<br>");
-            $("#sidebar").append("<b>Last Name:  </b>", display.lName, "<br>");
-            $("#sidebar").append("<b>Age: </b>", display.age, "<br>");
+            this.appendToDisplay(display);
         }
         else
             $("#sidebar").empty();
     };
+    State.prototype.updateDisplay = function () {
+        $("#sidebar").empty();
+        for (var _i = 0, _a = this.selected; _i < _a.length; _i++) {
+            var person = _a[_i];
+            this.appendToDisplay(person);
+        }
+    };
+    State.prototype.appendToDisplay = function (person) {
+        $("#sidebar").append("<b>First Name: </b>", person.fName, "<br>");
+        $("#sidebar").append("<b>Last Name:  </b>", person.lName, "<br>");
+        $("#sidebar").append("<b>Age: </b>", person.age, "<br>");
+        $("#sidebar").append("<hr style='width:100%;height:1px;'/>");
+    };
+    State.prototype.hasSelection = function () {
+        return this.selected.length > 0;
+    };
+    State.prototype.copySelection = function (other) {
+        this.selected.length = other.selected.length;
+        for (var i = 0; i < this.selected.length; i++)
+            this.selected[i] = other.selected[i];
+    };
     return State;
 }());
+/// <reference path="plotting.ts" />
+function setClickEvents(canvas, ctx, state) {
+    canvas.onmousedown = function (e) {
+        if (e.shiftKey)
+            state.addSelection(state.getPersonAt(e.offsetX, e.offsetY));
+        else
+            state.setSelection(state.getPersonAt(e.offsetX, e.offsetY));
+        state.draw(ctx);
+    };
+    canvas.onmousemove = function (e) {
+        if (!state.hasSelection()) {
+            state.setDisplay(state.getPersonAt(e.offsetX, e.offsetY));
+            state.draw(ctx);
+        }
+    };
+}
 ///<reference path='plotting.ts'/>
 /**
 Bridge between the frontend and backend applications
@@ -139,13 +202,16 @@ var Bridge = (function () {
 }());
 ///<reference path='plotting.ts'/>
 ///<reference path='communication.ts'/>
-///<reference path='events.ts'/>
 var maxTicks = 100;
+function pause(button, time) {
+    var pause = button.innerHTML === "Pause";
+    button.innerHTML = pause ? "Resume" : "Pause";
+    time.paused = pause;
+}
 var TimeManager = (function () {
     function TimeManager(bridge, ctx, state, next, pause) {
         this.bridge = bridge;
         this.frames = [];
-        this.frames.push([new Person(10, 10, "Brian", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)]);
         this.ticks = 0;
         this.paused = false;
         this.ctx = ctx;
@@ -155,6 +221,7 @@ var TimeManager = (function () {
         this.next = new State(this.state.people);
         this.isCurrent = true;
         this.pauseButton = pause;
+        this.setupEvents();
     }
     TimeManager.prototype.getFrame = function (index) {
         return JSON.parse(JSON.stringify(this.frames[index]));
@@ -163,7 +230,7 @@ var TimeManager = (function () {
         if (!this.paused) {
             if (this.isCurrent) {
                 this.ticks += 1;
-                this.queued.selected = this.state.selected;
+                this.queued.copySelection(this.state);
                 if (this.ticks == 100) {
                     this.bridge.tick(this.queued);
                     this.frames.push(JSON.parse(JSON.stringify(this.state.people)));
@@ -174,7 +241,7 @@ var TimeManager = (function () {
             }
             else {
                 this.ticks += 1;
-                this.next.selected = this.state.selected;
+                this.next.copySelection(this.state);
                 if (this.ticks == 100) {
                     this.moveStateForward();
                 }
@@ -203,7 +270,7 @@ var TimeManager = (function () {
         }
         this.isCurrent = false;
         if (!this.paused)
-            pause(this.pauseButton);
+            pause(this.pauseButton, this);
     };
     TimeManager.prototype.moveStateForward = function () {
         var _this = this;
@@ -218,7 +285,7 @@ var TimeManager = (function () {
             this.next.updateSelected();
             this.isCurrent = false;
             if (!this.paused)
-                pause(this.pauseButton);
+                pause(this.pauseButton, this);
         }
         else {
             this.isCurrent = true;
@@ -236,141 +303,178 @@ var TimeManager = (function () {
         }
         this.isCurrent = false;
         if (!this.paused)
-            pause(this.pauseButton);
+            pause(this.pauseButton, this);
+    };
+    TimeManager.prototype.getPersonInPast = function (person, timeBack) {
+        if (this.frames.length > 0) {
+            var frame = Math.max(this.currentFrame - timeBack, 0);
+            var temp = new State(this.frames[frame]);
+            return temp.getPersonByName(person.fName + " " + person.lName);
+        }
+        else {
+            return person;
+        }
+    };
+    TimeManager.prototype.setupEvents = function () {
+        var timeManager = this;
+        var state = this.state;
+        var ctx = this.ctx;
+        $("#back-to-start").click(function (e) {
+            timeManager.setStateToFirst();
+            state.draw(ctx);
+        });
+        $("#back-one").click(function (e) {
+            timeManager.moveStateBack();
+            state.draw(ctx);
+        });
+        $("#forward-one").click(function (e) {
+            timeManager.moveStateForward();
+            state.draw(ctx);
+        });
+        $("#forward-to-now").click(function (e) {
+            timeManager.setStateToCurrent();
+            state.draw(ctx);
+        });
+        $('#pause').click(function (e) {
+            pause(this, timeManager);
+        });
     };
     return TimeManager;
 }());
-///<reference path='plotting.ts'/>
-///<reference path='communication.ts'/>
-///<reference path='time.ts'/>
-var canvas = $('#position-feed')[0];
-var ctx = canvas.getContext('2d');
-var state = new State([new Person(40, 40, 'Brian', 'DeLeonardis', 18), new Person(40, 80, 'Jack', 'Dates', 18), new Person(40, 120, 'Anthony', 'Fasano', 18), new Person(40, 160, 'Anthony', 'Hamill', 18), new Person(40, 200, 'Brandon', 'Guglielmo', 18), new Person(40, 240, 'Chase', 'Moran', 18), new Person(40, 280, 'Daniel', 'Collins', 18), new Person(40, 320, 'Kevin', 'DeStefano', 18), new Person(40, 360, 'Matthew', 'Kumar', 18), new Person(40, 400, 'Ryan', 'Goldstein', 18), new Person(40, 440, 'Tina', 'Lu', 18),]);
-var bridge = new Bridge();
-var items;
-var count = 0;
-var next = new State(state.people);
-var timeManager = new TimeManager(bridge, ctx, state, next, $("#pause")[0]);
-canvas.onmousedown = function (e) {
-    state.setSelection(state.getPersonAt(e.offsetX, e.offsetY));
-    state.draw(ctx);
-};
-function pause(button) {
-    var pause = button.innerHTML === "Pause";
-    button.innerHTML = pause ? "Resume" : "Pause";
-    timeManager.paused = pause;
-}
-$("#back-to-start").click(function (e) {
-    timeManager.setStateToFirst();
-    state.draw(ctx);
-});
-$("#back-one").click(function (e) {
-    timeManager.moveStateBack();
-    state.draw(ctx);
-});
-$("#forward-one").click(function (e) {
-    timeManager.moveStateForward();
-    state.draw(ctx);
-});
-$("#forward-to-now").click(function (e) {
-    timeManager.setStateToCurrent();
-    state.draw(ctx);
-});
-$('#pause').click(function (e) {
-    pause(this);
-});
-canvas.onmousemove = function (e) {
-    if (!state.selected) {
-        state.setDisplay(state.getPersonAt(e.offsetX, e.offsetY));
+/// <reference path="plotting.ts" />
+/// <reference path="jquery.d.ts" />
+function setSearchEvents(state, ctx) {
+    var input = $('#searchbar')[0];
+    var count = 0;
+    var items = [];
+    function search() {
+        state.setSelection(state.getPersonByName(input.value));
+        $("#not-found").css("visibility", state.hasSelection() ? "hidden" : "visible");
         state.draw(ctx);
     }
-};
-var input = $('#searchbar')[0];
-function search() {
-    state.setSelection(state.getPersonByName(input.value));
-    $("#not-found").css("visibility", state.selected ? "hidden" : "visible");
-    state.draw(ctx);
-}
-function setSearchItems(is) {
-    var results = $("#search-results");
-    items = is;
-    if (items.length == 0) {
+    function setSearchItems(is) {
+        var results = $("#search-results");
+        items = is;
+        if (items.length == 0) {
+            results.html("");
+            results.css("border", "0px");
+        }
+        else {
+            count = 0;
+            results.html("");
+            for (var i = 0; i < items.length; i++) {
+                if (i == count) {
+                    var r = $('<input type="button" class = "sel" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
+                    results.append(r);
+                    results.append("<br>");
+                }
+                else {
+                    var r = $('<input type="button" class = "poss" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
+                    results.append(r);
+                    results.append("<br>");
+                }
+            }
+            results.css("border", "1px solid #A5ACB2");
+        }
+    }
+    function pSearch(check) {
+        if (check.length < 1)
+            return [];
+        var possible = [];
+        for (var i = 0; i < state.people.length; i++) {
+            var name = state.people[i].fName + " " + state.people[i].lName;
+            if (name.indexOf(check) >= 0) {
+                possible.push(name);
+            }
+        }
+        return possible;
+    }
+    $('#searchbutton').click(function (e) {
+        search();
+    });
+    function autocomplete_button_onclick(button) {
+        var results = $("#search-results");
         results.html("");
         results.css("border", "0px");
-    }
-    else {
-        count = 0;
-        results.html("");
-        for (var i = 0; i < items.length; i++) {
-            if (i == count) {
-                var r = $('<input type="button" class = "sel" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
-                results.append(r);
-                results.append("<br>");
-            }
-            else {
-                var r = $('<input type="button" class = "poss" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
-                results.append(r);
-                results.append("<br>");
-            }
-        }
-        results.css("border", "1px solid #A5ACB2");
-    }
-}
-function pSearch(check) {
-    if (check.length < 1)
-        return [];
-    var possible = [];
-    for (var i = 0; i < state.people.length; i++) {
-        var name = state.people[i].fName + " " + state.people[i].lName;
-        if (name.indexOf(check) >= 0) {
-            possible.push(name);
-        }
-    }
-    return possible;
-}
-$('#searchbutton').click(function (e) {
-    search();
-});
-function autocomplete_button_onclick(button) {
-    var results = $("#search-results");
-    results.html("");
-    results.css("border", "0px");
-    input.value = button.value;
-    search();
-}
-$('#searchbar').on("input", function (e) {
-    var str = input.value;
-    setSearchItems(pSearch(str));
-});
-$("#searchbar:input").bind('keyup change click', function (ev) {
-    var e = ev;
-    var results = $("#search-results");
-    if (e.keyCode === 13) {
-        $("#searchbar").val(items[count]);
+        input.value = button.value;
         search();
-        results.html("");
     }
-    else if (e.keyCode === 38 || e.keyCode === 40) {
-        if (e.keyCode === 38 && count > 0)
-            count--;
-        else if (e.keyCode === 40 && count < items.length - 1)
-            count++;
-        results.html("");
-        for (var i = 0; i < items.length; i++) {
-            if (i == count) {
-                var r = $('<input type="button" class = "sel" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
-                results.append(r);
-                results.append("<br>");
-            }
-            else {
-                var r = $('<input type="button" class = "poss" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
-                results.append(r);
-                results.append("<br>");
+    $('#searchbar').on("input", function (e) {
+        var str = input.value;
+        setSearchItems(pSearch(str));
+    });
+    $("#searchbar:input").bind('keyup change click', function (ev) {
+        var e = ev;
+        var results = $("#search-results");
+        if (e.keyCode === 13) {
+            $("#searchbar").val(items[count]);
+            search();
+            results.html("");
+        }
+        else if (e.keyCode === 38 || e.keyCode === 40) {
+            if (e.keyCode === 38 && count > 0)
+                count--;
+            else if (e.keyCode === 40 && count < items.length - 1)
+                count++;
+            results.html("");
+            for (var i = 0; i < items.length; i++) {
+                if (i == count) {
+                    var r = $('<input type="button" class = "sel" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
+                    results.append(r);
+                    results.append("<br>");
+                }
+                else {
+                    var r = $('<input type="button" class = "poss" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
+                    results.append(r);
+                    results.append("<br>");
+                }
             }
         }
+    });
+    return pSearch;
+}
+/// <reference path='plotting.ts'/>
+/// <reference path='communication.ts'/>
+/// <reference path='time.ts'/>
+/// <reference path="click_events.ts" />
+/// <reference path="search.ts" />
+function main() {
+    var canvas = $('#position-feed')[0];
+    var ctx = canvas.getContext('2d');
+    var state = new State([new Person(40, 40, 'Brian', 'DeLeonardis', 18), new Person(40, 80, 'Jack', 'Dates', 18), new Person(40, 120, 'Anthony', 'Fasano', 18), new Person(40, 160, 'Anthony', 'Hamill', 18), new Person(40, 200, 'Brandon', 'Guglielmo', 18), new Person(40, 240, 'Chase', 'Moran', 18), new Person(40, 280, 'Daniel', 'Collins', 18), new Person(40, 320, 'Kevin', 'DeStefano', 18), new Person(40, 360, 'Matthew', 'Kumar', 18), new Person(40, 400, 'Ryan', 'Goldstein', 18), new Person(40, 440, 'Tina', 'Lu', 18),]);
+    var bridge = new Bridge();
+    var items;
+    var count = 0;
+    var next = new State(state.people);
+    var timeManager = new TimeManager(bridge, ctx, state, next, $("#pause")[0]);
+    var pSearch = setSearchEvents(state, ctx);
+    state.time = timeManager;
+    state.draw(ctx);
+    setInterval(function () {
+        timeManager.updateFrame();
+    }, 10);
+    function getRoster() {
+        var names;
+        var results = $('#rSidebar');
+        names = pSearch(" ");
+        names.sort();
+        function generateButton(name) {
+            var r = $('<input type="button" class = "possNames" value ="' + name + '"/>');
+            r.click(function (e) {
+                var person = state.getPersonByName(r.val());
+                if (e.shiftKey)
+                    state.addSelection(person);
+                else
+                    state.setSelection(person);
+            });
+            results.append(r);
+            results.append("<br>");
+        }
+        for (var i = 0; i < names.length; i++) {
+            generateButton(names[i]);
+        }
     }
-});
-state.draw(ctx);
-setInterval(function () {
-    timeManager.updateFrame();
-}, 10);
+    setClickEvents(canvas, ctx, state);
+    getRoster();
+}
+main();
