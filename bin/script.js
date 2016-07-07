@@ -1,154 +1,4 @@
-///<reference path='node.d.ts'/>
-///<reference path='jquery.d.ts'/>
-var Person = (function () {
-    function Person(x, y, fName, lName, age) {
-        this.x = x;
-        this.y = y;
-        this.fName = fName;
-        this.lName = lName;
-        this.age = age;
-    }
-    return Person;
-}());
-var radius = 6;
-var radiusSquared = radius * radius;
-var State = (function () {
-    function State(people) {
-        this.people = people;
-        this.selected = [];
-    }
-    State.prototype.draw = function (ctx) {
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-        ctx.globalAlpha = 1.0;
-        ctx.fillStyle = "grey";
-        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-        ctx.lineWidth = 2;
-        for (var _i = 0, _a = this.people; _i < _a.length; _i++) {
-            var person = _a[_i];
-            ctx.beginPath();
-            ctx.fillStyle = "red";
-            ctx.strokeStyle = "blue";
-            ctx.globalAlpha = 0.25;
-            if (this.selected.indexOf(person) != -1 || this.selected.length === 0)
-                ctx.globalAlpha = 1.0;
-            ctx.arc(person.x, person.y, radius, 0, 2 * Math.PI);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.moveTo(person.x, person.y);
-            for (var i = 1; i < 10; i++) {
-                var previous = this.time.getPersonInPast(person, i);
-                ctx.lineTo(previous.x, previous.y);
-            }
-            ctx.stroke();
-        }
-    };
-    State.prototype.update = function (next, ticks, maxTicks) {
-        for (var _i = 0, _a = this.people; _i < _a.length; _i++) {
-            var person = _a[_i];
-            var equivalent = next.getPersonByName(person.fName + " " + person.lName);
-            person.x = this.scaleByTime(person.x, equivalent.x, ticks, maxTicks);
-            person.y = this.scaleByTime(person.y, equivalent.y, ticks, maxTicks);
-        }
-    };
-    State.prototype.scaleByTime = function (current, goal, ticks, maxTicks) {
-        return current + (goal - current) / (maxTicks - ticks);
-    };
-    State.prototype.getPersonAt = function (x, y) {
-        for (var _i = 0, _a = this.people; _i < _a.length; _i++) {
-            var person = _a[_i];
-            var dstX = x - person.x;
-            var dstY = y - person.y;
-            if (Math.pow(dstX, 2) + Math.pow(dstY, 2) <= radiusSquared)
-                return person;
-        }
-        return null;
-    };
-    State.prototype.getPersonByName = function (name) {
-        for (var _i = 0, _a = this.people; _i < _a.length; _i++) {
-            var person = _a[_i];
-            if (person.fName + " " + person.lName === name) {
-                return person;
-            }
-        }
-        return null;
-    };
-    State.prototype.updateSelected = function () {
-        for (var i = 0; i < this.people.length; i++) {
-            for (var j = 0; j < this.selected.length; j++) {
-                var person = this.people[i];
-                var selection = this.selected[j];
-                if (selection.lName === person.lName && selection.fName === person.fName && selection.age === person.age)
-                    this.selected[j] = person;
-            }
-        }
-    };
-    State.prototype.setSelection = function (selection) {
-        if (selection) {
-            this.selected.length = 1;
-            this.selected[0] = selection;
-        }
-        else
-            this.selected.length = 0;
-        this.updateDisplay();
-    };
-    State.prototype.addSelection = function (selection) {
-        if (selection) {
-            var index = this.selected.indexOf(selection);
-            if (index == -1)
-                this.selected.push(selection);
-            else
-                this.selected.splice(index, 1);
-            this.updateDisplay();
-        }
-    };
-    State.prototype.setDisplay = function (display) {
-        if (display) {
-            $("#sidebar").empty();
-            this.appendToDisplay(display);
-        }
-        else
-            $("#sidebar").empty();
-    };
-    State.prototype.updateDisplay = function () {
-        $("#sidebar").empty();
-        for (var _i = 0, _a = this.selected; _i < _a.length; _i++) {
-            var person = _a[_i];
-            this.appendToDisplay(person);
-        }
-    };
-    State.prototype.appendToDisplay = function (person) {
-        $("#sidebar").append("<b>First Name: </b>", person.fName, "<br>");
-        $("#sidebar").append("<b>Last Name:  </b>", person.lName, "<br>");
-        $("#sidebar").append("<b>Age: </b>", person.age, "<br>");
-        $("#sidebar").append("<hr style='width:100%;height:1px;'/>");
-    };
-    State.prototype.hasSelection = function () {
-        return this.selected.length > 0;
-    };
-    State.prototype.copySelection = function (other) {
-        this.selected.length = other.selected.length;
-        for (var i = 0; i < this.selected.length; i++)
-            this.selected[i] = other.selected[i];
-    };
-    return State;
-}());
-/// <reference path="plotting.ts" />
-function setClickEvents(canvas, ctx, state) {
-    canvas.onmousedown = function (e) {
-        if (e.shiftKey)
-            state.addSelection(state.getPersonAt(e.offsetX, e.offsetY));
-        else
-            state.setSelection(state.getPersonAt(e.offsetX, e.offsetY));
-        state.draw(ctx);
-    };
-    canvas.onmousemove = function (e) {
-        if (!state.hasSelection()) {
-            state.setDisplay(state.getPersonAt(e.offsetX, e.offsetY));
-            state.draw(ctx);
-        }
-    };
-}
-///<reference path='plotting.ts'/>
+///<reference path='state.ts'/>
 /**
 Bridge between the frontend and backend applications
 
@@ -200,7 +50,7 @@ var Bridge = (function () {
     };
     return Bridge;
 }());
-///<reference path='plotting.ts'/>
+///<reference path='state.ts'/>
 ///<reference path='communication.ts'/>
 var maxTicks = 100;
 function pause(button, time) {
@@ -307,7 +157,10 @@ var TimeManager = (function () {
     };
     TimeManager.prototype.getPersonInPast = function (person, timeBack) {
         if (this.frames.length > 0) {
-            var frame = Math.max(this.currentFrame - timeBack, 0);
+            var cFrame = this.currentFrame;
+            if (this.isCurrent)
+                cFrame = this.frames.length - 1;
+            var frame = Math.max(cFrame - timeBack, 0);
             var temp = new State(this.frames[frame]);
             return temp.getPersonByName(person.fName + " " + person.lName);
         }
@@ -341,14 +194,202 @@ var TimeManager = (function () {
     };
     return TimeManager;
 }());
-/// <reference path="plotting.ts" />
+///<reference path='node.d.ts'/>
+///<reference path='jquery.d.ts'/>
+/// <reference path="time.ts" />
+var Person = (function () {
+    function Person(x, y, fName, lName, age) {
+        this.x = x;
+        this.y = y;
+        this.fName = fName;
+        this.lName = lName;
+        this.age = age;
+    }
+    return Person;
+}());
+var radius = 6;
+var radiusSquared = radius * radius;
+var State = (function () {
+    function State(people) {
+        this.people = people;
+        this.selected = [];
+    }
+    State.prototype.draw = function (ctx) {
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.globalAlpha = 1.0;
+        ctx.fillStyle = "grey";
+        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.lineWidth = 2;
+        for (var _i = 0, _a = this.people; _i < _a.length; _i++) {
+            var person = _a[_i];
+            ctx.beginPath();
+            ctx.fillStyle = "red";
+            ctx.strokeStyle = "blue";
+            ctx.globalAlpha = 0.25;
+            if (this.selected.indexOf(person) != -1 || this.selected.length === 0)
+                ctx.globalAlpha = 1.0;
+            ctx.arc(person.x, person.y, radius, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.moveTo(person.x, person.y);
+            for (var i = 1; i < 10; i++) {
+                var previous = this.time.getPersonInPast(person, i);
+                ctx.lineTo(previous.x, previous.y);
+            }
+            ctx.stroke();
+        }
+    };
+    State.prototype.update = function (next, ticks, maxTicks) {
+        for (var _i = 0, _a = this.people; _i < _a.length; _i++) {
+            var person = _a[_i];
+            var equivalent = next.getPersonByName(person.fName + " " + person.lName);
+            person.x = this.scaleByTime(person.x, equivalent.x, ticks, maxTicks);
+            person.y = this.scaleByTime(person.y, equivalent.y, ticks, maxTicks);
+        }
+    };
+    State.prototype.scaleByTime = function (current, goal, ticks, maxTicks) {
+        return current + (goal - current) / (maxTicks - ticks);
+    };
+    State.prototype.getPersonAt = function (x, y) {
+        for (var _i = 0, _a = this.people; _i < _a.length; _i++) {
+            var person = _a[_i];
+            var dstX = x - person.x;
+            var dstY = y - person.y;
+            if (Math.pow(dstX, 2) + Math.pow(dstY, 2) <= radiusSquared)
+                return person;
+        }
+        return null;
+    };
+    State.prototype.getPersonByName = function (name) {
+        for (var _i = 0, _a = this.people; _i < _a.length; _i++) {
+            var person = _a[_i];
+            if (person.fName + " " + person.lName === name) {
+                return person;
+            }
+        }
+        return null;
+    };
+    State.prototype.updateSelected = function () {
+        for (var i = 0; i < this.people.length; i++) {
+            for (var j = 0; j < this.selected.length; j++) {
+                var person = this.people[i];
+                var selection = this.selected[j];
+                if (selection.lName === person.lName && selection.fName === person.fName && selection.age === person.age)
+                    this.selected[j] = person;
+            }
+        }
+    };
+    State.prototype.setSelection = function (selection) {
+        if (selection) {
+            this.selected.length = 1;
+            this.selected[0] = selection;
+        }
+        else
+            this.selected.length = 0;
+        this.updateDisplay();
+    };
+    State.prototype.setSelections = function (selection) {
+        this.selected.length = selection.length;
+        for (var i = 0; i < selection.length; i++)
+            this.selected[i] = selection[i];
+    };
+    State.prototype.addSelection = function (selection) {
+        if (selection) {
+            var index = this.selected.indexOf(selection);
+            if (index == -1)
+                this.selected.push(selection);
+            else
+                this.selected.splice(index, 1);
+            this.updateDisplay();
+        }
+    };
+    State.prototype.setDisplay = function (display) {
+        if (display) {
+            $("#sidebar").empty();
+            this.appendToDisplay(display);
+        }
+        else
+            $("#sidebar").empty();
+    };
+    State.prototype.updateDisplay = function () {
+        $("#sidebar").empty();
+        for (var _i = 0, _a = this.selected; _i < _a.length; _i++) {
+            var person = _a[_i];
+            this.appendToDisplay(person);
+        }
+        this.getRoster();
+    };
+    State.prototype.appendToDisplay = function (person) {
+        $("#sidebar").append("<b>First Name: </b>", person.fName, "<br>");
+        $("#sidebar").append("<b>Last Name:  </b>", person.lName, "<br>");
+        $("#sidebar").append("<b>Age: </b>", person.age, "<br>");
+        $("#sidebar").append("<hr style='width:100%;height:1px;'/>");
+    };
+    State.prototype.hasSelection = function () {
+        return this.selected.length > 0;
+    };
+    State.prototype.copySelection = function (other) {
+        this.selected.length = other.selected.length;
+        for (var i = 0; i < this.selected.length; i++)
+            this.selected[i] = other.selected[i];
+    };
+    State.prototype.getRoster = function () {
+        var names;
+        var results = $('#rSidebar');
+        results.empty();
+        names = this.pSearch(" ");
+        names.sort();
+        var state = this;
+        function generateButton(name) {
+            var className = "manifest-name";
+            if (state.selected.length > 0 && state.selected.indexOf(state.getPersonByName(name)) == -1)
+                className += "-deselected";
+            var r = $('<input type="button" class = "' + className + '" value ="' + name + '"/>');
+            r.click(function (e) {
+                var person = state.getPersonByName(r.val());
+                if (e.shiftKey)
+                    state.addSelection(person);
+                else
+                    state.setSelection(person);
+            });
+            results.append(r);
+            results.append("<br>");
+        }
+        for (var i = 0; i < names.length; i++) {
+            generateButton(names[i]);
+        }
+    };
+    return State;
+}());
+/// <reference path="state.ts" />
+function setClickEvents(canvas, ctx, state) {
+    canvas.onmousedown = function (e) {
+        if (e.shiftKey)
+            state.addSelection(state.getPersonAt(e.offsetX, e.offsetY));
+        else
+            state.setSelection(state.getPersonAt(e.offsetX, e.offsetY));
+        state.draw(ctx);
+    };
+    canvas.onmousemove = function (e) {
+        if (!state.hasSelection()) {
+            state.setDisplay(state.getPersonAt(e.offsetX, e.offsetY));
+            state.draw(ctx);
+        }
+    };
+}
+/// <reference path="state.ts" />
 /// <reference path="jquery.d.ts" />
 function setSearchEvents(state, ctx) {
     var input = $('#searchbar')[0];
     var count = 0;
     var items = [];
     function search() {
-        state.setSelection(state.getPersonByName(input.value));
+        var people = [];
+        for (var _i = 0, items_1 = items; _i < items_1.length; _i++) {
+            var item = items_1[_i];
+            people.push(state.getPersonByName(item));
+        }
+        state.setSelections(people);
         $("#not-found").css("visibility", state.hasSelection() ? "hidden" : "visible");
         state.draw(ctx);
     }
@@ -376,6 +417,7 @@ function setSearchEvents(state, ctx) {
             }
             results.css("border", "1px solid #A5ACB2");
         }
+        search();
     }
     function pSearch(check) {
         if (check.length < 1)
@@ -383,7 +425,7 @@ function setSearchEvents(state, ctx) {
         var possible = [];
         for (var i = 0; i < state.people.length; i++) {
             var name = state.people[i].fName + " " + state.people[i].lName;
-            if (name.indexOf(check) >= 0) {
+            if (name.toLowerCase().indexOf(check.toLowerCase()) >= 0) {
                 possible.push(name);
             }
         }
@@ -402,6 +444,8 @@ function setSearchEvents(state, ctx) {
     $('#searchbar').on("input", function (e) {
         var str = input.value;
         setSearchItems(pSearch(str));
+        if (str.length === 0)
+            $("#not-found").css("visibility", "hidden");
     });
     $("#searchbar:input").bind('keyup change click', function (ev) {
         var e = ev;
@@ -433,7 +477,7 @@ function setSearchEvents(state, ctx) {
     });
     return pSearch;
 }
-/// <reference path='plotting.ts'/>
+/// <reference path='state.ts'/>
 /// <reference path='communication.ts'/>
 /// <reference path='time.ts'/>
 /// <reference path="click_events.ts" />
@@ -447,34 +491,13 @@ function main() {
     var count = 0;
     var next = new State(state.people);
     var timeManager = new TimeManager(bridge, ctx, state, next, $("#pause")[0]);
-    var pSearch = setSearchEvents(state, ctx);
+    state.pSearch = setSearchEvents(state, ctx);
     state.time = timeManager;
     state.draw(ctx);
     setInterval(function () {
         timeManager.updateFrame();
     }, 10);
-    function getRoster() {
-        var names;
-        var results = $('#rSidebar');
-        names = pSearch(" ");
-        names.sort();
-        function generateButton(name) {
-            var r = $('<input type="button" class = "possNames" value ="' + name + '"/>');
-            r.click(function (e) {
-                var person = state.getPersonByName(r.val());
-                if (e.shiftKey)
-                    state.addSelection(person);
-                else
-                    state.setSelection(person);
-            });
-            results.append(r);
-            results.append("<br>");
-        }
-        for (var i = 0; i < names.length; i++) {
-            generateButton(names[i]);
-        }
-    }
     setClickEvents(canvas, ctx, state);
-    getRoster();
+    state.getRoster();
 }
 main();
