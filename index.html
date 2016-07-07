@@ -6,7 +6,9 @@
         <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
     </head>
     <body>
+        <!-- Page title -->
         <h1>DYNAMO</h1>
+        <!-- Searchbar -->
         <div id="searchbar-wrap">
             <input id="searchbar">
             </input>
@@ -16,6 +18,7 @@
             <p id = "not-found">Not found!</p>
             <div id="search-results"></div>
         </div>
+        <!-- Time management -->
         <div id="slider">
             <button id="back-to-start" class="time-button">&lt;&lt;Start</button>
             <button id="back-one" class="time-button">&lt;</button>
@@ -24,9 +27,18 @@
             <button id="forward-to-now" class="time-button">Current&gt;&gt;</button>
         </div>
         <br>
-        <div id = "sidebar" style="float:left">
+        <!-- Realtime display -->
+        <div class = "infobar">
+            <h3>Selection</h3>
+            <p id="sidebar"/>
         </div>
-        <canvas id="position-feed" width="1000" height="500">If you're seeing this text, your browser doesn't support HTML5. Please upgrade.</canvas>
+        <div id="canvas-container"  style="float:left">
+            <canvas id="position-feed" width="750" height="500">If you're seeing this text, your browser doesn't support HTML5. Please upgrade.</canvas>
+        </div>
+        <div class = "infobar">
+            <h3>Participants</h3>
+            <p id="rSidebar"/>
+        </div>
     </body>
     <script src='bin/script.js'></script>
 </html>

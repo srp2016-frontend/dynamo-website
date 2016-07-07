@@ -1,7 +1,12 @@
 ///<reference path='plotting.ts'/>
 ///<reference path='communication.ts'/>
-///<reference path='events.ts'/>
 const maxTicks = 100;
+function pause(button : HTMLButtonElement, time : TimeManager) : void
+{
+    let pause = button.innerHTML === "Pause"
+    button.innerHTML = pause ? "Resume" : "Pause"
+    time.paused = pause;
+}
 class TimeManager
 {
     private frames : Person[][];
@@ -19,7 +24,6 @@ class TimeManager
     constructor(bridge : Bridge, ctx : CanvasRenderingContext2D, state : State, next : State, pause : HTMLButtonElement) {
         this.bridge = bridge;
         this.frames = [];
-        this.frames.push([new Person(10, 10, "Brian", "Doe", 30), new Person(50, 100, "Brian", "DeLeonardis", 18)]);
         this.ticks = 0;
         this.paused = false;
         this.ctx = ctx;
@@ -29,6 +33,7 @@ class TimeManager
         this.next = new State(this.state.people);
         this.isCurrent = true;
         this.pauseButton = pause;
+        this.setupEvents();
     }
 
     private getFrame(index : number) : Person[]
@@ -43,7 +48,7 @@ class TimeManager
             if(this.isCurrent)
             {
                 this.ticks += 1;
-                this.queued.selected = this.state.selected;
+                this.queued.copySelection(this.state);
                 if(this.ticks == 100)
                 {
                     this.bridge.tick(this.queued);
@@ -55,7 +60,7 @@ class TimeManager
             } else
             {
                 this.ticks += 1;
-                this.next.selected = this.state.selected;
+                this.next.copySelection(this.state);
                 if(this.ticks == 100)
                 {
                    this.moveStateForward();
@@ -89,7 +94,7 @@ class TimeManager
         }
         this.isCurrent = false;
         if(!this.paused)
-            pause(this.pauseButton);
+            pause(this.pauseButton, this);
     }
 
     moveStateForward() : void
@@ -105,7 +110,7 @@ class TimeManager
             this.next.updateSelected();
             this.isCurrent = false;
             if(!this.paused)
-                pause(this.pauseButton);
+                pause(this.pauseButton, this);
         } else 
         {
             this.isCurrent = true;
@@ -126,6 +131,50 @@ class TimeManager
         }
         this.isCurrent = false;
         if(!this.paused)
-            pause(this.pauseButton);
+            pause(this.pauseButton, this);
+    }
+
+    getPersonInPast(person : Person, timeBack : number) : Person
+    {
+        if(this.frames.length > 0)
+        {
+            let frame = Math.max(this.currentFrame - timeBack, 0)
+            let temp = new State(this.frames[frame])
+            return temp.getPersonByName(person.fName + " " + person.lName)
+        } 
+        else
+        {
+            return person;
+        }
+    }
+
+    setupEvents() : void
+    {
+        let timeManager = this;
+        let state = this.state;
+        let ctx = this.ctx;
+         $("#back-to-start").click(function(e : Event){
+            timeManager.setStateToFirst()
+            state.draw(ctx)
+        })
+        $("#back-one").click(function(e : Event){
+            timeManager.moveStateBack();
+            state.draw(ctx)
+        })
+
+        $("#forward-one").click(function(e : Event){
+            timeManager.moveStateForward();
+            state.draw(ctx)
+        })
+
+        $("#forward-to-now").click(function(e : Event){
+            timeManager.setStateToCurrent();
+            state.draw(ctx)
+        })
+
+        $('#pause').click(function(e : Event)
+        {
+            pause(this, timeManager);
+        });
     }
 }
