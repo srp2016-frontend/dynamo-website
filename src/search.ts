@@ -6,7 +6,15 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D) : (strin
     let input = <HTMLInputElement>$('#searchbar')[0];
     let count = 0;
     let items : string[] = [];
-    function search() : void
+    function search()
+    {
+        for (let item of items)
+            if(input.value == item)     
+                state.setSelection(state.getPersonByName(input.value))
+        console.log("search")
+    }
+    
+    function searchAll() : void
     {
         let people : Person[] = [];
         for(let item of items)
@@ -19,32 +27,47 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D) : (strin
     function setSearchItems(is : string[]) : void
     {
         let results = $("#search-results");
+        results.empty()
         items = is;
         if(items.length == 0)
         {
             results.html("")
             results.css("border", "0px");
         } 
-        /*else if(items.length == 1) 
-        {
-            input.value = items[0];
-            input.hover = true;
-        } */
         else
         {
-            count = 0;
             results.html("");
             for(let i = 0; i < items.length; i++)
             {
                 if(i == count)
                 {
-                    var r= $('<input type="button" class = "sel" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
+                    let r= $('<input type="button" class = "sel" value="' + items[i] + '"/>');
+                    let button = <HTMLButtonElement>r[0];
+                    r.click((e : MouseEvent) => 
+                    {
+                        count = 0;
+                        let results = $("#search-results")
+                        results.html("");
+                        results.css("border", "0px");
+                        input.value = button.value;
+                        search();
+                    })
                     results.append(r);
                     results.append("<br>");
                 }
                 else
                 {
-                    var r= $('<input type="button" class = "poss" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
+                   let r= $('<input type="button" class = "poss" value="' + items[i] + '"/>');
+                    let button = <HTMLButtonElement>r[0];
+                    r.click((e : MouseEvent) => 
+                    {
+                        count = 0;
+                        let results = $("#search-results")
+                        results.html("");
+                        results.css("border", "0px");
+                        input.value = button.value;
+                        search();
+                    })
                     results.append(r);
                     results.append("<br>");
                 }
@@ -74,17 +97,9 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D) : (strin
 
     $('#searchbutton').click(function (e : Event)
     {
+        input.value = items[count];
         search();
     })
-
-    function autocomplete_button_onclick(button : HTMLButtonElement)
-    {
-        let results = $("#search-results")
-        results.html("");
-        results.css("border", "0px");
-        input.value =  button.value;
-        search();
-    }
 
     $('#searchbar').on("input", (e : Event) =>
     {
@@ -101,11 +116,12 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D) : (strin
         if(e.keyCode === 13)
         {
             $("#searchbar").val(items[count]);
+            count = 0;
             search();
             results.html("");
         }
         else if(e.keyCode === 38 || e.keyCode === 40)
-        {    
+        {   
             if(e.keyCode === 38 && count > 0)
                 count--;        
             else if(e.keyCode === 40 && count < items.length - 1)
@@ -113,21 +129,7 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D) : (strin
                 
             results.html("");
             
-            for(let i = 0; i < items.length; i++)
-            {
-                if(i == count)
-                {
-                    var r= $('<input type="button" class = "sel" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
-                    results.append(r);
-                    results.append("<br>");
-                }
-                else
-                {
-                    var r= $('<input type="button" class = "poss" onclick="autocomplete_button_onclick(this)" value="' + items[i] + '"/>');
-                    results.append(r);
-                    results.append("<br>");
-                }
-            }    
+            setSearchItems(items)
         }
     });
     return pSearch;
