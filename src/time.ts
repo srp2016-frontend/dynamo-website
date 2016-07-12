@@ -51,7 +51,7 @@ class TimeManager
                 this.queued.copySelection(this.state);
                 if(this.ticks == 100)
                 {
-                    this.bridge.tick(this.queued);
+                    this.bridge.tick(this.queued, this.frames.length);
                     this.frames.push(JSON.parse(JSON.stringify(this.state.people)));
                     this.ticks = 0;
                 }
@@ -114,7 +114,7 @@ class TimeManager
         } else 
         {
             this.isCurrent = true;
-            this.bridge.tick(this.queued, () => this.frames.push(this.state.people));
+            this.bridge.tick(this.queued, this.frames.length, () => this.frames.push(this.state.people));
         }
     }
 

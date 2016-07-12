@@ -17,18 +17,21 @@ class Bridge
     * Takes a message from the cache or the server and makes it into a State object
     * Asynchronous because it may make an AJAX request
     */
-    tick(state : State, action : () => void = null)
+    tick(state : State, frame : number, action : () => void = null)
     {
-        this.doWithMessage((message : string) =>
+        this.doWithMessage(frame, (message : string) =>
         {
-            state.people = <Person[]>eval(message);
-            state.updateSelected()
-            if(action)
-                action();
+            let value = <Person[]>eval(message);
+            if(value) {
+                state.people = value;
+                state.updateSelected()
+                if(action)
+                    action();
+            }
         })
     }
 
-    private doWithMessage(callback : (string) => void) : void
+    private doWithMessage(frame : number, callback : (string) => void) : void
     {
         if(this.messageCache.length > 0)
         {
@@ -36,7 +39,7 @@ class Bridge
         }
         else
         {
-            let x : any = $.ajax({url : "index.html", method: "POST", context:document.body, data : "next"})
+            let x : any = $.ajax({url : "index.html", method: "POST", context:document.body, data : "" + frame})
             x.success(function(data) { console.log(data); callback(data); } )
         }
     }
