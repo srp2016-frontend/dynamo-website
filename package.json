@@ -2,11 +2,6 @@
     "name" : "dynamo",
     "version" : "1.0.0",
     "description" : "The Dynamo frontend",
-    "dependencies" : {
-        "jquery" : "1.11.x",
-        "tsd" : "0.6.x",
-        "typescript-require" : "x.x.x"
-    },
     "devDependencies" : {
         "typescript" : "1.8.x"
     }
