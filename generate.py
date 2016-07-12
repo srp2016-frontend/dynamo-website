@@ -14,13 +14,13 @@ for i in range(len(people)):
         y += math.sin(angle) * velocity
 string = "["
 for j in range(20):
-    string += "\nJSON.stringify(["
+    string += "\n\"["
     for i in range(len(people)):
         person = people[i]
         x,y = positions[i][j]
         fname = people[i].split(" ")[0]
         lname = people[i].split(" ")[1]
         string += "new Person(" + str(x) + ", " + str(y) + ", '" + fname + "', '" + lname + "', 18),"
-    string += "]),"
+    string += "]\","
 string += "]"
 print(string)
