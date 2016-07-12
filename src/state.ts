@@ -1,4 +1,3 @@
-///<reference path='node.d.ts'/>
 ///<reference path='jquery.d.ts'/>
 /// <reference path="time.ts" />
 
