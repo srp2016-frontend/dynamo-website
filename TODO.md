@@ -1,5 +1,9 @@
 #TODO
+##Important Modules
+- Telemetry data
+
 ##Currently Achievable
+- Set video time to correct time for the race data
 - Custom icons for the first responders
 - Use configurable identifiers
 - Search by non-name metadata
