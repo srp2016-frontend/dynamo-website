@@ -30,23 +30,23 @@
         <!-- Realtime display -->
         <div id="menu">
             <h3>Menu</h3>
-            <input type="checkbox" checked>Searchbar</input> <br/>
-            <input type="checkbox" checked>Time Management</input> <br/>
-            <input type="checkbox" checked>Selection Panel</input><br/>
-            <input type="checkbox" checked>Virtual Map</input><br/>
-            <input type="checkbox" checked>Manifest</input><br/>
-            <input type="checkbox" checked>Video</input><br/>
+            <input type="checkbox" id="search-check" checked>Searchbar</input> <br/>
+            <input type="checkbox" id="time-check" checked>Time Management</input> <br/>
+            <input type="checkbox" id="selection-check" checked>Selection Panel</input><br/>
+            <input type="checkbox" id="map-check" checked>Virtual Map</input><br/>
+            <input type="checkbox" id="manifest-check" checked>Manifest</input><br/>
+            <input type="checkbox" id="video-check" checked>Video</input><br/>
         </div>
-        <div class = "info-panel">
+        <div class = "info-panel" id = "selection-panel">
             <h3>Selection</h3>
             <p id="sidebar"/>
         </div>
         <canvas id="position-feed" width = "750" height = "500" class = "media-panel">If you're seeing this text, your browser doesn't support HTML5. Please upgrade.</canvas>
-        <div class = "info-panel">
+        <div class = "info-panel" id = "manifest-panel">
             <h3>Participants</h3>
             <p id="rSidebar"/>
         </div>
-        <video class="media-panel" controls>
+        <video class="media-panel" id = "video-feed" controls>
 
         </video>
     </body>

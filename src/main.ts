@@ -3,6 +3,8 @@
 /// <reference path='time.ts'/>
 /// <reference path="click_events.ts" />
 /// <reference path="search.ts" />
+/// <reference path="menu.ts" />
+
 function main() {
     let canvas = <HTMLCanvasElement>$('#position-feed')[0];
     let ctx = canvas.getContext('2d');
@@ -20,5 +22,6 @@ function main() {
     }, 10);
     setClickEvents(canvas, ctx, state);
     state.getRoster();
+    setMenuEvents();
 }
 main();
