@@ -9,7 +9,7 @@
         <!-- Page title -->
         <h1>DYNAMO</h1>
         <!-- Searchbar -->
-        <div id="searchbar-wrap">
+        <div id="searchbar-container">
             <input id="searchbar">
             </input>
             <button id = "searchbutton">
@@ -19,7 +19,7 @@
             <div id="search-results"></div>
         </div>
         <!-- Time management -->
-        <div id="slider">
+        <div id="time">
             <button id="back-to-start" class="time-button">&lt;&lt;Start</button>
             <button id="back-one" class="time-button">&lt;</button>
             <button id = "pause" class="time-button">Pause</button>
@@ -28,17 +28,27 @@
         </div>
         <br>
         <!-- Realtime display -->
-        <div class = "infobar">
+        <div id="menu">
+            <h3>Menu</h3>
+            <input type="checkbox" checked>Searchbar</input> <br/>
+            <input type="checkbox" checked>Time Management</input> <br/>
+            <input type="checkbox" checked>Selection Panel</input><br/>
+            <input type="checkbox" checked>Virtual Map</input><br/>
+            <input type="checkbox" checked>Manifest</input><br/>
+            <input type="checkbox" checked>Video</input><br/>
+        </div>
+        <div class = "info-panel">
             <h3>Selection</h3>
             <p id="sidebar"/>
         </div>
-        <div id="canvas-container"  style="float:left">
-            <canvas id="position-feed" width="750" height="500">If you're seeing this text, your browser doesn't support HTML5. Please upgrade.</canvas>
-        </div>
-        <div class = "infobar">
+        <canvas id="position-feed" width = "750" height = "500" class = "media-panel">If you're seeing this text, your browser doesn't support HTML5. Please upgrade.</canvas>
+        <div class = "info-panel">
             <h3>Participants</h3>
             <p id="rSidebar"/>
         </div>
+        <video class="media-panel" controls>
+
+        </video>
     </body>
     <script src='bin/script.js'></script>
 </html>
