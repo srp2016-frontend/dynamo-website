@@ -40,7 +40,7 @@ class Bridge
         else
         {
             let x : any = $.ajax({url : "index.html", method: "POST", context:document.body, data : "" + frame})
-            x.success(function(data) { console.log(data); callback(data); } )
+            x.success((data : string) => { callback(data); } )
         }
     }
 }
