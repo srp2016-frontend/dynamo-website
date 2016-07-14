@@ -3,6 +3,7 @@ html, body {
     font-family : "Source Code Pro";
     margin: 0;
     height: 100%;
+    background-color: #EEEEEE;
 }
 /*Headers*/
 h1 {
@@ -15,7 +16,7 @@ h3 {
 #menu {
     width : 200;
     height : 100%;
-    background-color: #DDDDDD;
+    background-color: #EEEEEE;
     float : left;
     float : top;
 }
@@ -30,7 +31,7 @@ h3 {
     /*display:block;*/
     overflow-x:hidden;
     overflow-y:auto;
-    background-color: #DDDDDD;
+    background-color: #0d64b2;
     float : left;
     float : top;
 }
