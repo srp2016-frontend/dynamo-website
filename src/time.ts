@@ -1,5 +1,7 @@
 ///<reference path='state.ts'/>
 ///<reference path='communication.ts'/>
+/// <reference path="alert.ts" />
+
 const maxTicks = 100;
 function pause(button : HTMLButtonElement, time : TimeManager) : void
 {
@@ -70,7 +72,7 @@ class TimeManager
             }
         }
     }
-
+    
     setStateToCurrent() : void
     {
         this.ticks = 0;

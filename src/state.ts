@@ -30,12 +30,15 @@ class State
     private selected : Item[];
     public pSearch : (string) => string[];
     public time : TimeManager;
+    public width : number;
+    public height : number;
 
-    constructor(people : Item[])
+    constructor(people : Item[], width : number, height : number)
     {
         this.people = people;
-
         this.selected = [];
+        this.width = width;
+        this.height = height;
     }
 
     draw(ctx : CanvasRenderingContext2D) : void
