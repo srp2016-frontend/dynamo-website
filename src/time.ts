@@ -9,7 +9,7 @@ function pause(button : HTMLButtonElement, time : TimeManager) : void
 }
 class TimeManager
 {
-    private frames : Person[][];
+    private frames : Item[][];
     private ticks : number;
     private bridge : Bridge;
     private currentFrame : number;
@@ -36,7 +36,7 @@ class TimeManager
         this.setupEvents();
     }
 
-    private getFrame(index : number) : Person[]
+    private getFrame(index : number) : Item[]
     {
         return JSON.parse(JSON.stringify(this.frames[index]))
     }
@@ -134,7 +134,7 @@ class TimeManager
             pause(this.pauseButton, this);
     }
 
-    getPersonInPast(person : Person, timeBack : number) : Person
+    getPersonInPast(person : Item, timeBack : number) : Item
     {
         if(this.frames.length > 0)
         {
@@ -143,7 +143,7 @@ class TimeManager
                 cFrame = this.frames.length - 1;
             let frame = Math.max(cFrame - timeBack, 0)
             let temp = new State(this.frames[frame])
-            return temp.getPersonByName(person.fName + " " + person.lName)
+            return temp.getPersonByName(person.id)
         } 
         else
         {

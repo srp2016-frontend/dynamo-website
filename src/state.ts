@@ -1,20 +1,18 @@
 ///<reference path='jquery.d.ts'/>
 /// <reference path="time.ts" />
 
-class Person
+class Item
 {
     x : number;
     y : number;
     age : number;
-    fName : string;
-    lName : string;
+    id : string;
 
-    constructor(x : number, y : number, fName: string, lName : string, age : number)
+    constructor(x : number, y : number, id : string, age : number)
     {
         this.x = x;
         this.y = y;
-        this.fName = fName;
-        this.lName = lName;
+        this.id = id;
         this.age = age;
     }
 }
@@ -24,12 +22,12 @@ const radiusSquared = radius * radius;
 
 class State
 {
-    people : Person[];
-    private selected : Person[];
+    people : Item[];
+    private selected : Item[];
     public pSearch : (string) => string[];
     public time : TimeManager;
 
-    constructor(people : Person[])
+    constructor(people : Item[])
     {
         this.people = people;
 
@@ -70,7 +68,7 @@ class State
     {
         for(let person of this.people)
         {
-            let equivalent = next.getPersonByName(person.fName + " " + person.lName);
+            let equivalent = next.getPersonByName(person.id);
             person.x = this.scaleByTime(person.x, equivalent.x, ticks, maxTicks);
             person.y = this.scaleByTime(person.y, equivalent.y, ticks, maxTicks);
         }
@@ -81,7 +79,7 @@ class State
         return current + (goal - current) / (maxTicks - ticks)
     }
 
-    getPersonAt(x : number, y : number) : Person
+    getPersonAt(x : number, y : number) : Item
     {
         for(let person of this.people)
         {
@@ -93,11 +91,11 @@ class State
         return null;
     }
 
-    getPersonByName(name : string) : Person
+    getPersonByName(name : string) : Item
     {
         for(let person of this.people)
         {
-            if(person.fName + " " + person.lName === name)
+            if(person.id === name)
             {
                 return person;
             }
@@ -113,13 +111,13 @@ class State
             {
                 let person = this.people[i];
                 let selection = this.selected[j];
-                if(selection.lName === person.lName && selection.fName === person.fName && selection.age === person.age)
+                if(selection.id == person.id && selection.age === person.age)
                     this.selected[j] = person;
             }
         }
     }
 
-    setSelection(selection : Person) : void
+    setSelection(selection : Item) : void
     {
         if(selection)
         {
@@ -131,14 +129,14 @@ class State
         this.updateDisplay();
     }
 
-    setSelections(selection : Person[]) : void
+    setSelections(selection : Item[]) : void
     {
         this.selected.length = selection.length;
         for(let i = 0; i < selection.length; i++)
             this.selected[i] = selection[i];
     }
 
-    addSelection(selection : Person) : void
+    addSelection(selection : Item) : void
     {
         if(selection)
         {
@@ -151,7 +149,7 @@ class State
         }
     }
 
-    setDisplay(display : Person) : void
+    setDisplay(display : Item) : void
     {
         if(display)
         {
@@ -170,10 +168,9 @@ class State
         this.getRoster();
     }
 
-    private appendToDisplay(person : Person) : void
+    private appendToDisplay(person : Item) : void
     {
-        $("#sidebar").append("<b>First Name: </b>", person.fName, "<br>");
-        $("#sidebar").append("<b>Last Name:  </b>", person.lName, "<br>");
+        $("#sidebar").append("<b>ID: </b>", person.id, "<br>");
         $("#sidebar").append("<b>Age: </b>", person.age, "<br>");
         $("#sidebar").append("<hr style='width:100%;height:1px;'/>");
     }

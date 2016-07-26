@@ -21,7 +21,7 @@ class Bridge
     {
         this.doWithMessage(frame, (message : string) =>
         {
-            let value = <Person[]>eval(message);
+            let value = <Item[]>eval(message);
             if(value) {
                 state.people = value;
                 state.updateSelected()

@@ -16,7 +16,7 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D) : (strin
     
     function searchAll() : void
     {
-        let people : Person[] = [];
+        let people : Item[] = [];
         for(let item of items)
             people.push(state.getPersonByName(item))
         state.setSelections(people)
@@ -86,7 +86,7 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D) : (strin
         var possible = [];
         for(let i = 0; i < state.people.length; i++)
         {
-            var name = state.people[i].fName + " " + state.people[i].lName;
+            var name = state.people[i].id;
             if(name.toLowerCase().indexOf(check.toLowerCase()) >= 0)
             {
                 possible.push(name);
