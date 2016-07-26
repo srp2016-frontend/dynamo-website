@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title>DYNAMO</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+    </head>
+    <body>
+        <!-- Page title -->
+        <h1>DYNAMO</h1>
+        <!-- Searchbar -->
+        <div id="searchbar-container">
+            <input id="searchbar">
+            </input>
+            <button id = "searchbutton">
+                Search
+            </button>
+            <p id = "not-found">Not found!</p>
+            <div id="search-results"></div>
+        </div>
+        <!-- Time management -->
+        <div id="time">
+            <button id="back-to-start" class="time-button">&lt;&lt;Start</button>
+            <button id="back-one" class="time-button">&lt;</button>
+            <button id = "pause" class="time-button">Pause</button>
+            <button id="forward-one" class="time-button">&gt;</button>
+            <button id="forward-to-now" class="time-button">Current&gt;&gt;</button>
+        </div>
+        <br>
+        <!-- Realtime display -->
+        <div id="menu">
+            <h3>Menu</h3>
+            <input type="checkbox" id="search-check" checked>Searchbar</input> <br/>
+            <input type="checkbox" id="time-check">Time Management</input> <br/>
+            <input type="checkbox" id="selection-check" checked>Selection Panel</input><br/>
+            <input type="checkbox" id="map-check" checked>Virtual Map</input><br/>
+            <input type="checkbox" id="manifest-check">Manifest</input><br/>
+            <input type="checkbox" id="video-check">Video</input><br/>
+        </div>
+        <div class = "info-panel" id = "selection-panel">
+            <h3>Selection</h3>
+            <p id="sidebar"/>
+        </div>
+        <canvas id="position-feed" width = "750" height = "500" class = "media-panel">If you're seeing this text, your browser doesn't support HTML5. Please upgrade.</canvas>
+        <video class="media-panel" id = "video-feed" controls>
+            Your browser doesn't support HTML5 video.
+        </video>
+        <div class = "info-panel" id = "manifest-panel">
+            <h3>Participants</h3>
+            <p id="rSidebar"/>
+        </div>
+    </body>
+    <script src='bin/script.js'></script>
+</html>

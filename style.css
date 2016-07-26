@@ -1,114 +1,93 @@
-/*Basic font items*/
-html, body {
-    font-family : "Source Code Pro";
-    margin: 0;
-    height: 100%;
-    background-color: #EEEEEE;
+#container{
+    background-image: url('img/Running.jpg');
+    background-repeat: no-repeat;
+    background-size:cover;
 }
-/*Headers*/
-h1 {
-    margin-top : 0.75em;
-    text-align: center;
+
+#header{
+    height:17%;
+    width:100%;
+    padding-top:1%;
+    margin-top:-1%;
+    background-color: rgba(217, 231, 249, .65);
 }
-h3 {
+
+#top-main{
+    width:100%;
+    height:30%;
+    margin-top:-5.7%;
+    color:rgba(250, 250, 250, 1);
+    font-family: "Noto Sans", sans-serif;
+    font-size: 425%;
     text-align:center;
-}
-#menu {
-    width : 200;
-    height : 100%;
-    background-color: #EEEEEE;
-    float : left;
-    float : top;
-}
-.media-panel {
-    width : 750;
-    height : 500;
-    float : left;
-}
-.info-panel {
-    width : 225;
-    height : 500;
-    /*display:block;*/
-    overflow-x:hidden;
-    overflow-y:auto;
-    background-color: #0d64b2;
-    float : left;
-    float : top;
+    background-color: rgba(40,54,92,.7);
+    
 }
 
-/* Manifest text */
-.manifest-name {
-    font-family : "Source Code Pro";
-    width:100%;
-    height:30;
-    background-color: Transparent;
-    background-repeat:no-repeat;
-    border: none;
-    cursor:pointer;
-    overflow: hidden;
-    outline:none;
-}
-.manifest-name-deselected {
-    font-family : "Source Code Pro";
-    width:100%;
-    height:30;
-    background-color: Transparent;
-    background-repeat:no-repeat;
-    border: none;
-    cursor:pointer;
-    overflow: hidden;
-    outline:none;
-    opacity: 0.5;
-}
-/* TIME MANAGER */
-#time{
-    margin-left: 8.5%;
-    font-family: "Verdana";
-}
-.time-button {
-    width:20%;
-}
-#pause{
-    width : 65;
-}
-/*SEARCH*/
-#searchbar {
-    width : 50%;
-    margin-left : 25%;
-    text-align:  center;
-}
-#searchbar-container {
-    width : 100%;
+#page-break{
+    height:2%;
+    background-color:rgba(165, 220, 241, .7);
 }
 
-#not-found {
-    color: red;
+
+#bottom-main{
+    width:100%;
+    height:51%;
+    margin-top:-2.85%;
+    font-family: "Noto Sans", sans-serif;
+    font-size:200%;
+    color: rgba(36, 21, 133, 1);
+    text-align:center;
+    background-color: rgba(217, 231, 249, .65);
+}
+
+#full-name{
+    margin-left:31%;
+    margin-top:6%;
+    color: rgba(36, 21, 133, 1);
+}
+
+#about{
+    width:8%;
+    height:22.5%;
+     margin-top:-6%;
+    font-size:1.525rem;
+}
+
+.h-buttons{
+    width:6%;
+    height:33%;
+    margin-right:.65%;
+    font-size: 1.20rem;
+    float:right;
+}
+
+.applications{
+    width: 70%;
+    height: 55%;
+    margin: 0 auto;
+    display:block;
+    font-size: 1.80rem;
+} 
+
+button{
+    border-color: rgba(36, 21, 133, 1);
+    border-width:6px;
+    font-family: "Noto Sans", sans-serif;
+    color:F9F8F8;
+    background-color: rgba(112, 118, 207, 1);
+}
+table {
+    width:40%;
+    height:70%;
+    margin-top: -2.5%;
+    margin-left:auto;
+    margin-right:auto;
     text-align: center;
-    visibility : hidden;
-}
-#search-results {
-    text-align: center;
-    position: absolute;
-    top:6.75em;
-    left:25%;
-    width:50%;
 }
 
-/*Search options*/
-.poss {
-    font-family : "Source Code Pro";
-    background-color:white;
+tr{
     width:100%;
-}
-
-.sel{
-    font-family : "Source Code Pro";
-    width:100%;
-    background-color:#1832b6;
-    color:white;
-}
-
-.poss:hover{
-    background-color:#061355;
-    color:white;
+    height:50%;
+    text-align:center;
 }
