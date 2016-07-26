@@ -8,7 +8,7 @@
 function main() {
     let canvas = <HTMLCanvasElement>$('#position-feed')[0];
     let ctx = canvas.getContext('2d');
-    let state = new State([new Item(40, 40, 'Brian DeLeonardis', 18),new Item(40, 80, 'Jack Dates', 18),new Item(40, 120, 'Anthony Fasano', 18),new Item(40, 160, 'Anthony Hamill', 18),new Item(40, 200, 'Brandon Guglielmo', 18),new Item(40, 240, 'Chase Moran', 18),new Item(40, 280, 'Daniel Collins', 18),new Item(40, 320, 'Kevin DeStefano', 18),new Item(40, 360, 'Matthew Kumar', 18),new Item(40, 400, 'Ryan Goldstein', 18),new Item(40, 440, 'Tina Lu', 18),])
+    let state = new State([new Item(40, 40, 'Brian DeLeonardis', 18, 'Belize', 'athlete'),new Item(40, 80, 'Jack Dates', 18, 'Thailand', 'athlete'),new Item(40, 120, 'Anthony Fasano', 18, 'Botswana', 'athlete'),new Item(40, 160, 'Anthony Hamill', 18, 'Portugal', 'athlete'),new Item(40, 200, 'Brandon Guglielmo', 18, 'Niger', 'athlete'),new Item(40, 240, 'Chase Moran', 18, 'Macedonia', 'athlete'),new Item(40, 280, 'Daniel Collins', 18, 'Pakistan', 'athlete'),new Item(40, 320, 'Kevin DeStefano', 18, 'Slovenia', 'athlete'),new Item(40, 360, 'Matthew Kumar', 18, 'San Marino', 'athlete'),new Item(40, 400, 'Ryan Goldstein', 18, 'Equatorial Guinea', 'athlete'),new Item(40, 440, 'Tina Lu', 18, 'Italy', 'athlete'),])
     let bridge = new Bridge();
     let items : string[];
     let count = 0;

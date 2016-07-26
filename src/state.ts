@@ -7,13 +7,17 @@ class Item
     y : number;
     age : number;
     id : string;
+    affiliation : string;
+    type : string;
 
-    constructor(x : number, y : number, id : string, age : number)
+    constructor(x : number, y : number, id : string, age : number, affiliation : string, type : string)
     {
         this.x = x;
         this.y = y;
         this.id = id;
         this.age = age;
+        this.affiliation = affiliation;
+        this.type = type;
     }
 }
 
@@ -172,6 +176,8 @@ class State
     {
         $("#sidebar").append("<b>ID: </b>", person.id, "<br>");
         $("#sidebar").append("<b>Age: </b>", person.age, "<br>");
+        $("#sidebar").append("<b>Affiliation: </b>", person.affiliation, "<br>");
+        $("#sidebar").append("<b>Type: </b>", person.type, "<br>");
         $("#sidebar").append("<hr style='width:100%;height:1px;'/>");
     }
 
