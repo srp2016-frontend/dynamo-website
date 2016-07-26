@@ -28,6 +28,7 @@ class State
 {
     items : Item[];
     private selected : Item[];
+    private bkg : HTMLImageElement;
     public pSearch : (string) => string[];
     public time : TimeManager;
 
@@ -35,14 +36,13 @@ class State
     {
         this.items = items;
         this.selected = [];
+        this.bkg = <HTMLImageElement>$("#map-background")[0]
     }
 
     draw(ctx : CanvasRenderingContext2D) : void
     {
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.drawImage(this.bkg, 0, 0)
         ctx.globalAlpha = 1.0;
-        ctx.fillStyle = "grey";
-        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.lineWidth = 2;
         for(let item of this.items)
         {

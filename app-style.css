@@ -34,12 +34,12 @@ button{
 
 .media-panel {
     width : 750;
-    height : 500;
+    height : 600;
     float : left;
 }
 .info-panel {
     width : 225;
-    height : 500;
+    height : 600;
     /*display:block;*/
     overflow-x:hidden;
     overflow-y:auto;
