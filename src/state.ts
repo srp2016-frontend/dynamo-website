@@ -71,7 +71,7 @@ class State
     {
         for(let item of this.items)
         {
-            let equivalent = next.getItemByName(item.id);
+            let equivalent = next.getItemByID(item.id);
             item.x = this.scaleByTime(item.x, equivalent.x, ticks, maxTicks);
             item.y = this.scaleByTime(item.y, equivalent.y, ticks, maxTicks);
         }
@@ -94,7 +94,7 @@ class State
         return null;
     }
 
-    getItemByName(name : string) : Item
+    getItemByID(name : string) : Item
     {
         for(let item of this.items)
         {
@@ -202,12 +202,12 @@ class State
         let state = this;
         function generateButton(name : string) : void 
         {
-            let className = "manifest-name"
-            if(state.selected.length > 0 && state.selected.indexOf(state.getItemByName(name)) == -1)
-                className += "-deselected"
-            var r= $('<input type="button" class = "' + className + '" value ="' + name + '"/>');
+            let classID = "manifest-name"
+            if(state.selected.length > 0 && state.selected.indexOf(state.getItemByID(name)) == -1)
+                classID += "-deselected"
+            var r= $('<input type="button" class = "' + classID + '" value ="' + name + '"/>');
             r.click(function(e : MouseEvent) {
-                let item = state.getItemByName(r.val());
+                let item = state.getItemByID(r.val());
                 if(e.shiftKey) 
                     state.addSelection(item)
                 else

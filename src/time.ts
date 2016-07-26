@@ -145,7 +145,7 @@ class TimeManager
                 cFrame = this.frames.length - 1;
             let frame = Math.max(cFrame - timeBack, 0)
             let temp = new State(this.frames[frame])
-            return temp.getItemByName(item.id)
+            return temp.getItemByID(item.id)
         } 
         else
         {

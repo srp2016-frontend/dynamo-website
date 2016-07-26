@@ -10,7 +10,7 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D) : (strin
     {
         for (let item of items)
             if(input.value == item)     
-                state.setSelection(state.getItemByName(input.value))
+                state.setSelection(state.getItemByID(input.value))
         console.log("search")
     }
     
@@ -18,7 +18,7 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D) : (strin
     {
         let items : Item[] = [];
         for(let item of items)
-            items.push(state.getItemByName(item.id))
+            items.push(state.getItemByID(item.id))
         state.setSelections(items)
         $("#not-found").css("visibility", state.hasSelection() ? "hidden" : "visible")
         state.draw(ctx);
