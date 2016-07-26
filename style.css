@@ -1,3 +1,11 @@
+body {
+    padding:0;
+    margin: 0;
+    border : 0;
+    color: rgba(36, 21, 133, 1);
+    font-family: "Noto Sans", sans-serif;
+    text-align:center;
+}
 #container{
     background-image: url('img/Running.jpg');
     background-repeat: no-repeat;
@@ -7,17 +15,20 @@
 #header{
     height:17%;
     width:100%;
-    padding-top:1%;
-    margin-top:-1%;
     background-color: rgba(217, 231, 249, .65);
+    position:relative;
 }
-
+h1 {
+    padding:0;
+    margin: 0;
+    border : 0;
+}
 #top-main{
+        padding:0;
+    margin: 0;
+    border : 0;
     width:100%;
-    height:30%;
-    margin-top:-5.7%;
     color:rgba(250, 250, 250, 1);
-    font-family: "Noto Sans", sans-serif;
     font-size: 425%;
     text-align:center;
     background-color: rgba(40,54,92,.7);
@@ -33,40 +44,32 @@
 #bottom-main{
     width:100%;
     height:51%;
-    margin-top:-2.85%;
-    font-family: "Noto Sans", sans-serif;
     font-size:200%;
-    color: rgba(36, 21, 133, 1);
-    text-align:center;
     background-color: rgba(217, 231, 249, .65);
 }
 
 #full-name{
-    margin-left:31%;
-    margin-top:6%;
-    color: rgba(36, 21, 133, 1);
+    margin:0;
+    margin-left:25%;
+    position:absolute;
+    bottom:0;
+    font-size:1.7rem;
 }
 
 #about{
-    width:8%;
-    height:22.5%;
-     margin-top:-6%;
     font-size:1.525rem;
 }
 
 .h-buttons{
-    width:6%;
-    height:33%;
     margin-right:.65%;
     font-size: 1.20rem;
     float:right;
 }
 
 .applications{
-    width: 70%;
+    width : 100%;
     height: 55%;
     margin: 0 auto;
-    display:block;
     font-size: 1.80rem;
 } 
 
@@ -80,7 +83,6 @@ button{
 table {
     width:40%;
     height:70%;
-    margin-top: -2.5%;
     margin-left:auto;
     margin-right:auto;
     text-align: center;
@@ -90,4 +92,8 @@ tr{
     width:100%;
     height:50%;
     text-align:center;
+}
+td {
+    padding-left : 1em;
+    padding-right : 1em;
 }
