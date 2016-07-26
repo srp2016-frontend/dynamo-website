@@ -24,7 +24,7 @@ h1 {
     border : 0;
 }
 #top-main{
-        padding:0;
+    padding:0;
     margin: 0;
     border : 0;
     width:100%;
@@ -50,7 +50,10 @@ h1 {
 
 #full-name{
     margin:0;
-    margin-left:25%;
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
     position:absolute;
     bottom:0;
     font-size:1.7rem;
