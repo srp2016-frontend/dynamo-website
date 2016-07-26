@@ -23,7 +23,7 @@ class Bridge
         {
             let value = <Item[]>eval(message);
             if(value) {
-                state.people = value;
+                state.items = value;
                 state.updateSelected()
                 if(action)
                     action();

@@ -32,7 +32,7 @@ class TimeManager
         this.currentFrame = 0;
         this.state = state;
         this.queued = next;
-        this.next = new State(this.state.people);
+        this.next = new State(this.state.items);
         this.isCurrent = true;
         this.pauseButton = pause;
         this.setupEvents();
@@ -54,7 +54,7 @@ class TimeManager
                 if(this.ticks == 100)
                 {
                     this.bridge.tick(this.queued, this.frames.length);
-                    this.frames.push(JSON.parse(JSON.stringify(this.state.people)));
+                    this.frames.push(JSON.parse(JSON.stringify(this.state.items)));
                     this.ticks = 0;
                 }
                 this.state.update(this.queued, this.ticks, maxTicks);
@@ -77,7 +77,7 @@ class TimeManager
     {
         this.ticks = 0;
         this.currentFrame = this.frames.length - 1;
-        this.state.people = this.getFrame(this.currentFrame);
+        this.state.items = this.getFrame(this.currentFrame);
         this.state.updateSelected();
         this.isCurrent = true;
     }
@@ -87,11 +87,11 @@ class TimeManager
         if(this.currentFrame == 0) return;
         this.ticks = 0;
         this.currentFrame --;
-        this.state.people = this.getFrame(this.currentFrame)
+        this.state.items = this.getFrame(this.currentFrame)
         this.state.updateSelected();
         if(this.currentFrame < this.frames.length - 1)
         {
-            this.next.people = this.getFrame(this.currentFrame + 1);
+            this.next.items = this.getFrame(this.currentFrame + 1);
             this.next.updateSelected();
         }
         this.isCurrent = false;
@@ -104,11 +104,11 @@ class TimeManager
         if(this.currentFrame == this.frames.length - 1) return;
         this.ticks = 0;
         this.currentFrame ++;
-        this.state.people = this.getFrame(this.currentFrame)
+        this.state.items = this.getFrame(this.currentFrame)
         this.state.updateSelected();
         if(this.currentFrame < this.frames.length - 1)
         {
-            this.next.people = this.getFrame(this.currentFrame + 1);
+            this.next.items = this.getFrame(this.currentFrame + 1);
             this.next.updateSelected();
             this.isCurrent = false;
             if(!this.paused)
@@ -116,7 +116,7 @@ class TimeManager
         } else 
         {
             this.isCurrent = true;
-            this.bridge.tick(this.queued, this.frames.length, () => this.frames.push(this.state.people));
+            this.bridge.tick(this.queued, this.frames.length, () => this.frames.push(this.state.items));
         }
     }
 
@@ -124,11 +124,11 @@ class TimeManager
     {
         this.currentFrame = 0;
         this.ticks = 0;
-        this.state.people = this.getFrame(this.currentFrame);
+        this.state.items = this.getFrame(this.currentFrame);
         this.state.updateSelected();
         if(this.currentFrame < this.frames.length - 1)
         {
-            this.next.people = this.getFrame(this.currentFrame + 1);
+            this.next.items = this.getFrame(this.currentFrame + 1);
             this.next.updateSelected();
         }
         this.isCurrent = false;
@@ -136,7 +136,7 @@ class TimeManager
             pause(this.pauseButton, this);
     }
 
-    getPersonInPast(person : Item, timeBack : number) : Item
+    getItemInPast(item : Item, timeBack : number) : Item
     {
         if(this.frames.length > 0)
         {
@@ -145,11 +145,11 @@ class TimeManager
                 cFrame = this.frames.length - 1;
             let frame = Math.max(cFrame - timeBack, 0)
             let temp = new State(this.frames[frame])
-            return temp.getPersonByName(person.id)
+            return temp.getItemByName(item.id)
         } 
         else
         {
-            return person;
+            return item;
         }
     }
 

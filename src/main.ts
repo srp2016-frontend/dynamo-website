@@ -12,7 +12,7 @@ function main() {
     let bridge = new Bridge();
     let items : string[];
     let count = 0;
-    let next = new State(state.people)
+    let next = new State(state.items)
     let timeManager = new TimeManager(bridge, ctx, state, next, <HTMLButtonElement>$("#pause")[0])
     state.pSearch = setSearchEvents(state, ctx);
     state.time = timeManager;

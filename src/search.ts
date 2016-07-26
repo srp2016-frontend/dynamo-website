@@ -10,16 +10,16 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D) : (strin
     {
         for (let item of items)
             if(input.value == item)     
-                state.setSelection(state.getPersonByName(input.value))
+                state.setSelection(state.getItemByName(input.value))
         console.log("search")
     }
     
     function searchAll() : void
     {
-        let people : Item[] = [];
+        let items : Item[] = [];
         for(let item of items)
-            people.push(state.getPersonByName(item))
-        state.setSelections(people)
+            items.push(state.getItemByName(item.id))
+        state.setSelections(items)
         $("#not-found").css("visibility", state.hasSelection() ? "hidden" : "visible")
         state.draw(ctx);
     }
@@ -84,9 +84,9 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D) : (strin
         if(check.length < 1)
             return [];
         var possible = [];
-        for(let i = 0; i < state.people.length; i++)
+        for(let i = 0; i < state.items.length; i++)
         {
-            var name = state.people[i].id;
+            var name = state.items[i].id;
             if(name.toLowerCase().indexOf(check.toLowerCase()) >= 0)
             {
                 possible.push(name);

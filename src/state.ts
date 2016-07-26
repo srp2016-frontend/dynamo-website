@@ -26,19 +26,15 @@ const radiusSquared = radius * radius;
 
 class State
 {
-    people : Item[];
+    items : Item[];
     private selected : Item[];
     public pSearch : (string) => string[];
     public time : TimeManager;
-    public width : number;
-    public height : number;
 
-    constructor(people : Item[], width : number, height : number)
+    constructor(items : Item[])
     {
-        this.people = people;
+        this.items = items;
         this.selected = [];
-        this.width = width;
-        this.height = height;
     }
 
     draw(ctx : CanvasRenderingContext2D) : void
@@ -48,23 +44,23 @@ class State
         ctx.fillStyle = "grey";
         ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.lineWidth = 2;
-        for(let person of this.people)
+        for(let item of this.items)
         {
             ctx.beginPath();
             ctx.fillStyle = "red";
             ctx.strokeStyle = "blue"
             ctx.globalAlpha = 0.25;
 
-            if(this.selected.indexOf(person) != -1 || this.selected.length === 0)
+            if(this.selected.indexOf(item) != -1 || this.selected.length === 0)
                 ctx.globalAlpha = 1.0;
 
-            ctx.arc(person.x, person.y, radius, 0, 2 * Math.PI);
+            ctx.arc(item.x, item.y, radius, 0, 2 * Math.PI);
             ctx.fill();
             ctx.beginPath();
-            ctx.moveTo(person.x, person.y);
+            ctx.moveTo(item.x, item.y);
             for(let i = 1; i < 10; i++)
             {
-                let previous = this.time.getPersonInPast(person, i)
+                let previous = this.time.getItemInPast(item, i)
                 ctx.lineTo(previous.x, previous.y)
             }
             ctx.stroke()
@@ -73,11 +69,11 @@ class State
 
     update(next : State, ticks : number, maxTicks : number) : void
     {
-        for(let person of this.people)
+        for(let item of this.items)
         {
-            let equivalent = next.getPersonByName(person.id);
-            person.x = this.scaleByTime(person.x, equivalent.x, ticks, maxTicks);
-            person.y = this.scaleByTime(person.y, equivalent.y, ticks, maxTicks);
+            let equivalent = next.getItemByName(item.id);
+            item.x = this.scaleByTime(item.x, equivalent.x, ticks, maxTicks);
+            item.y = this.scaleByTime(item.y, equivalent.y, ticks, maxTicks);
         }
     }
 
@@ -86,25 +82,25 @@ class State
         return current + (goal - current) / (maxTicks - ticks)
     }
 
-    getPersonAt(x : number, y : number) : Item
+    getItemAt(x : number, y : number) : Item
     {
-        for(let person of this.people)
+        for(let item of this.items)
         {
-            let dstX = x - person.x;
-            let dstY = y - person.y;
+            let dstX = x - item.x;
+            let dstY = y - item.y;
             if(dstX ** 2 + dstY ** 2 <= radiusSquared)
-                return person;
+                return item;
         }
         return null;
     }
 
-    getPersonByName(name : string) : Item
+    getItemByName(name : string) : Item
     {
-        for(let person of this.people)
+        for(let item of this.items)
         {
-            if(person.id === name)
+            if(item.id === name)
             {
-                return person;
+                return item;
             }
         }
         return null;
@@ -112,14 +108,14 @@ class State
 
     updateSelected() : void
     {
-        for(let i = 0; i < this.people.length; i++)
+        for(let i = 0; i < this.items.length; i++)
         {
             for(let j = 0; j < this.selected.length; j++)
             {
-                let person = this.people[i];
+                let item = this.items[i];
                 let selection = this.selected[j];
-                if(selection.id == person.id && selection.age === person.age)
-                    this.selected[j] = person;
+                if(selection.id == item.id && selection.age === item.age)
+                    this.selected[j] = item;
             }
         }
     }
@@ -170,17 +166,17 @@ class State
     private updateDisplay() : void
     {
         $("#sidebar").empty();
-        for(let person of this.selected)
-            this.appendToDisplay(person);
+        for(let item of this.selected)
+            this.appendToDisplay(item);
         this.getRoster();
     }
 
-    private appendToDisplay(person : Item) : void
+    private appendToDisplay(item : Item) : void
     {
-        $("#sidebar").append("<b>ID: </b>", person.id, "<br>");
-        $("#sidebar").append("<b>Age: </b>", person.age, "<br>");
-        $("#sidebar").append("<b>Affiliation: </b>", person.affiliation, "<br>");
-        $("#sidebar").append("<b>Type: </b>", person.type, "<br>");
+        $("#sidebar").append("<b>ID: </b>", item.id, "<br>");
+        $("#sidebar").append("<b>Age: </b>", item.age, "<br>");
+        $("#sidebar").append("<b>Affiliation: </b>", item.affiliation, "<br>");
+        $("#sidebar").append("<b>Type: </b>", item.type, "<br>");
         $("#sidebar").append("<hr style='width:100%;height:1px;'/>");
     }
 
@@ -207,15 +203,15 @@ class State
         function generateButton(name : string) : void 
         {
             let className = "manifest-name"
-            if(state.selected.length > 0 && state.selected.indexOf(state.getPersonByName(name)) == -1)
+            if(state.selected.length > 0 && state.selected.indexOf(state.getItemByName(name)) == -1)
                 className += "-deselected"
             var r= $('<input type="button" class = "' + className + '" value ="' + name + '"/>');
             r.click(function(e : MouseEvent) {
-                let person = state.getPersonByName(r.val());
+                let item = state.getItemByName(r.val());
                 if(e.shiftKey) 
-                    state.addSelection(person)
+                    state.addSelection(item)
                 else
-                    state.setSelection(person);
+                    state.setSelection(item);
             })
             results.append(r);  
             results.append("<br>");

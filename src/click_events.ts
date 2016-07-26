@@ -5,9 +5,9 @@ function setClickEvents(canvas : HTMLCanvasElement, ctx : CanvasRenderingContext
     canvas.onmousedown = (e : MouseEvent) =>
     {
         if(e.shiftKey)
-            state.addSelection(state.getPersonAt(e.offsetX, e.offsetY));
+            state.addSelection(state.getItemAt(e.offsetX, e.offsetY));
         else
-            state.setSelection(state.getPersonAt(e.offsetX, e.offsetY));
+            state.setSelection(state.getItemAt(e.offsetX, e.offsetY));
         state.draw(ctx);
     }
 
@@ -15,7 +15,7 @@ function setClickEvents(canvas : HTMLCanvasElement, ctx : CanvasRenderingContext
     {
         if(!state.hasSelection())
         {
-            state.setDisplay(state.getPersonAt(e.offsetX, e.offsetY))
+            state.setDisplay(state.getItemAt(e.offsetX, e.offsetY))
             state.draw(ctx);
         }
     }
