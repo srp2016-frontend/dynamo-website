@@ -4,7 +4,7 @@ function setMenuEvents() : void
 {
     function bind(input : JQuery, target : JQuery) : void 
     {
-        let doEvent = (e : Event) => target.css("display", input.is(":checked") ? "auto" : "none")
+        let doEvent = (e : Event) => target.css("display", input.is(":checked") ? "initial" : "none")
         input.change(doEvent)
         doEvent(null)
     }
