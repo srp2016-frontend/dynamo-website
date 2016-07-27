@@ -3,7 +3,6 @@
 - Communicate with database *
 - Change settings based on user selection
 - Show video feed *
-- Alerts for loss / gain of sensed objects
 - Switch between triathlon portions / view location
 ##Important
 - Telemetry data **
