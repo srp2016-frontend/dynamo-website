@@ -2,8 +2,21 @@
     <head>
         <title>DYNAMO</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/style.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet"/>
+        <script>
+            function goTo(type)
+            {
+                try {
+                    var cookies = JSON.parse(document.cookie)
+                } catch (e) {
+                    var cookies = {}
+                }
+                cookies.type = type
+                document.cookie = JSON.stringify(cookies)
+                location.href="pages/Options-" + type + ".html"
+            }
+        </script>
     </head>
     <body>
         <div id = "container">
@@ -11,7 +24,7 @@
                 <button class = "h-buttons">Register</button>
                 <button class = "h-buttons">Sign In</button>
                 <br/>
-                <h2 id = "full-name">Dynamic Motion Object Identification and Location<h2>
+                <h2 id = "full-name">Dynamic Motion Object Identification and Location</h2>
             </div>
             <div id = "top-main">
                 <h1>DYNAMO</h1>
@@ -23,18 +36,18 @@
                 <table>
 					<tr>
 						<td> 
-							<button class = "applications"  onclick = "location.href='Options-Triathlon.html'">Triathlon</button>
+							<button class = "applications"  onclick = "goTo('Triathlon')">Triathlon</button>
 						</td>
 						<td> 
-							<button class = "applications" onclick = "location.href='Options-Water.html'">Water Search</button>
+							<button class = "applications" onclick = "goTo('Water')'">Water Search</button>
 						</td>
 					</tr>
 					<tr>
 						<td> 
-							<button class = "applications" onclick = "location.href='Options-Shooter.html'">Active Shooter</button>
+							<button class = "applications" onclick = "goTo('Shooter')">Active Shooter</button>
 						</td>
 						<td> 
-                            <button class = "applications" onclick = "location.href='Options-Land.html'">Land Search</button>
+                            <button class = "applications" onclick = "goTo('Land')">Land Search</button>
 						</td>
 					</tr>
 				</table>

@@ -1,5 +1,6 @@
 ///<reference path='jquery.d.ts'/>
 /// <reference path="time.ts" />
+/// <reference path="alert.ts" />
 
 class Item
 {
@@ -28,6 +29,7 @@ class State
 {
     items : Item[];
     private selected : Item[];
+    private missing : Item[];
     private bkg : HTMLImageElement;
     public pSearch : (string) => string[];
     public time : TimeManager;
@@ -36,6 +38,7 @@ class State
     {
         this.items = items;
         this.selected = [];
+        this.missing = [];
         this.bkg = <HTMLImageElement>$("#map-background")[0]
     }
 
@@ -72,9 +75,28 @@ class State
         for(let item of this.items)
         {
             let equivalent = next.getItemByID(item.id);
-            item.x = this.scaleByTime(item.x, equivalent.x, ticks, maxTicks);
-            item.y = this.scaleByTime(item.y, equivalent.y, ticks, maxTicks);
+            let missingIndex = this.missingIndex(item);
+            if (equivalent) {
+                item.x = this.scaleByTime(item.x, equivalent.x, ticks, maxTicks);
+                item.y = this.scaleByTime(item.y, equivalent.y, ticks, maxTicks);
+                if(missingIndex !== -1) {
+                    this.missing.splice(missingIndex)
+                }
+            } else {
+                 if(missingIndex === -1) {
+                    generate_alert(item.type + " " + item.id + " has left the sensor field.")
+                    this.missing.push(item)
+                }
+
+            }
         }
+    }
+
+    missingIndex(item : Item) : number 
+    {
+        let index = 0;
+        while(index < this.missing.length && item.id !== this.missing[index].id) index++;
+        return (index < this.missing.length) ? index : -1;
     }
 
     scaleByTime(current : number, goal : number, ticks : number, maxTicks : number) : number
