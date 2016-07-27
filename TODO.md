@@ -7,7 +7,6 @@
 - Switch between triathlon portions / view location
 ##Important
 - Telemetry data
-- Display map background
 - Fix time movement
 ##Unimportant
 - Custom icons for the first responders
