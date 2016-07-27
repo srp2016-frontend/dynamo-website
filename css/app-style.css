@@ -2,6 +2,7 @@
 html, body {
     font-family : "Noto Sans", sans-serif;
     margin: 0;
+    margin-left:100;
     height: 100%;
     background-color: #EEEEEE;
 }
@@ -14,17 +15,15 @@ h1 {
 h3 {
     text-align:center;
 }
-/*Buttons*/
-button{
 
-}
 /*Widgets*/
 #menu {
     width : 200;
     height : 100%;
     background-color: #EEEEEE;
-    float : left;
-    float : top;
+    position: fixed;
+    top : 0;
+    left : 0;
 }
 
 .media-panel {
@@ -73,52 +72,47 @@ button{
 /* TIME MANAGER */
 #time{
     margin-left:38.75%;
+    height : 5%;
 }
 
 .time-button {
-    width:4%;
-    height:8.25%;
+    height:100%;
     border:0;
     background:transparent;
 }
 
 #back-to-start{
-    background: url('img/left-double.png');
+    background: url('../img/left-double.png');
     background-size: cover;                  
     background-repeat: no-repeat;
     background-position: center center;
 }
 
 #back-one{
-    background:url('img/left-arrow.png');
+    background:url('../img/left-arrow.png');
     background-size: cover;                  
     background-repeat: no-repeat;
     background-position: center center;
 }
 #pause{
-    background: url('img/play.png');
+    background: url('../img/play.png');
     background-size: cover;                  
     background-repeat: no-repeat;
     background-position: center center;
 }
 
 #forward-one{
-    background: url('img/right-arrow.png');
+    background: url('../img/right-arrow.png');
     background-size: cover;                  
     background-repeat: no-repeat;
     background-position: center center;
 }
 
 #forward-to-now{
-    background:url('img/right-double.png');
+    background:url('../img/right-double.png');
     background-size: cover;                  
     background-repeat: no-repeat;
     background-position: center center;
-}
-
-
-#pause{
-    width : 65;
 }
 /*SEARCH*/
 #searchbar {
@@ -145,7 +139,6 @@ button{
     font-size:1.1em;
     color:F9F8F8;
     background-color: rgba(112, 118, 207, 1);
-    width:6%;
 }
 
 /*Search options*/
