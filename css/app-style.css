@@ -71,12 +71,12 @@ h3 {
 }
 /* TIME MANAGER */
 #time{
-    margin-left:38.75%;
-    height : 5%;
+    margin-left:35.75%;
 }
 
 .time-button {
-    height:100%;
+    width : 64px;
+    height : 64px;
     border:0;
     background:transparent;
 }
