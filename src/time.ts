@@ -3,11 +3,17 @@
 /// <reference path="alert.ts" />
 
 const maxTicks = 100;
-function pause(button : HTMLButtonElement, time : TimeManager) : void
+function pause(time : TimeManager) : void
 {
-    let pause = button.innerHTML === "Pause"
-    button.innerHTML = pause ? "Resume" : "Pause"
-    time.paused = pause;
+    $("#play").css("display", "initial");
+    $("#pause").css("display", "none");
+    time.paused = true;
+}
+function play(time : TimeManager) : void
+{
+    $("#pause").css("display", "initial");
+    $("#play").css("display", "none");
+    time.paused = false;
 }
 class TimeManager
 {
@@ -96,7 +102,7 @@ class TimeManager
         }
         this.isCurrent = false;
         if(!this.paused)
-            pause(this.pauseButton, this);
+            pause(this);
     }
 
     moveStateForward() : void
@@ -112,7 +118,7 @@ class TimeManager
             this.next.updateSelected();
             this.isCurrent = false;
             if(!this.paused)
-                pause(this.pauseButton, this);
+                pause(this);
         } else 
         {
             this.isCurrent = true;
@@ -133,7 +139,7 @@ class TimeManager
         }
         this.isCurrent = false;
         if(!this.paused)
-            pause(this.pauseButton, this);
+            pause(his);
     }
 
     getItemInPast(item : Item, timeBack : number) : Item
@@ -179,7 +185,11 @@ class TimeManager
 
         $('#pause').click(function(e : Event)
         {
-            pause(this, timeManager);
+            pause(timeManager);
+        });
+        $('#play').click(function (e : Event)
+        {
+            play(timeManager);
         });
     }
 }
