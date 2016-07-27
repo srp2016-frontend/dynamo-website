@@ -23,7 +23,7 @@ button{
     color:F9F8F8;
     background-color: rgba(112, 118, 207, 1);
 }
-
+/*Widgets*/
 #menu {
     width : 200;
     height : 100%;
@@ -133,4 +133,10 @@ button{
 .poss:hover{
     background-color:#061355;
     color:white;
+}
+
+/* MISC */
+.invisible {
+    position:absolute;
+    visibility:hidden;
 }
