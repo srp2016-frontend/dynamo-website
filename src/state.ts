@@ -59,14 +59,14 @@ class State
             if(this.selected.indexOf(item) != -1 || this.selected.length === 0)
                 ctx.globalAlpha = 1.0;
 
-            ctx.arc(item.x + 10, item.y - 10, radius, 0, 2 * Math.PI);
+            ctx.arc(item.x, item.y, radius, 0, 2 * Math.PI);
             ctx.fill();
             ctx.beginPath();
-            ctx.moveTo(item.x + 10, item.y - 10);
+            ctx.moveTo(item.x, item.y);
             for(let i = 1; i < 10; i++)
             {
                 let previous = this.time.getItemInPast(item, i)
-                ctx.lineTo(previous.x + 10, previous.y - 10)
+                ctx.lineTo(previous.x, previous.y)
             }
             ctx.stroke()
         }
@@ -81,8 +81,8 @@ class State
             let equivalent = next.getItemByID(item.id);
             let missingIndex = this.missingIndex(item);
             if (equivalent) {
-                item.x = this.scaleByTime(item.x, equivalent.x, ticks, maxTicks);
-                item.y = this.scaleByTime(item.y, equivalent.y, ticks, maxTicks);
+                item.x = this.scaleByTime(item.x, Math.floor(equivalent.x), ticks, maxTicks);
+                item.y = this.scaleByTime(item.y, Math.floor(equivalent.y), ticks, maxTicks);
                 if(missingIndex !== -1) {
                     this.missing.splice(missingIndex)
                 }
