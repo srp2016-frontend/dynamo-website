@@ -2,13 +2,26 @@
     <head>
         <title>DYNAMO</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+        <script src="../src/dropdown.js"></script>
         <link rel="stylesheet" type="text/css" href="../css/app-style.css">
         <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
         <img id="map-background" class="invisible" src="../img/background.png"></img>
     </head>
     <body>
+        <!--Dropdown-->
+        <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn">Courses</button>
+            <div id="myDropdown" class="dropdown-content">
+               <a href="file:///U:/Dynamo/dynamo-website/pages/app.html" style = "color:black">Rio Olympics</a>
+                <a href="file:///U:/Dynamo/dynamo-website/pages/app.html">London Olympics</a>
+                <a href="file:///U:/Dynamo/dynamo-website/pages/app.html">Beijing Olympics</a>
+                <a href = "file:///U:/Dynamo/dynamo-website/pages/app.html">Malibu Triathlon</a>
+            </div>
+        </div>
+        
         <!-- Page title -->
         <h1>DYNAMO</h1>
+        
         <!-- Searchbar -->
         <div id="searchbar-container">
             <input id="searchbar">
@@ -40,6 +53,17 @@
             <input type="checkbox" id="manifest-check"><span id="manifest-check-name">Manifest</span></input><br/>
             
             <input type="checkbox" id="video-check">Video</input><br/>
+            <input type="checkbox" id ="tech-check">Technology</input><br/>
+            
+            <!--Tech used-->
+            <div id = "tech-info">
+                <h3>Technology Used</h3>
+                <ul>
+                    <li><b>GPS</b>: each subject wears a gps tag (simulated)</li><br>
+                    <li><b>RFID:</b> passive - used for checkpoints (simulated)</li><br>
+                    <li><b>Drone:</b> video was taped of Dynamo team members</li>
+                </ul>
+            </div>
         </div>
         <div class = "info-panel" id = "selection-panel">
             <h3>Selection</h3>

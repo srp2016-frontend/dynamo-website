@@ -15,4 +15,5 @@ function setMenuEvents() : void
     bind($("#alert-check"), $("#alert-panel"))
     bind($("#manifest-check"), $("#manifest-panel"))
     bind($("#video-check"), $("#video-feed"))
+    bind($("#tech-check"), $("#tech-info"))
 }
