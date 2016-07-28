@@ -8,4 +8,5 @@ function changeSettings()
     $("#manifest-check-name").html(manifest_name)
     if(type !== "Triathlon")
         $("#course-dropdown").remove()
+    $("#title").append(": " + type)
 }
