@@ -3,9 +3,11 @@
 - Map background changes based on application
 ##Important
 - Telemetry data **
-- Fix time movement
+- Technology blurb should respond to the current application
 ##Unimportant
 - Custom icons for the first responders
+- Remove extraneous menu items
+- Fix time movement
 ##Stretch / extra
 
 * Depends on processing team
