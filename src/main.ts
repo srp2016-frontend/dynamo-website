@@ -19,7 +19,7 @@ function main() {
     state.draw(ctx);
     setInterval(() => {
         timeManager.updateFrame();
-    }, 10);
+    }, 1);
     setClickEvents(canvas, ctx, state);
     state.getRoster();
     setMenuEvents();
