@@ -126,6 +126,12 @@ h3 {
     margin-left : 25%;
     text-align:  center;
 }
+
+#tech-info{
+    position:absolute;
+    bottom:0;
+}
+
 #searchbar-container {
     width : 100%;
 }
