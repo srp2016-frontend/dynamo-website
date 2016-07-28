@@ -139,7 +139,7 @@ class TimeManager
         }
         this.isCurrent = false;
         if(!this.paused)
-            pause(his);
+            pause(this);
     }
 
     getItemInPast(item : Item, timeBack : number) : Item
