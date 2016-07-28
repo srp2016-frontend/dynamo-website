@@ -56,11 +56,15 @@ class TimeManager
             if(this.isCurrent)
             {
                 this.ticks += 1;
-                this.queued.copySelection(this.state);
+                if(this.state.items.length > 0)
+                    this.queued.copySelection(this.state);
+                else
+                    this.state.items = JSON.parse(JSON.stringify(this.queued.items));
                 if(this.ticks == 100)
                 {
                     this.bridge.tick(this.queued, this.frames.length);
-                    this.frames.push(JSON.parse(JSON.stringify(this.state.items)));
+                    if(this.state.items.length > 0)
+                        this.frames.push(JSON.parse(JSON.stringify(this.state.items)));
                     this.ticks = 0;
                 }
                 this.state.update(this.queued, this.ticks, maxTicks);
