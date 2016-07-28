@@ -4,6 +4,7 @@
 /// <reference path="click_events.ts" />
 /// <reference path="search.ts" />
 /// <reference path="menu.ts" />
+/// <reference path="type.ts" />
 
 function main() {
     let canvas = <HTMLCanvasElement>$('#position-feed')[0];
@@ -23,5 +24,6 @@ function main() {
     setClickEvents(canvas, ctx, state);
     state.getRoster();
     setMenuEvents();
+    changeSettings();
 }
 main();
