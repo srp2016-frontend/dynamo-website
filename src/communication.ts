@@ -24,6 +24,12 @@ class Bridge
             let value = <Item[]>eval(message);
             if(value) {
                 state.items = value;
+                for(let item of state.items)
+                {
+                    item.x = parseInt("" + item.x) + 20;
+                    item.y = parseInt("" + item.y) - 10;
+                    console.log(item)
+                }
                 state.updateSelected()
                 if(action)
                     action();
