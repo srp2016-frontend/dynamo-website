@@ -49,6 +49,8 @@ class State
         ctx.lineWidth = 2;
         for(let item of this.items)
         {
+            item.x = Math.floor(item.x);
+            item.y = Math.floor(item.y);
             ctx.beginPath();
             ctx.fillStyle = "red";
             ctx.strokeStyle = "blue"
@@ -57,14 +59,14 @@ class State
             if(this.selected.indexOf(item) != -1 || this.selected.length === 0)
                 ctx.globalAlpha = 1.0;
 
-            ctx.arc(item.x, item.y, radius, 0, 2 * Math.PI);
+            ctx.arc(item.x + 10, item.y - 10, radius, 0, 2 * Math.PI);
             ctx.fill();
             ctx.beginPath();
-            ctx.moveTo(item.x, item.y);
+            ctx.moveTo(item.x + 10, item.y - 10);
             for(let i = 1; i < 10; i++)
             {
                 let previous = this.time.getItemInPast(item, i)
-                ctx.lineTo(previous.x, previous.y)
+                ctx.lineTo(previous.x + 10, previous.y - 10)
             }
             ctx.stroke()
         }
@@ -74,6 +76,8 @@ class State
     {
         for(let item of this.items)
         {
+            item.x = Math.floor(item.x);
+            item.y = Math.floor(item.y);
             let equivalent = next.getItemByID(item.id);
             let missingIndex = this.missingIndex(item);
             if (equivalent) {
