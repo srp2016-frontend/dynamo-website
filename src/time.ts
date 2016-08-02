@@ -2,7 +2,6 @@
 ///<reference path='communication.ts'/>
 /// <reference path="alert.ts" />
 
-const maxTicks = 10;
 function pause(time : TimeManager) : void
 {
     $("#play").css("display", "initial");

@@ -6,6 +6,8 @@
 /// <reference path="menu.ts" />
 /// <reference path="type.ts" />
 
+const maxTicks = 50; 
+
 function main() {
     let canvas = <HTMLCanvasElement>$('#position-feed')[0];
     let ctx = canvas.getContext('2d');
