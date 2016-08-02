@@ -20,15 +20,21 @@
     </head>
     <body>
         <div id = "container" style = "background-image: url('img/Running.jpg')">
+        
             <div id = "header">
                 <button class = "h-buttons">Register</button>
                 <button class = "h-buttons">Sign In</button>
+                
                 <br/>
                 <h2 id = "full-name">Dynamic Motion Object Identification and Location</h2>
             </div>
+        <div id="abstract">
+            <button id="close-abstract" onclick="$('#abstract').css('visibility', 'hidden')">X</button>
+            DYNAMO is applied research, the core of which is fueled by data created by Wireless Network Sensors. DYNAMO used GPS, active and passive RFID, and drone video sensors. Data from these actual sensors plus data from a DYNAMO Simulation Toolkit, built as part of the project, was used to illustrate systems and applications that would derive value from this sensor data. These applications include monitoring athletes competing in the Rio Olympics triathlon, tracking 1st responders in an active shooter incident at Monmouth University, and conducting a water search for remnants of an air disaster. 
+        </div>
             <div id = "top-main">
                 <h1>DYNAMO</h1>
-                <button id = "about">About</button>
+                <button id = "about" onclick="$('#abstract').css('visibility', 'initial')">About</button>
             </div>
             <div id = "page-break"></div>
             <div id = "bottom-main">
@@ -52,7 +58,8 @@
 					</tr>
 				</table>
             </div>
-        </div>
             
+        </div>
+        
     </body>
 </html>
