@@ -7,6 +7,7 @@
 - Fix application area backgrounds
 ##Unimportant
 - Custom icons for the first responders
+- Hover effects
 - Fix time movement
 ##Stretch / extra
 
