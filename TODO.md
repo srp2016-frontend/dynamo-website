@@ -2,6 +2,8 @@
 ##Critical
 - Map background changes based on application
 - Fix map stuttering
+- Integrate active shooter data
+- Integrate new design
 ##Important
 - Telemetry data **
 - Fix application area backgrounds
