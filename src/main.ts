@@ -25,7 +25,7 @@ function main() {
     }, 10);
     setClickEvents(canvas, ctx, state);
     state.getRoster();
-    setMenuEvents();
     changeSettings();
+    setMenuEvents();
 }
 main();
