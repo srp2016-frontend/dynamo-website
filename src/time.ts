@@ -2,7 +2,6 @@
 ///<reference path='communication.ts'/>
 /// <reference path="alert.ts" />
 
-const maxTicks = 100;
 function pause(time : TimeManager) : void
 {
     $("#play").css("display", "initial");
@@ -60,7 +59,7 @@ class TimeManager
                     this.queued.copySelection(this.state);
                 else
                     this.state.items = JSON.parse(JSON.stringify(this.queued.items));
-                if(this.ticks == 100)
+                if(this.ticks == maxTicks)
                 {
                     this.bridge.tick(this.queued, this.frames.length);
                     if(this.state.items.length > 0)
@@ -73,7 +72,7 @@ class TimeManager
             {
                 this.ticks += 1;
                 this.next.copySelection(this.state);
-                if(this.ticks == 100)
+                if(this.ticks == maxTicks)
                 {
                    this.moveStateForward();
                 }
