@@ -23,6 +23,8 @@ body {
 }
 #close-abstract {
     float:right;
+    margin-left:100%;
+    margin-bottom:1px;
 }
 #container{
     background-image: url('img/Running.jpg');
