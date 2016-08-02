@@ -6,7 +6,7 @@
 /// <reference path="menu.ts" />
 /// <reference path="type.ts" />
 
-const maxTicks = 25; 
+const maxTicks = 10; 
 
 function main() {
     let canvas = <HTMLCanvasElement>$('#position-feed')[0];
@@ -22,7 +22,7 @@ function main() {
     state.draw(ctx);
     setInterval(() => {
         timeManager.updateFrame();
-    }, 1);
+    }, 10);
     setClickEvents(canvas, ctx, state);
     state.getRoster();
     setMenuEvents();
