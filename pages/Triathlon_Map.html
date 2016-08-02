@@ -1,0 +1,115 @@
+<html>
+    <head>
+        <title>DYNAMO</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+        <script src="../src/dropdown.js"></script>
+        <link rel="stylesheet" type="text/css" href="../css/triathlon-style.css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+        <img id="map-background" class="invisible" src="../img/background.png"></img>
+    </head>
+    <body>
+        <!--Dropdown-->
+        
+         <div id="topHead">
+            <div id="colorLayer">
+                <div class="round-button">
+                	<img src="http://codeitdown.com/media/Home_Icon.svg" alt="Home">
+                </div>
+                
+                 <div class="dropdown" id = "course-dropdown">
+                    <button onclick="myFunction()" class="dropbtn">Courses</button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <a href="file:///U:/Dynamo/dynamo-website/pages/app.html" style = "color:black">Rio Olympics</a>
+                        <a href="file:///U:/Dynamo/dynamo-website/pages/app.html">London Olympics</a>
+                        <a href="file:///U:/Dynamo/dynamo-website/pages/app.html">Beijing Olympics</a>
+                        <a href = "file:///U:/Dynamo/dynamo-website/pages/app.html">Malibu Triathlon</a>
+                    </div>
+                </div>
+                
+                
+                <h1><em>Triathlon</em></h1>
+                
+                <div id="searchbar-container">
+                    <input id="searchbar"></input>
+                    <button id = "searchbutton">Search</button>
+                    <div id="search-results"></div>
+                </div>
+            </div>
+        </div>
+        
+       
+        
+        <!-- Page title -->
+        
+        <!-- Searchbar -->
+       
+        <br/>
+        <!-- Time management -->
+        <div id="time">
+            <button id="back-to-start" class="time-button"></button>
+            <button id="back-one" class="time-button"></button>
+            <button id = "pause" class="time-button"></button>
+            <button id = "play" style="display:none" class="time-button"></button>
+            <button id="forward-one" class="time-button"></button>
+            <button id="forward-to-now" class="time-button"></button>
+        </div>
+        <br>
+        <!-- Realtime display -->
+        <div id="menu">
+            <h3>Menu</h3>
+            <div id="menu-boxes">
+                <input type="checkbox" id="search-check" checked>Searchbar</input> <br/>
+                <input type="checkbox" id="time-check">Time Management</input> <br/>
+                <input type="checkbox" id="selection-check" checked>Selection Panel</input><br/>
+                <input type="checkbox" id="map-check" checked>Virtual Map</input><br/>
+                <input type="checkbox" id="alert-check">Alerts</input> <br/>
+                <input type="checkbox" id="manifest-check"><span id="manifest-check-name">Manifest</span></input><br/>
+                <input type="checkbox" id="video-check">Video</input><br/>
+                <input type="checkbox" id ="tech-check">Technology</input><br/>
+            </div>
+            
+            <!--Tech used-->
+            <div id = "tech-info">
+                <div id = "triathlon-tech">
+                    <h3>Technology Used</h3>
+                    <ul>
+                        <li><b>GPS</b>: each subject wears a gps tag (simulated)</li><br>
+                        <li><b>RFID:</b> passive - used for checkpoints (simulated)</li><br>
+                        <li><b>Drone:</b> video was taped of Dynamo team members and image recognition was written to identify the people moving</li>
+                    </ul>
+                </div>
+                <div id = "shooter-tech">
+                    <ul>
+                        <li><b>RFID:</b> passive - used for locating first responders inside</li><br>
+                        <li><b>RFID:</b> active - used for locating first responders outside</li>
+                    </ul>                    
+                </div>
+                <div id = "water-tech">
+                    <ul>
+                        <li><b>Drone:</b> video was taped of Dynamo team members and image recognition was written to identify the different objects</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            <div class = "info-panel" id = "selection-panel">
+                <h3>Selection</h3>
+                <p id="sidebar"/>
+            </div>
+            <canvas id="position-feed" width = "746" height = "596" class = "media-panel">If you're seeing this text, your browser doesn't support HTML5. Please upgrade.</canvas>
+            <div class = "info-panel" id = "alert-panel">
+                <h3>Alerts</h3>
+                <p id = "alerts"/>
+            </div>
+            <video class="media-panel" id = "video-feed" controls>
+                <source src="../video/notCorrupt.mp4" type="video/mp4">
+                    Your browser doesn't support HTML5 video.
+            </video>
+            <div class = "info-panel" id = "manifest-panel">
+                <h3 id="manifest">Manifest</h3>
+                <p id="rSidebar"/>
+            </div>
+        </div>
+    </body>
+    <script src='../bin/script.js'></script>
+</html>
