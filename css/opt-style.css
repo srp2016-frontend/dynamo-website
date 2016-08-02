@@ -24,6 +24,7 @@ html, body {
 
 #main{
     width:100%;
+    min-height:1000px;
     background-color: rgba(217, 231, 249, .9);
     color: rgba(0, 0, 0, 1);
     padding : 1em;
