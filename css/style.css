@@ -103,6 +103,12 @@ button{
     color:F9F8F8;
     background-color: rgba(112, 118, 207, 1);
 }
+
+button:hover{
+    background-color: rgba(131, 152, 222, 1);
+    cursor:pointer;
+}
+
 table {
     width:40%;
     height:70%;
