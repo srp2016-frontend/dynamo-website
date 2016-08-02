@@ -6,6 +6,24 @@ body {
     font-family: "Noto Sans", sans-serif;
     text-align:center;
 }
+#abstract {
+    color:white;
+    background-color:rgba(40,54,120, 0.95);
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(30,44,110);
+    position:fixed;
+    width:50%;
+    visibility:hidden;
+    font-size:150%;
+    margin-left:25%;
+    text-align:left;
+    padding:1em;
+    border-radius: 25px;
+}
+#close-abstract {
+    float:right;
+}
 #container{
     background-image: url('img/Running.jpg');
     background-repeat: no-repeat;
