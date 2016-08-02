@@ -6,7 +6,7 @@
 /// <reference path="menu.ts" />
 /// <reference path="type.ts" />
 
-const maxTicks = 50; 
+const maxTicks = 25; 
 
 function main() {
     let canvas = <HTMLCanvasElement>$('#position-feed')[0];
