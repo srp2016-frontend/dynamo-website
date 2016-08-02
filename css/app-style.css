@@ -47,6 +47,7 @@ button {
     font-size:20px;
     font-weight:bold;
     margin-top: 0.5em;
+    float:left;
 }
 .round-button:hover {
     background: #262626;
@@ -62,7 +63,8 @@ button {
 }
 
 h1 {
-    margin:);
+    margin:0;
+    margin-right:10%;
     font-size: 400%;
     color: #BBF4FA;
     margin-bottom: none;
@@ -195,9 +197,6 @@ h3 {
     text-align:  center;
 }
 
-#tech-info{
-
-}
 
 #searchbar-container {
     width : 100%;
