@@ -4,11 +4,9 @@
 - Fix map stuttering
 ##Important
 - Telemetry data **
-- Technology blurb should respond to the current application
 - Fix application area backgrounds
 ##Unimportant
 - Custom icons for the first responders
-- Remove extraneous menu items
 - Fix time movement
 ##Stretch / extra
 
