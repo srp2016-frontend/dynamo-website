@@ -133,8 +133,7 @@ h3 {
 }
 
 #tech-info{
-    position:absolute;
-    bottom:0;
+
 }
 
 #searchbar-container {
@@ -230,4 +229,23 @@ h3 {
 
 #not-grey{
     color: black; 
+}
+
+/*only shows the corresponding technology*/
+#triathlon-tech{
+    visibility:hidden;
+    position:absolute;
+    bottom:0;
+}
+
+#shooter-tech{
+    visibility:hidden;
+    position:absolute;
+    bottom:0;
+}
+
+#water-tech{
+    visibility:hidden;
+    position:absolute;
+    bottom:0;
 }
