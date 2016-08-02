@@ -206,7 +206,7 @@ h3 {
 
 #search-results {
     text-align: center;
-    position: absolute;
+    /*position: absolute;*/
     top:6.75em;
     left:25%;
     width:50%;
@@ -239,19 +239,20 @@ h3 {
 /*Search options*/
 .poss {
     font-family : "Source Code Pro";
+    overflow:visible;
     background-color:white;
     width:100%;
+}
+
+.poss:hover{
+    background-color:#061355;
+    color:white;
 }
 
 .sel{
     font-family : "Source Code Pro";
     width:100%;
     background-color:#1832b6;
-    color:white;
-}
-
-.poss:hover{
-    background-color:#061355;
     color:white;
 }
 
