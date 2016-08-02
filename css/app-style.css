@@ -1,52 +1,114 @@
 /*Basic font items*/
 html, body {
-    font-family : "Noto Sans", sans-serif;
+    font-family: 'Open Sans', sans-serif;
     margin: 0;
-    margin-left:100;
+    padding: 0;
     height: 100%;
-    background-color: #EEEEEE;
+    background-color:rgba(207,208,230,.7);
 }
-/*Headers*/
+
+#topHead{
+    width: 100%;
+    height: 35%;
+    padding: 0;
+    background-image: url("http://cdn1.bostonmagazine.com/wp-content/uploads/2014/04/running-main1.jpg");
+    background-repeat: no-repeat;
+    background-size:cover;
+    overflow: hidden;
+    float: left;
+    border-bottom: 6px solid #BBF4FA;
+}
+
+#colorLayer{
+     background-color: rgba(40,54,92,.7);
+     width: 100%;
+     height: 100%;
+}
+
+button {
+    background-color: Transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    font-size: 75%;
+}
+
+.round-button{
+    display:inline-block;
+    width:50px;
+    height:50px;
+    line-height:50px;
+    border: 1px solid #BBF4FA;
+    border-radius: 50%;
+    color:#f5f5f5;
+    text-align:center;
+    text-decoration:none;
+    background: #464646;
+    box-shadow: 0 0 3px gray;
+    font-size:20px;
+    font-weight:bold;
+    margin-top: 0.5em;
+    margin-left: 240;
+}
+.round-button:hover {
+    background: #262626;
+}
+
+img {
+    width: 35px;
+    height: 48px;
+}
+
+
 h1 {
-    margin-top : 0.75em;
+    font-size: 400%;
+    color: #BBF4FA;
+    margin-top : 0.3em;
+    margin-left: 15%;
+    margin-bottom: none;
     text-align: center;
-    color:rgba(36, 21, 133, 1);
 }
+    
 h3 {
     text-align:center;
+    font-size: 175%;
+    font-style: italic;
 }
 
 /*Widgets*/
 #menu {
-    width : 200;
+    width : 205;
     height : 100%;
     background-color: #DDDDDD;
     position: fixed;
     top : 0;
     left : 0;
+    border-right: 6px solid #BBF4FA; 
+    padding-left: 15;
 }
 
 .media-panel {
-    width : 746;
+    width : 69.5%;
     height : 596;
-    border-style:solid;
-    border-width: 2px;
-    border-color:rgb(30,44,110);
     float : left;
+    border-right: 6px solid #BBF4FA;
+    border-bottom: 6px solid #BBF4FA;
 }
 .info-panel {
-    width : 221px;
+    width : 250;
     height : 596px;
     /*display:block;*/
     overflow-x:hidden;
     overflow-y:auto;
-    background-color: rgba(40,54,120,.7);
+    background-color: rgba(106, 115, 171, 1);
     color: rgba(250,250,250,1);
-    border-style:solid;
-    border-width: 2px;
-    border-color:rgb(30,44,110);
     float : left;
+    margin-left: 220;
+    margin-top: none;
+    border-right: 6px solid #BBF4FA;
+    border-bottom: 6px solid #BBF4FA;
 }
+    
 
 /* Manifest text */
 .manifest-name {
@@ -77,6 +139,7 @@ h3 {
 /* TIME MANAGER */
 #time{
     margin-left:35.75%;
+    height: 0;
 }
 
 .time-button {
@@ -128,7 +191,8 @@ h3 {
 /*SEARCH*/
 #searchbar {
     width : 50%;
-    margin-left : 25%;
+    margin-left : 30%;
+    margin-top: none;
     text-align:  center;
 }
 
@@ -148,7 +212,7 @@ h3 {
     width:50%;
 }
 
-#searchbar-container button{
+/* #searchbar-container button{
     border-color: rgba(36, 21, 133, 1);
     border-width:3px;
     font-family: "Noto Sans", sans-serif;
@@ -156,10 +220,20 @@ h3 {
     color:F9F8F8;
     background-color: rgba(112, 118, 207, 1);
 }
+*/
 
-#searchbar-container button:hover{
-    background-color: rgba(131, 152, 222, 1);
-    cursor:pointer;
+#searchbutton {
+    display:inline-block;
+    width:100px;
+    height:35px;
+    line-height:25px;
+    border: 1px solid #BBF4FA;
+    text-align:center;
+    text-decoration:none;
+    background-color: #464646;
+    box-shadow: 0 0 3px gray;
+    color: white;
+    font-size: 1.1em;
 }
 
 /*Search options*/
@@ -190,12 +264,31 @@ h3 {
 /*All the dropdown stuff*/
 /* Dropdown Button */
 .dropbtn {
-    background-color: rgba(40,54,120,.7);
+    display:inline-block;
+    width:100px;
+    height:50px;
+    line-height:50px;
+    border: 1px solid #BBF4FA;
+    color:#f5f5f5;
+    text-align:center;
+    text-decoration:none;
+    background-color: #464646;
+    box-shadow: 0 0 3px gray;
+    font-size:20px;
+    font-weight:bold;
+    margin-top: 0em;
+    padding: none;
+    float: right;
+    margin-left: 58.5em;
+    
+    /* background-color: rgba(40,54,120,.7);
     color: white;
     padding: 16px;
+    margin-left: 200%;
+    margin-top: none;
     font-size: 16px;
     border: none;
-    cursor: pointer;
+    cursor: pointer; */
 }
 
 /* Dropdown button on hover & focus */
@@ -213,6 +306,8 @@ h3 {
 .dropdown-content {
     display: none;
     position: absolute;
+    top: 50;
+    right: 0;
     background-color: #f9f9f9;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -254,4 +349,3 @@ h3 {
     position:absolute;
     bottom:0;
 }
-

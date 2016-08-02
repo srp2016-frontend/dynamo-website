@@ -9,38 +9,45 @@
     </head>
     <body>
         <!--Dropdown-->
-        <div class="dropdown" id = "course-dropdown">
-            <button onclick="myFunction()" class="dropbtn">Courses</button>
-            <div id="myDropdown" class="dropdown-content">
-                <a href="file:///U:/Dynamo/dynamo-website/pages/app.html" style = "color:black">Rio Olympics</a>
-                <a href="file:///U:/Dynamo/dynamo-website/pages/app.html">London Olympics</a>
-                <a href="file:///U:/Dynamo/dynamo-website/pages/app.html">Beijing Olympics</a>
-                <a href = "file:///U:/Dynamo/dynamo-website/pages/app.html">Malibu Triathlon</a>
+        
+         <div id="topHead">
+            <div id="colorLayer">
+                <div class="round-button">
+                	<img src="http://codeitdown.com/media/Home_Icon.svg" alt="Home">
+                </div>
+                
+                 <div class="dropdown" id = "course-dropdown">
+                    <button onclick="myFunction()" class="dropbtn">Courses</button>
+                    </br>
+                    <div id="myDropdown" class="dropdown-content">
+                        <a href="file:///U:/Dynamo/dynamo-website/pages/app.html" style = "color:black">Rio Olympics</a>
+                        <a href="file:///U:/Dynamo/dynamo-website/pages/app.html">London Olympics</a>
+                        <a href="file:///U:/Dynamo/dynamo-website/pages/app.html">Beijing Olympics</a>
+                        <a href = "file:///U:/Dynamo/dynamo-website/pages/app.html">Malibu Triathlon</a>
+                    </div>
+                </div>
+                
+                
+                <h1><em id="title">DYNAMO</em></h1>
+                
+                <div id="searchbar-container">
+                    <input id="searchbar"></input>
+                    <button id = "searchbutton">Search</button>
+                    <div id="search-results"></div>
+                </div>
+                <br/>
+                <!-- Time management -->
+                <div id="time">
+                    <button id="back-to-start" class="time-button"></button>
+                    <button id="back-one" class="time-button"></button>
+                    <button id = "pause" class="time-button"></button>
+                    <button id = "play" style="display:none" class="time-button"></button>
+                    <button id="forward-one" class="time-button"></button>
+                    <button id="forward-to-now" class="time-button"></button>
+                </div>
             </div>
         </div>
         
-        <!-- Page title -->
-        <h1 id="title"><a href="../index.html">DYNAMO</a></h1>
-        
-        <!-- Searchbar -->
-        <div id="searchbar-container">
-            <input id="searchbar">
-            </input>
-            <button id = "searchbutton">
-                Search
-            </button>
-            <div id="search-results"></div>
-        </div>
-        <br/>
-        <!-- Time management -->
-        <div id="time">
-            <button id="back-to-start" class="time-button"></button>
-            <button id="back-one" class="time-button"></button>
-            <button id = "pause" class="time-button"></button>
-            <button id = "play" style="display:none" class="time-button"></button>
-            <button id="forward-one" class="time-button"></button>
-            <button id="forward-to-now" class="time-button"></button>
-        </div>
         <br>
         <!-- Realtime display -->
         <div id="menu">
