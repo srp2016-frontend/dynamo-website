@@ -92,6 +92,10 @@ h3 {
     padding-left: 15;
 }
 
+.check-buttons:hover{
+    cursor:pointer;
+}
+
 .media-panel {
     width : 746;
     height : 596;
