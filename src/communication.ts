@@ -30,7 +30,6 @@ class Bridge
                 {
                     item.x = parseInt("" + item.x) + 20;
                     item.y = parseInt("" + item.y) - 10;
-                    console.log(item)
                 }
                 state.updateSelected()
                 if(action)

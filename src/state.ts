@@ -1,7 +1,8 @@
 ///<reference path='jquery.d.ts'/>
 /// <reference path="time.ts" />
 /// <reference path="alert.ts" />
-
+let mouseX = 0;
+let mouseY = 0;
 class Item
 {
     x : number;
@@ -24,7 +25,7 @@ class Item
 
 const radius = 6;
 const radiusSquared = radius * radius;
-
+const canvas = <HTMLCanvasElement>$("#position-feed")[0]
 class State
 {
     items : Item[];
@@ -68,17 +69,16 @@ class State
             item.y = Math.floor(item.y);
             if(this.selected.indexOf(item) != -1 || this.selected.length === 0)
                 ctx.globalAlpha = 1.0;
-            ctx.drawImage(this.flags[item.affiliation], item.x, item.y)
-            ctx.fill();
-            ctx.beginPath();
-            ctx.moveTo(item.x, item.y);
-            for(let i = 1; i < 10; i++)
-            {
-                let previous = this.time.getItemInPast(item, i)
-                ctx.lineTo(previous.x, previous.y)
-            }
-            ctx.stroke()
+            ctx.drawImage(this.flags[item.affiliation], item.x - 6, item.y - 6)
         }
+        let zoomCanvas = <HTMLCanvasElement>$("#zoom")[0]
+        let zCtx = zoomCanvas.getContext('2d')
+        let x = mouseX - 62
+        x = x > 0 ? (x + 125 < 746 ? x : 746 - 125) : 0
+        let y = mouseY - 62
+        y = y > 0 ? (y + 125 < 596 ? y : 596 - 125) : 0
+        zCtx.drawImage(canvas, x, y, 125, 125, 0, 0, 250, 250)
+
     }
 
     update(next : State, ticks : number, maxTicks : number) : void
