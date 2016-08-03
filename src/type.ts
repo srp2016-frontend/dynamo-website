@@ -37,5 +37,6 @@ function changeSettings()
         '<input type = "checkbox" id = "tech-check">Technology</input><br/>') 
         $("#video-feed").remove()
         $("#shooter-tech").css("visibility", "visible");    
+        $("#map-background").attr("src", "../img/blueprint.png")
     }
 }
