@@ -201,7 +201,7 @@ h3 {
 /*SEARCH*/
 #searchbar {
     width : 50%;
-    margin-left : 10%;
+    margin-left : 15%;
     margin-top: none;
     text-align:  center;
 }
@@ -215,8 +215,8 @@ h3 {
 #search-results {
     text-align: center;
     position: absolute;
-    margin-top:-.6em;
-    margin-left:10%;
+    margin-top:-.5em;
+    margin-left:15%;
     width:50%;
 }
 
