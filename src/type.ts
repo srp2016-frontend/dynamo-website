@@ -22,6 +22,8 @@ function changeSettings()
         $("#video-feed").css("float", "none")
         $("#content").css("text-align", "center")
         $("#water-tech").css("visibility", "visible")
+        $("#video-feed video source").attr('src', "../video/likeABausVideo.mp4") 
+        $("#video-feed video")[0].load()
     }
     else if(type === "Triathlon")
     {
