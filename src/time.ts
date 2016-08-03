@@ -1,6 +1,7 @@
 ///<reference path='state.ts'/>
 ///<reference path='communication.ts'/>
 /// <reference path="alert.ts" />
+/// <reference path="main.ts" />
 
 function pause(time : TimeManager) : void
 {
