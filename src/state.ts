@@ -33,13 +33,28 @@ class State
     private bkg : HTMLImageElement;
     public pSearch : (string) => string[];
     public time : TimeManager;
-
+    private flags : {[key:string] : HTMLImageElement;}
+    
+    
     constructor(items : Item[])
     {
         this.items = items;
         this.selected = [];
         this.missing = [];
         this.bkg = <HTMLImageElement>$("#map-background")[0]
+        this.flags = {}
+        this.flags['Canada'] = $("#Canada")[0]
+        this.flags['Argentina'] = $("#Argentina")[0]
+        this.flags['Australia'] = $("#Australia")[0]
+        this.flags['Austria'] = $("Austria")[0]
+        this.flags['Barbados'] = $("Barbados")[0]
+        this.flags['Czech Republic'] = $("Czech-Republic")[0]
+        this.flags['Great Britain'] = $("Great-Britain")[0]
+        this.flags['New Zealand'] = $("New-Zealand")[0]
+        this.flags['Switzerland'] = $("Switzerland")[0]
+        this.flags['Police'] = $("Police")[0]
+        this.flags['Medical'] = $("Medical")[0]
+        this.flags['Fire'] = $("Fire")[0]
     }
 
     draw(ctx : CanvasRenderingContext2D) : void
@@ -52,14 +67,15 @@ class State
             item.x = Math.floor(item.x);
             item.y = Math.floor(item.y);
             ctx.beginPath();
-            ctx.fillStyle = "red";
+            ctx.fillStyle = ctx.createPattern(this.flags[item.affiliation], 'no-repeat']);
             ctx.strokeStyle = "blue"
             ctx.globalAlpha = 0.25;
 
             if(this.selected.indexOf(item) != -1 || this.selected.length === 0)
                 ctx.globalAlpha = 1.0;
 
-            ctx.arc(item.x, item.y, radius, 0, 2 * Math.PI);
+            //ctx.arc(item.x, item.y, radius, 0, 2 * Math.PI);
+            ctx.drawImage(this.flags[item.affiliation], item.x, item.y)
             ctx.fill();
             ctx.beginPath();
             ctx.moveTo(item.x, item.y);
@@ -67,7 +83,6 @@ class State
             {
                 let previous = this.time.getItemInPast(item, i)
                 ctx.lineTo(previous.x, previous.y)
-                console.log("x:" + this.x + " y: " + this.y)
             }
             ctx.stroke()
         }
@@ -89,9 +104,9 @@ class State
                 }
             } else {
                  if(missingIndex === -1) {
-                    if(item.x == 434 && item.y == 509)
+                    if(item.x === 434 && item.y === 509)
                     {
-                        generate_alert(item.type + " " + item.id + " has left the sensor field.")
+                        generate_alert(item.type + " " + item.id + " has finished the race.")
                         this.missing.push(item)
                     }
                     else{
