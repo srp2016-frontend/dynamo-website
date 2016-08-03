@@ -1,6 +1,5 @@
 #TODO
 ##Critical
-- Map background changes based on application
 ##Important
 - Telemetry data **
 ##Unimportant
