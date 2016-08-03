@@ -209,8 +209,8 @@ h3 {
 
 #search-results {
     text-align: center;
-    /*position: absolute;*/
-    top:6.75em;
+    position: absolute;
+    margin-top:-.6em;
     left:25%;
     width:50%;
 }
