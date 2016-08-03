@@ -61,14 +61,6 @@ class State
 
             ctx.arc(item.x, item.y, radius, 0, 2 * Math.PI);
             ctx.fill();
-            ctx.beginPath();
-            ctx.moveTo(item.x, item.y);
-            for(let i = 1; i < 10; i++)
-            {
-                let previous = this.time.getItemInPast(item, i)
-                ctx.lineTo(previous.x, previous.y)
-            }
-            ctx.stroke()
         }
     }
 
