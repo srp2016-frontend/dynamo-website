@@ -10,6 +10,7 @@ function setMenuEvents() : void
     }
     bind($("#search-check"), $("#searchbar-container"))
     bind($("#time-check"), $("#time"))
+    bind($("#zoom-check"), $("#zoom"))
     bind($("#selection-check"), $("#selection-panel"))
     bind($("#map-check"), $("#position-feed"))
     bind($("#alert-check"), $("#alert-panel"))
