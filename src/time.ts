@@ -46,6 +46,7 @@ class TimeManager
 
     private getFrame(index : number) : Item[]
     {
+        console.log(index)
         return JSON.parse(JSON.stringify(this.frames[index]))
     }
 
@@ -92,9 +93,16 @@ class TimeManager
         this.isCurrent = true;
     }
 
+    refresh() : void
+    {
+        if(this.isCurrent)
+            this.currentFrame = this.frames.length;
+    }
+
     moveStateBack() : void 
     {
-        if(this.currentFrame == 0) return;
+        if(this.currentFrame == 0 && !this.isCurrent) return;
+        this.refresh();
         this.ticks = 0;
         this.currentFrame --;
         this.state.items = this.getFrame(this.currentFrame)
