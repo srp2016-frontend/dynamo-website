@@ -1,4 +1,6 @@
 ///<reference path='state.ts'/>
+/// <reference path="type.ts" />
+
 /**
 Bridge between the frontend and backend applications
 
@@ -45,7 +47,7 @@ class Bridge
         }
         else
         {
-            let x : any = $.ajax({url : "index.html", method: "POST", context:document.body, data : "" + frame})
+            let x : any = $.ajax({url : "index.html", method: "POST", context:document.body, data : type + ":" + frame})
             x.success((data : string) => { callback(data); } )
         }
     }
