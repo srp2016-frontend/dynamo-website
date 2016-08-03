@@ -65,12 +65,13 @@ class State
         ctx.lineWidth = 2;
         for(let item of this.items)
         {
+            console.log(item.affiliation)
             item.x = Math.floor(item.x);
             item.y = Math.floor(item.y);
             if(this.selected.indexOf(item) != -1 || this.selected.length === 0)
                 ctx.globalAlpha = 1.0;
             ctx.drawImage(this.flags[item.affiliation], item.x - 6, item.y - 6)
-            console.log(item.affiliation)
+           
         }
         let zoomCanvas = <HTMLCanvasElement>$("#zoom")[0]
         let zCtx = zoomCanvas.getContext('2d')
