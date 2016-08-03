@@ -46,8 +46,11 @@ class Bridge
         }
         else
         {
-            let x : any = $.ajax({url : "index.html", method: "POST", context:document.body, data : type + ":" + frame})
-            x.success((data : string) => { callback(data); } )
+            if(type === "Shooter" || type === "Triathlon")
+            {
+                let x : any = $.ajax({url : "index.html", method: "POST", context:document.body, data : type + ":" + frame})
+                x.success((data : string) => { callback(data); } )
+            }
         }
     }
 }

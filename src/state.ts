@@ -67,6 +67,7 @@ class State
             {
                 let previous = this.time.getItemInPast(item, i)
                 ctx.lineTo(previous.x, previous.y)
+                console.log("x:" + this.x + " y: " + this.y)
             }
             ctx.stroke()
         }
@@ -88,8 +89,15 @@ class State
                 }
             } else {
                  if(missingIndex === -1) {
-                    generate_alert(item.type + " " + item.id + " has left the sensor field.")
-                    this.missing.push(item)
+                    if(item.x == 434 && item.y == 509)
+                    {
+                        generate_alert(item.type + " " + item.id + " has left the sensor field.")
+                        this.missing.push(item)
+                    }
+                    else{
+                        generate_alert(item.type + " " + item.id + " has left the sensor field.")
+                        this.missing.push(item)
+                    }
                 }
 
             }
