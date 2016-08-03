@@ -1,7 +1,8 @@
 ///<reference path='jquery.d.ts'/>
 /// <reference path="time.ts" />
 /// <reference path="alert.ts" />
-
+let mouseX = 0;
+let mouseY = 0;
 class Item
 {
     x : number;

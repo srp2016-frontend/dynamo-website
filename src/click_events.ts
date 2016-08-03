@@ -21,11 +21,10 @@ function setClickEvents(canvas : HTMLCanvasElement, ctx : CanvasRenderingContext
             state.setDisplay(state.getItemAt(e.offsetX, e.offsetY))
             state.draw(ctx);
         }
-        let zoomCanvas = <HTMLCanvasElement>$("#zoom")[0]
-        let zCtx = zoomCanvas.getContext('2d')
         let offset = $(canvas).offset()
         let x = e.pageX - offset.left
         let y = e.pageY - offset.top
-        zCtx.drawImage(canvas, x - 62, y - 62, 125, 125, 0, 0, 250, 250)
+        mouseX = x
+        mouseY = y
     }
 }
