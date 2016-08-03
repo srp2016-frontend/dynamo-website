@@ -65,7 +65,11 @@ class State
         }
         let zoomCanvas = <HTMLCanvasElement>$("#zoom")[0]
         let zCtx = zoomCanvas.getContext('2d')
-        zCtx.drawImage(canvas, mouseX - 62, mouseY - 62, 125, 125, 0, 0, 250, 250)
+        let x = mouseX - 62
+        x = x > 0 ? (x + 125 < 746 ? x : 746 - 125) : 0
+        let y = mouseY - 62
+        y = y > 0 ? (y + 125 < 596 ? y : 596 - 125) : 0
+        zCtx.drawImage(canvas, x, y, 125, 125, 0, 0, 250, 250)
 
     }
 
