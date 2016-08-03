@@ -25,7 +25,7 @@ class Item
 
 const radius = 6;
 const radiusSquared = radius * radius;
-const canvas = <HTMLCanvasElement>$("position-feed")[0]
+const canvas = <HTMLCanvasElement>$("#position-feed")[0]
 class State
 {
     items : Item[];
