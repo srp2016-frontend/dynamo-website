@@ -62,6 +62,10 @@ class State
             ctx.arc(item.x, item.y, radius, 0, 2 * Math.PI);
             ctx.fill();
         }
+        let zoomCanvas = <HTMLCanvasElement>$("#zoom")[0]
+        let zCtx = zoomCanvas.getContext('2d')
+        zCtx.drawImage(<HTMLCanvasElement>$("#canvas")[0], mouseX - 62, mouseY - 62, 125, 125, 0, 0, 250, 250)
+
     }
 
     update(next : State, ticks : number, maxTicks : number) : void
