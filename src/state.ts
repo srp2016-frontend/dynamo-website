@@ -25,7 +25,7 @@ class Item
 
 const radius = 6;
 const radiusSquared = radius * radius;
-
+const canvas = <HTMLCanvasElement>$("position-feed")[0]
 class State
 {
     items : Item[];
@@ -65,7 +65,7 @@ class State
         }
         let zoomCanvas = <HTMLCanvasElement>$("#zoom")[0]
         let zCtx = zoomCanvas.getContext('2d')
-        zCtx.drawImage(<HTMLCanvasElement>$("#canvas")[0], mouseX - 62, mouseY - 62, 125, 125, 0, 0, 250, 250)
+        zCtx.drawImage(canvas, mouseX - 62, mouseY - 62, 125, 125, 0, 0, 250, 250)
 
     }
 
