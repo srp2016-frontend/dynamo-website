@@ -23,7 +23,7 @@ function changeSettings()
         $("#content").css("text-align", "center")
         $("#water-tech").css("visibility", "visible")
         $("#video-source").attr('src', "../video/likeABausVideo.mp4") 
-        $("#video-source")[0].load()
+        $("#video-feed")[0].load()
     }
     else if(type === "Triathlon")
     {
