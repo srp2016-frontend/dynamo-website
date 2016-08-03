@@ -1,7 +1,6 @@
 #TODO
 ##Critical
 - Map background changes based on application
-- Integrate active shooter data
 ##Important
 - Telemetry data **
 ##Unimportant
