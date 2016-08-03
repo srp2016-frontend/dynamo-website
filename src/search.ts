@@ -11,7 +11,6 @@ function setSearchEvents(state : State, ctx : CanvasRenderingContext2D) : (strin
         for (let item of items)
             if(input.value == item)     
                 state.setSelection(state.getItemByID(input.value))
-        console.log("search")
     }
     
     function searchAll() : void
