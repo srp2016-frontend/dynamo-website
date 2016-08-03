@@ -66,15 +66,8 @@ class State
         {
             item.x = Math.floor(item.x);
             item.y = Math.floor(item.y);
-            ctx.beginPath();
-            ctx.fillStyle = ctx.createPattern(this.flags[item.affiliation], 'no-repeat']);
-            ctx.strokeStyle = "blue"
-            ctx.globalAlpha = 0.25;
-
             if(this.selected.indexOf(item) != -1 || this.selected.length === 0)
                 ctx.globalAlpha = 1.0;
-
-            //ctx.arc(item.x, item.y, radius, 0, 2 * Math.PI);
             ctx.drawImage(this.flags[item.affiliation], item.x, item.y)
             ctx.fill();
             ctx.beginPath();
