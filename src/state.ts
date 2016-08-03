@@ -67,7 +67,6 @@ class State
             {
                 let previous = this.time.getItemInPast(item, i)
                 ctx.lineTo(previous.x, previous.y)
-                console.log("x:" + this.x + " y: " + this.y)
             }
             ctx.stroke()
         }
