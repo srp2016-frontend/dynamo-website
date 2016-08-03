@@ -146,6 +146,7 @@ h3 {
 }
 
 .time-button {
+    margin-top:1em;
     width : 64px;
     height : 64px;
     border:0;
