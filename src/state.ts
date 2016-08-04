@@ -1,11 +1,10 @@
 ///<reference path='jquery.d.ts'/>
 /// <reference path="time.ts" />
 /// <reference path="alert.ts" />
+/// <reference path="type.ts" />
+
 let mouseX = 0;
 let mouseY = 0;
-
-var Cookies : any;
-let type : string = Cookies.get("type");
 
 class Item
 {
@@ -61,6 +60,7 @@ class State
         this.flags['Police'] = <HTMLImageElement>$("#Police")[0]
         this.flags['Medical'] = <HTMLImageElement>$("#Medical")[0]
         this.flags['Fire'] = <HTMLImageElement>$("#Fire")[0]
+        
         this.pics = {}
         this.pics['Brandon Guglielmo'] = <HTMLImageElement>$("#Brandon")[0]
         this.pics['Brian DeLeonardis'] = <HTMLImageElement>$("#Brian")[0]
@@ -68,7 +68,6 @@ class State
         this.pics['Jack Dates'] = <HTMLImageElement>$("#Jack")[0]
         this.pics['Kevin Destefano'] = <HTMLImageElement>$("#Kevin")[0]
         this.pics['Mathew Kumar'] = <HTMLImageElement>$("#Matt")[0]
-        
     }
 
     draw(ctx : CanvasRenderingContext2D) : void
@@ -90,6 +89,15 @@ class State
                     ctx.drawImage(this.pics[item.id], item.x - 6, item.y - 6)
                 else if(Cookies.get("pick-icon") === "Aff")
                     ctx.drawImage(this.flags[item.affiliation], item.x - 6, item.y - 6)
+                else
+                {
+                    ctx.beginPath();
+                    ctx.fillStyle = "#000000";
+                    ctx.arc(item.x, item.y, 6, 0, 2*Math.PI);
+                    ctx.stroke();
+                    ctx.fill();
+                }
+                    
             }
             else
                 ctx.drawImage(this.flags[item.affiliation], item.x - 6, item.y - 6)
