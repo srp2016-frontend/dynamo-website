@@ -173,7 +173,6 @@ class State
         else
             this.selected.length = 0;
         this.updateDisplay();
-        console.log(this.selected)
     }
 
     setSelections(selection : Item[]) : void

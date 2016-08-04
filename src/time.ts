@@ -27,6 +27,7 @@ class TimeManager
     private queued : State;
     private isCurrent : boolean;
     private pauseButton : HTMLButtonElement;
+    private length : number;
     public paused : boolean;
 
     constructor(bridge : Bridge, ctx : CanvasRenderingContext2D, state : State, next : State, pause : HTMLButtonElement) {
@@ -42,6 +43,7 @@ class TimeManager
         this.isCurrent = true;
         this.pauseButton = pause;
         this.setupEvents();
+        this.length = state.items.length;
     }
 
     private getFrame(index : number) : Item[]
@@ -51,6 +53,10 @@ class TimeManager
 
     updateFrame()
     {
+        if(this.state.items.length !== this.length) {
+            this.state.getRoster();
+            this.length = this.state.items.length;
+        }
         if(!this.paused)
         {
             if(this.isCurrent)
@@ -66,7 +72,6 @@ class TimeManager
                     if(this.state.items.length > 0)
                         this.frames.push(JSON.parse(JSON.stringify(this.state.items)));
                     this.ticks = 0;
-                    this.state.getRoster();
                 }
                 this.state.update(this.queued, this.ticks, maxTicks);
                 this.state.draw(this.ctx);
@@ -77,7 +82,6 @@ class TimeManager
                 if(this.ticks == maxTicks)
                 {
                    this.moveStateForward();
-                   this.state.getRoster();
                 }
                 this.state.update(this.next, this.ticks, maxTicks);
                 this.state.draw(this.ctx);

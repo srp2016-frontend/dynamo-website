@@ -4,14 +4,11 @@ function setClickEvents(canvas : HTMLCanvasElement, ctx : CanvasRenderingContext
 {
     canvas.onmousedown = (e : MouseEvent) =>
     {
-        if(e.button === 1)
-        {
-            if(e.shiftKey)
-                state.addSelection(state.getItemAt(e.offsetX, e.offsetY));
-            else
-                state.setSelection(state.getItemAt(e.offsetX, e.offsetY));
-            state.draw(ctx);
-        }
+        if(e.shiftKey)
+            state.addSelection(state.getItemAt(e.offsetX, e.offsetY));
+        else
+            state.setSelection(state.getItemAt(e.offsetX, e.offsetY));
+        state.draw(ctx);
     }
 
     canvas.onmousemove = function(e : MouseEvent)
