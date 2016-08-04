@@ -47,15 +47,15 @@ class State
         this.flags['Canada'] = <HTMLImageElement>$("#Canada")[0]
         this.flags['Argentina'] = <HTMLImageElement>$("#Argentina")[0]
         this.flags['Australia'] = <HTMLImageElement>$("#Australia")[0]
-        this.flags['Austria'] = <HTMLImageElement>$("Austria")[0]
-        this.flags['Barbados'] = <HTMLImageElement>$("Barbados")[0]
-        this.flags['Czech Republic'] = <HTMLImageElement>$("Czech-Republic")[0]
-        this.flags['Great Britain'] = <HTMLImageElement>$("Great-Britain")[0]
-        this.flags['New Zealand'] = <HTMLImageElement>$("New-Zealand")[0]
-        this.flags['Switzerland'] = <HTMLImageElement>$("Switzerland")[0]
-        this.flags['Police'] = <HTMLImageElement>$("Police")[0]
-        this.flags['Medical'] = <HTMLImageElement>$("Medical")[0]
-        this.flags['Fire'] = <HTMLImageElement>$("Fire")[0]
+        this.flags['Austria'] = <HTMLImageElement>$("#Austria")[0]
+        this.flags['Barbados'] = <HTMLImageElement>$("#Barbados")[0]
+        this.flags['Czech Republic'] = <HTMLImageElement>$("#Czech-Republic")[0]
+        this.flags['Great Britain'] = <HTMLImageElement>$("#Great-Britain")[0]
+        this.flags['New Zealand'] = <HTMLImageElement>$("#New-Zealand")[0]
+        this.flags['Switzerland'] = <HTMLImageElement>$("#Switzerland")[0]
+        this.flags['Police'] = <HTMLImageElement>$("#Police")[0]
+        this.flags['Medical'] = <HTMLImageElement>$("#Medical")[0]
+        this.flags['Fire'] = <HTMLImageElement>$("#Fire")[0]
     }
 
     draw(ctx : CanvasRenderingContext2D) : void
@@ -65,11 +65,13 @@ class State
         ctx.lineWidth = 2;
         for(let item of this.items)
         {
+            console.log(item.affiliation)
             item.x = Math.floor(item.x);
             item.y = Math.floor(item.y);
             if(this.selected.indexOf(item) != -1 || this.selected.length === 0)
                 ctx.globalAlpha = 1.0;
             ctx.drawImage(this.flags[item.affiliation], item.x - 6, item.y - 6)
+           
         }
         let zoomCanvas = <HTMLCanvasElement>$("#zoom")[0]
         let zCtx = zoomCanvas.getContext('2d')
