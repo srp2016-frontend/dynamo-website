@@ -44,18 +44,18 @@ class State
         this.missing = [];
         this.bkg = <HTMLImageElement>$("#map-background")[0]
         this.flags = {}
-        this.flags['Canada'] = $("#Canada")[0]
-        this.flags['Argentina'] = $("#Argentina")[0]
-        this.flags['Australia'] = $("#Australia")[0]
-        this.flags['Austria'] = $("Austria")[0]
-        this.flags['Barbados'] = $("Barbados")[0]
-        this.flags['Czech Republic'] = $("Czech-Republic")[0]
-        this.flags['Great Britain'] = $("Great-Britain")[0]
-        this.flags['New Zealand'] = $("New-Zealand")[0]
-        this.flags['Switzerland'] = $("Switzerland")[0]
-        this.flags['Police'] = $("Police")[0]
-        this.flags['Medical'] = $("Medical")[0]
-        this.flags['Fire'] = $("Fire")[0]
+        this.flags['Canada'] = <HTMLImageElement>$("#Canada")[0]
+        this.flags['Argentina'] = <HTMLImageElement>$("#Argentina")[0]
+        this.flags['Australia'] = <HTMLImageElement>$("#Australia")[0]
+        this.flags['Austria'] = <HTMLImageElement>$("Austria")[0]
+        this.flags['Barbados'] = <HTMLImageElement>$("Barbados")[0]
+        this.flags['Czech Republic'] = <HTMLImageElement>$("Czech-Republic")[0]
+        this.flags['Great Britain'] = <HTMLImageElement>$("Great-Britain")[0]
+        this.flags['New Zealand'] = <HTMLImageElement>$("New-Zealand")[0]
+        this.flags['Switzerland'] = <HTMLImageElement>$("Switzerland")[0]
+        this.flags['Police'] = <HTMLImageElement>$("Police")[0]
+        this.flags['Medical'] = <HTMLImageElement>$("Medical")[0]
+        this.flags['Fire'] = <HTMLImageElement>$("Fire")[0]
     }
 
     draw(ctx : CanvasRenderingContext2D) : void
