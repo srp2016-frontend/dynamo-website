@@ -1,8 +1,11 @@
 ///<reference path='jquery.d.ts'/>
 /// <reference path="time.ts" />
 /// <reference path="alert.ts" />
+/// <reference path="type.ts" />
+
 let mouseX = 0;
 let mouseY = 0;
+
 class Item
 {
     x : number;
@@ -35,6 +38,7 @@ class State
     public pSearch : (string) => string[];
     public time : TimeManager;
     private flags : {[key:string] : HTMLImageElement;}
+    private pics : {[key:string] : HTMLImageElement;}
     
     
     constructor(items : Item[])
@@ -56,6 +60,14 @@ class State
         this.flags['Police'] = <HTMLImageElement>$("#Police")[0]
         this.flags['Medical'] = <HTMLImageElement>$("#Medical")[0]
         this.flags['Fire'] = <HTMLImageElement>$("#Fire")[0]
+        
+        this.pics = {}
+        this.pics['Brandon Guglielmo'] = <HTMLImageElement>$("#Brandon")[0]
+        this.pics['Brian DeLeonardis'] = <HTMLImageElement>$("#Brian")[0]
+        this.pics['Ryan Goldstein'] = <HTMLImageElement>$("#Ryan")[0]
+        this.pics['Jack Dates'] = <HTMLImageElement>$("#Jack")[0]
+        this.pics['Kevin Destefano'] = <HTMLImageElement>$("#Kevin")[0]
+        this.pics['Mathew Kumar'] = <HTMLImageElement>$("#Matt")[0]
     }
 
     draw(ctx : CanvasRenderingContext2D) : void
@@ -71,7 +83,26 @@ class State
                 ctx.globalAlpha = 1.0;
             else
                 ctx.globalAlpha = 0.5;
-            ctx.drawImage(this.flags[item.affiliation], item.x - 6, item.y - 6)
+            if(type === "Shooter")
+            {
+                if(Cookies.get("pick-icon") === "Pic")
+                    ctx.drawImage(this.pics[item.id], item.x - 15, item.y - 17)
+                else if(Cookies.get("pick-icon") === "Aff")
+                    ctx.drawImage(this.flags[item.affiliation], item.x - 6, item.y - 6)
+                else
+                {
+                    ctx.beginPath();
+                    ctx.fillStyle = "#000000";
+                    ctx.arc(item.x, item.y, 6, 0, 2*Math.PI);
+                    ctx.stroke();
+                    ctx.fill();
+                }
+                    
+            }
+            else
+                ctx.drawImage(this.flags[item.affiliation], item.x - 6, item.y - 6)
+            console.log(Cookies.get("pick-icon"))
+            console.log(type)
            
         }
         let zoomCanvas = <HTMLCanvasElement>$("#zoom")[0]
@@ -250,7 +281,9 @@ class State
             let classID = "manifest-name"
             if(state.selected.length > 0 && state.selected.indexOf(state.getItemByID(name)) == -1)
                 classID += "-deselected"
-            var r= $('<input type="button" class = "' + classID + '" value ="' + name + '"/>');
+         
+            var r= $('<button type="button" class = "' + classID + '" value = "' + name + '">' + name + ' <img src="' + state.flags[state.getItemByID(name).affiliation].src + '"></button>'); 
+            
             r.click(function(e : MouseEvent) {
                 let item = state.getItemByID(r.val());
                 if(e.shiftKey) 
