@@ -8,7 +8,7 @@ $("#submit").click(function(e) {
         for(var j = 0; j < form.children.length; j++) {
             if(form.children[j]) {
                 var split = form.action.split("/")
-                cookies.form[split[split.length - 1]] = form.chlidren[j].value;
+                cookies.form[split[split.length - 1]] = form.children[j].value;
             }
         }
     }
