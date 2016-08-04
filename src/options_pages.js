@@ -1,4 +1,4 @@
-var old_event = $("#submit").click()
+var old_event = $("#submit").attr("onclick");
 $("#submit").click(function(e) {
     var cookies = JSON.parse(document.cookies)
     cookies.form = {}
