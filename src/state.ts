@@ -67,7 +67,7 @@ class State
         this.pics['Ryan Goldstein'] = <HTMLImageElement>$("#Ryan")[0]
         this.pics['Jack Dates'] = <HTMLImageElement>$("#Jack")[0]
         this.pics['Kevin Destefano'] = <HTMLImageElement>$("#Kevin")[0]
-        this.pics['Mathew Kumar'] = <HTMLImageElement>$("#Matt")[0]
+        this.pics['Matthew Kumar'] = <HTMLImageElement>$("#Matt")[0]
     }
 
     draw(ctx : CanvasRenderingContext2D) : void
@@ -97,13 +97,17 @@ class State
                     ctx.stroke();
                     ctx.fill();
                 }
-                    
+            ctx.beginPath();
+            ctx.moveTo(item.x, item.y);
+            for(let i = 1; i < 10; i++)
+            {
+                let previous = this.time.getItemInPast(item, i)
+                ctx.lineTo(previous.x, previous.y)
+            }
+            ctx.stroke()   
             }
             else
-                ctx.drawImage(this.flags[item.affiliation], item.x - 6, item.y - 6)
-            console.log(Cookies.get("pick-icon"))
-            console.log(type)
-           
+                ctx.drawImage(this.flags[item.affiliation], item.x - 6, item.y - 6)     
         }
         let zoomCanvas = <HTMLCanvasElement>$("#zoom")[0]
         let zCtx = zoomCanvas.getContext('2d')
@@ -282,7 +286,7 @@ class State
             if(state.selected.length > 0 && state.selected.indexOf(state.getItemByID(name)) == -1)
                 classID += "-deselected"
          
-            var r= $('<button type="button" class = "' + classID + '" value = "' + name + '">' + name + ' <img src="' + state.flags[state.getItemByID(name).affiliation].src + '"></button>'); 
+            var r= $('<button type="button" class = "' + classID + '" value = "' + name + '">' + name + "></button>");  //' <img src="' + state.flags[state.getItemByID(name).affiliation].src + '
             
             r.click(function(e : MouseEvent) {
                 let item = state.getItemByID(r.val());
