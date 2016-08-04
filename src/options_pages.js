@@ -1,6 +1,6 @@
 var old_event = $("#submit").attr("onclick");
 $("#submit").click(function(e) {
-    var cookies = JSON.parse(document.cookies)
+    var cookies = JSON.parse(document.cookie)
     cookies.form = {}
     var forms = $("form")
     for(var i = 0; i < forms.length; i++) {
@@ -12,6 +12,6 @@ $("#submit").click(function(e) {
             }
         }
     }
-    document.cookies = JSON.stringify(cookies)
+    document.cookie = JSON.stringify(cookies)
     old_event(e);
 });
