@@ -248,7 +248,7 @@ class State
             let classID = "manifest-name"
             if(state.selected.length > 0 && state.selected.indexOf(state.getItemByID(name)) == -1)
                 classID += "-deselected"
-            var r= $('<input type="button" class = "' + classID + '" value ="' + name + this.flags[getItemByID(name).affiliation]'"/>');
+            var r= $('<input type="button" class = "' + classID + '" value ="' + name + '"icons"' + this.flags[state.getItemByID(name).affiliation] + '"/>');
             r.click(function(e : MouseEvent) {
                 let item = state.getItemByID(r.val());
                 if(e.shiftKey) 
