@@ -1,5 +1,6 @@
 /// <reference path="jquery.d.ts" />
-let type : string = JSON.parse(document.cookie).type;
+var Cookie : any;
+let type : string = Cookie.get("type");
 function changeSettings()
 {
     let manifest_name = type === "Triathlon" ? "Participants" : type === "Shooter" ? "Responders" : "Manifest"

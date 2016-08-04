@@ -7,13 +7,8 @@
         <script>
             function goTo(type)
             {
-                try {
-                    var cookies = JSON.parse(document.cookie)
-                } catch (e) {
-                    var cookies = {}
-                }
-                cookies.type = type
-                document.cookie = JSON.stringify(cookies)
+                document.cookie = ""
+                Cookies.set("type", type)
                 location.href="pages/Options-" + type + ".html"
             }
         </script>
