@@ -65,7 +65,6 @@ class State
         ctx.lineWidth = 2;
         for(let item of this.items)
         {
-            console.log(item.affiliation)
             item.x = Math.floor(item.x);
             item.y = Math.floor(item.y);
             if(this.selected.indexOf(item) != -1 || this.selected.length === 0)

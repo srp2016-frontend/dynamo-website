@@ -46,7 +46,6 @@ class TimeManager
 
     private getFrame(index : number) : Item[]
     {
-        console.log(index)
         return JSON.parse(JSON.stringify(this.frames[index]))
     }
 
