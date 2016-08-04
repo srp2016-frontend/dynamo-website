@@ -1,4 +1,3 @@
-var old_event = $("#submit").attr("onclick");
 $("#submit").click(function(e) {
     var cookies = JSON.parse(document.cookie)
     cookies.form = {}
@@ -13,5 +12,4 @@ $("#submit").click(function(e) {
         }
     }
     document.cookie = JSON.stringify(cookies)
-    old_event(e);
 });
