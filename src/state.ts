@@ -69,6 +69,8 @@ class State
             item.y = Math.floor(item.y);
             if(this.selected.indexOf(item) != -1 || this.selected.length === 0)
                 ctx.globalAlpha = 1.0;
+            else
+                ctx.globalAlpha = 0.5;
             ctx.drawImage(this.flags[item.affiliation], item.x - 6, item.y - 6)
            
         }
