@@ -22,7 +22,6 @@ function main() {
     state.draw(ctx);
     setInterval(() => {
         timeManager.updateFrame();
-        state.getRoster();
     }, 10);
     setClickEvents(canvas, ctx, state);
     state.getRoster();

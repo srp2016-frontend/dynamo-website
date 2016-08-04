@@ -66,6 +66,7 @@ class TimeManager
                     if(this.state.items.length > 0)
                         this.frames.push(JSON.parse(JSON.stringify(this.state.items)));
                     this.ticks = 0;
+                    this.state.getRoster();
                 }
                 this.state.update(this.queued, this.ticks, maxTicks);
                 this.state.draw(this.ctx);
@@ -76,6 +77,7 @@ class TimeManager
                 if(this.ticks == maxTicks)
                 {
                    this.moveStateForward();
+                   this.state.getRoster();
                 }
                 this.state.update(this.next, this.ticks, maxTicks);
                 this.state.draw(this.ctx);
