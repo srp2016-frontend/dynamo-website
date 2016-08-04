@@ -86,7 +86,7 @@ class State
             if(type === "Shooter")
             {
                 if(Cookies.get("pick-icon") === "Pic")
-                    ctx.drawImage(this.pics[item.id], item.x - 6, item.y - 6)
+                    ctx.drawImage(this.pics[item.id], item.x - 15, item.y - 17)
                 else if(Cookies.get("pick-icon") === "Aff")
                     ctx.drawImage(this.flags[item.affiliation], item.x - 6, item.y - 6)
                 else
