@@ -26,7 +26,7 @@ class Item
     }
 }
 
-const radius = 6;
+const radius = 11;
 const radiusSquared = radius * radius;
 const canvas = <HTMLCanvasElement>$("#position-feed")[0]
 class State
@@ -68,6 +68,12 @@ class State
         this.pics['Jack Dates'] = <HTMLImageElement>$("#Jack")[0]
         this.pics['Kevin Destefano'] = <HTMLImageElement>$("#Kevin")[0]
         this.pics['Matthew Kumar'] = <HTMLImageElement>$("#Matt")[0]
+        this.pics['Simon Whitfield'] = <HTMLImageElement>$("#Whitfield")[0]
+        this.pics['Bevan Docherty'] = <HTMLImageElement>$("#Docherty")[0]
+        this.pics['Alistair Brownlee'] = <HTMLImageElement>$("#Brownlee")[0]
+        this.pics['Nicola Spirig'] = <HTMLImageElement>$("#Spirig")[0]
+        this.pics['Emma Snowsill'] = <HTMLImageElement>$("#Snowsill")[0]
+        this.pics['Kate Allen'] = <HTMLImageElement>$("#Allen")[0]
     }
 
     draw(ctx : CanvasRenderingContext2D) : void
@@ -83,32 +89,32 @@ class State
                 ctx.globalAlpha = 1.0;
             else
                 ctx.globalAlpha = 0.5;
+                
+            if(Cookies.get("pick-icon") === "Pic")
+                ctx.drawImage(this.pics[item.id], item.x - 15, item.y - 17)
+            else if(Cookies.get("pick-icon") === "Aff")
+                ctx.drawImage(this.flags[item.affiliation], item.x - 6, item.y - 6)
+            else
+            {
+                ctx.beginPath();
+                ctx.fillStyle = "#000000";
+                ctx.arc(item.x, item.y, 6, 0, 2*Math.PI);
+                ctx.stroke();
+                ctx.fill();
+            }
+            
             if(type === "Shooter")
             {
-                if(Cookies.get("pick-icon") === "Pic")
-                    ctx.drawImage(this.pics[item.id], item.x - 15, item.y - 17)
-                else if(Cookies.get("pick-icon") === "Aff")
-                    ctx.drawImage(this.flags[item.affiliation], item.x - 6, item.y - 6)
-                else
+                ctx.beginPath();
+                ctx.moveTo(item.x, item.y);
+                for(let i = 1; i < 10; i++)
                 {
-                    ctx.beginPath();
-                    ctx.fillStyle = "#000000";
-                    ctx.arc(item.x, item.y, 6, 0, 2*Math.PI);
-                    ctx.stroke();
-                    ctx.fill();
+                    let previous = this.time.getItemInPast(item, i)
+                    ctx.lineTo(previous.x, previous.y)
                 }
-            ctx.beginPath();
-            ctx.moveTo(item.x, item.y);
-            for(let i = 1; i < 10; i++)
-            {
-                let previous = this.time.getItemInPast(item, i)
-                ctx.lineTo(previous.x, previous.y)
+                ctx.stroke()
             }
-            ctx.stroke()   
-            }
-            else
-                ctx.drawImage(this.flags[item.affiliation], item.x - 6, item.y - 6)     
-        }
+        }    
         let zoomCanvas = <HTMLCanvasElement>$("#zoom")[0]
         let zCtx = zoomCanvas.getContext('2d')
         let x = mouseX - 62
