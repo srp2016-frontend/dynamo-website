@@ -25,11 +25,8 @@ class Bridge
 		{
 			console.log(message)
 			let value = <Item[]>eval(message);
-			if(typeof value === "function") {
-				(<Function>value)();
-				this.tick(state, frame, action); 
-				return;
-			}
+			var comm_action : () : void;
+			if(comm_action) comm_action();
             if(value) {
                 state.items = value;
                 for(let item of state.items)
