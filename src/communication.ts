@@ -29,7 +29,7 @@ class Bridge
 				$("#map-background").attr("src", "../img/edison.png")
 			}
             if(value) {
-				if(value == null || value == "null") {
+				if(value == null || message == "null") {
 					state.items = [];
 				} else {
 					state.items = value;
