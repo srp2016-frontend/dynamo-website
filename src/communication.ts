@@ -25,7 +25,7 @@ class Bridge
 		{
 			console.log(message)
 			let value = <Item[]>eval(message);
-			var comm_action : () : void;
+			var comm_action : () => void;
 			if(comm_action) comm_action();
             if(value) {
                 state.items = value;
