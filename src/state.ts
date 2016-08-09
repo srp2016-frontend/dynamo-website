@@ -81,6 +81,23 @@ class State
         ctx.drawImage(this.bkg, 0, 0)
         ctx.globalAlpha = 1.0;
         ctx.lineWidth = 2;
+		
+		let offX = 0;
+		let offY = 0;
+		let stage = Cookies.get("pick-stage")
+		if (stage === "Swim")
+		{
+			
+		}
+		else if (stage === "Bike")
+		{
+			
+		}
+		else if (stage === "Run")
+		{
+			
+		}
+		
         for(let item of this.items)
         {
             item.x = Math.floor(item.x);
@@ -89,7 +106,8 @@ class State
                 ctx.globalAlpha = 1.0;
             else
                 ctx.globalAlpha = 0.5;
-                
+			
+			
             if(Cookies.get("pick-icon") === "Pic")
                 ctx.drawImage(this.pics[item.id], item.x - 15, item.y - 17)
             else if(Cookies.get("pick-icon") === "Aff")
