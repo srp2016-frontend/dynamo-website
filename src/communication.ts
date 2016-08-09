@@ -23,8 +23,10 @@ class Bridge
     {
         this.doWithMessage(frame, (message : string) =>
 		{
-			console.log(message)
 			let value = <Item[]>eval(message);
+			if(type === "Shooter" && value.length < state.items.length) {
+				console.log("switch")
+			}
             if(value) {
                 state.items = value;
                 for(let item of state.items)
@@ -35,7 +37,7 @@ class Bridge
                 state.updateSelected()
                 if(action)
                     action();
-            }
+            } 
         })
     }
 
