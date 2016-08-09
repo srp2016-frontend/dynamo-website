@@ -3,7 +3,7 @@ var Cookies : any;
 let type : string = Cookies.get("type");
 function changeSettings()
 {
-    let manifest_name = type === "Triathlon" ? "Participants" : type === "Shooter" ? "Responders" : "Manifest"
+    let manifest_name = type === "Triathlon" ? "Leaderboard" : type === "Shooter" ? "Responders" : "Manifest"
     $("#manifest").html(manifest_name)
     $("#manifest-check-name").html(manifest_name)
     

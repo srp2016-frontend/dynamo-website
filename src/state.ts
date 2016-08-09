@@ -39,6 +39,9 @@ class State
     public time : TimeManager;
     private flags : {[key:string] : HTMLImageElement;}
     private pics : {[key:string] : HTMLImageElement;}
+	public distTraveled : {[key:string] : number;}
+	public previousCoords : {[key:string] : number[];}
+	public leaderboard : string[];
     
     
     constructor(items : Item[])
@@ -77,6 +80,10 @@ class State
         this.pics['Luciano Taccone'] = <HTMLImageElement>$("#Taccone")[0]
         this.pics['Jonathan Brownlee'] = <HTMLImageElement>$("#JBrownlee")[0]
         this.pics['Andrea Hewitt'] = <HTMLImageElement>$("#Hewitt")[0]
+		
+		this.distTraveled = {};
+		this.previousCoords = {};
+		this.leaderboard = [];
     }
 
     draw(ctx : CanvasRenderingContext2D) : void
@@ -116,8 +123,16 @@ class State
             else
                 ctx.globalAlpha = 0.5;
 			
-			let tx = (item.x - offX) * (width / (offX2 - offX))
-			let ty = (item.y - offY) * (height / (offY2 - offY))
+			let tx = item.x
+			let ty = item.y
+			if (this.distTraveled[item.id] === undefined)
+				this.distTraveled[item.id] = 0
+			if (this.previousCoords[item.id] === undefined)
+				this.previousCoords[item.id] = [tx, ty]
+			this.distTraveled[item.id] += Math.sqrt(Math.pow(this.previousCoords[item.id][0] - tx, 2) + Math.pow(this.previousCoords[item.id][1] - ty, 2))
+			this.previousCoords[item.id] = [tx, ty]
+			tx = (item.x - offX) * (width / (offX2 - offX))
+			ty = (item.y - offY) * (height / (offY2 - offY))
 			tx = Math.floor(tx)
 			ty = Math.floor(ty)
 			if (tx < 0 || tx > width || ty < 0 || ty > height)
@@ -156,7 +171,28 @@ class State
         let y = mouseY - 62
         y = y > 0 ? (y + 125 < 596 ? y : 596 - 125) : 0
         zCtx.drawImage(canvas, x, y, 125, 125, 0, 0, 250, 250)
-
+		
+		let newLeaderboard : string[] = [];
+		for (let name in this.distTraveled)
+		{
+			let dist = this.distTraveled[name];
+			let insert = 0;
+			while (insert < newLeaderboard.length && this.distTraveled[newLeaderboard[insert]] > dist)
+				insert++;
+			newLeaderboard.splice(insert, 0, name)
+		}
+		let isSame : boolean = true;
+		for (let val in newLeaderboard)
+			if (newLeaderboard[val] != this.leaderboard[val])
+			{
+				isSame = false;
+				break;
+			}
+		if (!isSame)
+		{
+			this.leaderboard = newLeaderboard
+			this.getRoster()
+		}	
     }
 
     update(next : State, ticks : number, maxTicks : number) : void
@@ -316,19 +352,19 @@ class State
 
     getRoster() : void
     {
-        let names : string[];
+        let names = this.leaderboard;
         let results = $('#rSidebar');
         results.empty();
-        names = this.pSearch(" ");
-        names.sort();
+        //names = this.pSearch(" ");
+        //names.sort();
         let state = this;
-        function generateButton(name : string) : void 
+        function generateButton(name : string, i : number) : void 
         {
             let classID = "manifest-name"
             if(state.selected.length > 0 && state.selected.indexOf(state.getItemByID(name)) == -1)
                 classID += "-deselected"
          
-            var r= $('<button type="button" class = "' + classID + '" value = "' + name + '">' + name + "</button>");  //' <img src="' + state.flags[state.getItemByID(name).affiliation].src + '
+            var r= $('<button type="button" class = "' + classID + '" value = "' + name + '">' + (i + 1) + '. ' + name + "</button>");  //' <img src="' + state.flags[state.getItemByID(name).affiliation].src + '
             
             r.click(function(e : MouseEvent) {
                 let item = state.getItemByID(r.val());
@@ -342,7 +378,7 @@ class State
         }
         for(let i = 0; i < names.length; i++)
         {
-           generateButton(names[i])
+           generateButton(names[i], i)
         }
     }
 }
