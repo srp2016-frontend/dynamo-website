@@ -23,6 +23,5 @@ function setClickEvents(canvas : HTMLCanvasElement, ctx : CanvasRenderingContext
         let y = e.pageY - offset.top
         mouseX = x
         mouseY = y
-		console.log(x + " " + y)
     }
 }
