@@ -127,8 +127,9 @@ class State
 
     update(next : State, ticks : number, maxTicks : number) : void
     {
-        for(let item of this.items)
+        for(let i = 0; i < this.items.length; i++)
         {
+			let item = this.items[i]
             item.x = Math.floor(item.x);
             item.y = Math.floor(item.y);
             let equivalent = next.getItemByID(item.id);
@@ -144,12 +145,12 @@ class State
                     if(item.x === 434 && item.y === 509)
                     {
                         generate_alert(item.type + " " + item.id + " has finished the race.")
-                        this.missing.push(item)
                     }
                     else{
                         generate_alert(item.type + " " + item.id + " has left the sensor field.")
-                        this.missing.push(item)
                     }
+					this.missing.push(item)
+					this.items.splice(i)
                 }
 
             }

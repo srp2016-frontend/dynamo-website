@@ -40,6 +40,5 @@ function changeSettings()
         $("#video-feed").remove()
         $("#shooter-tech").css("visibility", "visible");    
         $("#map-background").attr("src", "../img/blueprint_outside.png")
-		// $("#map-background").attr("src", "../img/edison.png")
     }
 }
