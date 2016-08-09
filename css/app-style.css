@@ -253,15 +253,14 @@ h3 {
 /*Search options*/
 .poss {
     font-family : "Source Code Pro";
-    position:absolute;
     background-color:white;
     width:100%;
 }
 
 .poss:hover{
     background-color:#061355;
-    position:absolute;
     color:white;
+    width:100%;
 }
 
 .sel{

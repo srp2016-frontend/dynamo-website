@@ -17,4 +17,16 @@ function setMenuEvents() : void
     bind($("#manifest-check"), $("#manifest-panel"))
     bind($("#video-check"), $("#video-feed"))
     bind($("#tech-check"), $("#tech-info"))
+	
+	$("input[value='" + Cookies.get("pick-stage") + "']").prop('checked', true);
+	$("input[name=stage-select]").change(function()
+	{
+		Cookies.set("pick-stage", this.value);
+	})
+	
+	$("input[value='" + Cookies.get("pick-icon") + "']").prop('checked', true);
+	$("input[name=icon-select]").change(function()
+	{
+		Cookies.set("pick-icon", this.value);
+	})
 }

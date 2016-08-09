@@ -81,27 +81,58 @@ class State
 
     draw(ctx : CanvasRenderingContext2D) : void
     {
-        ctx.drawImage(this.bkg, 0, 0)
+		let width = 750;
+		let height = 600;
+		let offX = 0;
+		let offY = 0;
+		let offX2 = width;
+		let offY2 = height;
+		let stage = Cookies.get("pick-stage")
+		if (stage === "Swim")
+		{
+			offX = 430
+			offY = 265
+			offX2 = 750
+			offY2 = 520
+		}
+		else if (stage === "Bike")
+		{
+			offX2 = 630
+		}
+		else if (stage === "Run")
+		{
+			offX = 390
+			offX2 = 590
+		}
+		
+		ctx.drawImage(this.bkg, offX, offY, offX2 - offX, offY2 - offY, 0, 0, width, height)
         ctx.globalAlpha = 1.0;
         ctx.lineWidth = 2;
+		
         for(let item of this.items)
         {
-            item.x = Math.floor(item.x);
-            item.y = Math.floor(item.y);
             if(this.selected.indexOf(item) != -1 || this.selected.length === 0)
                 ctx.globalAlpha = 1.0;
             else
                 ctx.globalAlpha = 0.5;
-                
+			
+			let tx = (item.x - offX) * (width / (offX2 - offX))
+			let ty = (item.y - offY) * (height / (offY2 - offY))
+			tx = Math.floor(tx)
+			ty = Math.floor(ty)
+			if (tx < 0 || tx > width || ty < 0 || ty > height)
+				continue
+			
+			
             if(Cookies.get("pick-icon") === "Pic")
-                ctx.drawImage(this.pics[item.id], item.x - 15, item.y - 17)
+                ctx.drawImage(this.pics[item.id], tx - 15, ty - 17)
             else if(Cookies.get("pick-icon") === "Aff")
-                ctx.drawImage(this.flags[item.affiliation], item.x - 6, item.y - 6)
+                ctx.drawImage(this.flags[item.affiliation], tx - 6, ty - 6)
             else
             {
                 ctx.beginPath();
                 ctx.fillStyle = "#000000";
-                ctx.arc(item.x, item.y, 6, 0, 2*Math.PI);
+                ctx.arc(tx, ty, 6, 0, 2*Math.PI);
                 ctx.stroke();
                 ctx.fill();
             }
@@ -109,7 +140,7 @@ class State
             if(type === "Shooter")
             {
                 ctx.beginPath();
-                ctx.moveTo(item.x, item.y);
+                ctx.moveTo(tx, ty);
                 for(let i = 1; i < 10; i++)
                 {
                     let previous = this.time.getItemInPast(item, i)
@@ -139,7 +170,8 @@ class State
             let missingIndex = this.missingIndex(item);
             if (equivalent) {
                 item.x = this.scaleByTime(item.x, Math.floor(equivalent.x), ticks, maxTicks);
-                item.y = this.scaleByTime(item.y, Math.floor(equivalent.y), ticks, maxTicks);
+                item.y = this.scaleByTime(item.y, Math.floor(equivalent.y), ticks, maxTicks); //X: 600.104 Y: 450.01062
+              
                 if(missingIndex !== -1) {
                     this.missing.splice(missingIndex)
                 }
