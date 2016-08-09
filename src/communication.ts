@@ -26,7 +26,7 @@ class Bridge
 			let value = <Item[]>eval(message);
 			if(typeof value === "function") {
 				(<Function>value)();
-				tick(state, frame, action); 
+				this.tick(state, frame, action); 
 				return;
 			}
             if(value) {
