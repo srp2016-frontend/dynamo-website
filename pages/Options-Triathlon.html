@@ -22,12 +22,19 @@
                     <input type="radio" name = "icons" value="Aff">Affiliation<br>
                 </form>
                 
-                <div class = "questions"><em>What stage of the triathlon whould you like to view?</em></div>
+                <div class = "questions"><em>What stage of the triathlon would you like to view?</em></div>
                 <form action = "pick-stage" class = "buttons">
                     <input type="radio" name = "stage" value="Swim">Swimming<br>
                     <input type="radio" name = "stage" value="Bike">Biking<br>
                     <input type="radio" name = "stage" value="Run">Running<br>
                     <input type = "radio" name = "stage" value="All" checked>Entire Triathlon<br>
+                </form>  
+                
+                <div class = "questions"><em>What course would you like to view?</em></div>
+                <form action = "pick-course" class = "buttons">
+                    <input type="radio" name = "stage" value="Rio" checked>Rio Olympics<br>
+                    <input type="radio" name = "stage" value="London">London Olympics<br>
+                    <input type="radio" name = "stage" value="Beijing">Beijing Olympics<br>
                 </form>  
                 <button id = "submit" onclick="location.href='app.html'">Submit</button>
             </div>
