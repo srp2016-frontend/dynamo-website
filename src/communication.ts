@@ -25,7 +25,7 @@ class Bridge
 		{
 			console.log(message)
 			let value = <Item[]>eval(message);
-			if(type === "Shooter" && value.length < state.length) {
+			if(type === "Shooter" && value.length < state.items.length) {
 				console.log("switch")
 			}
             if(value) {
