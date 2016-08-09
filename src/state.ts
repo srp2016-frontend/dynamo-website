@@ -169,8 +169,12 @@ class State
             let equivalent = next.getItemByID(item.id);
             let missingIndex = this.missingIndex(item);
             if (equivalent) {
+                if(item.x > 416 && item.x < 420 && item.y > 435 && item.y < 441){ 
+                    console.log(item.id)
+                }
                 item.x = this.scaleByTime(item.x, Math.floor(equivalent.x), ticks, maxTicks);
-                item.y = this.scaleByTime(item.y, Math.floor(equivalent.y), ticks, maxTicks);
+                item.y = this.scaleByTime(item.y, Math.floor(equivalent.y), ticks, maxTicks); //X: 600.104 Y: 450.01062
+              
                 if(missingIndex !== -1) {
                     this.missing.splice(missingIndex)
                 }
