@@ -15,58 +15,14 @@
             
             <div id = "main">
                 <br>
-                
-                <div id = "left">
-                    <div class = "questions"><em>Which stage would you like to view?</em></div>
-                    <form action="pick-stage" class = "buttons">
-                        <input type="radio" name = "stage" value="Swimming">Swimming<br>
-                        <input type="radio" name = "stage" value="Biking">Biking<br>
-                        <input type="radio" name = "stage" value="Running">Running<br>
-                        <input type="radio" name = "stage" value="Most" checked>Stage with Most People<br>
+                <div class = "questions"><em>How would you like the participants' icons displayed?</em></div>
+                    <form action="pick-icon" class = "buttons">
+                        <input type="radio" name = "icons" value="Pic" checked>Small Picture<br>
+                        <input type="radio" name = "icons" value="Black-Dot">Black Dot<br>
+                        <input type="radio" name = "icons" value="Aff">Affiliation<br>
                     </form>
-                    
-                    <div class = "questions"><em>Which 10 people would you like to see?</em></div>
-                    <form action = "pick-people" class = "buttons">
-                        <input type="radio" name = "people" value="Top-10" checked>Top 10<br>
-                        <input type="radio" name = "people" value="Bottom-10">Bottom 10<br>
-                        <input type="radio" name = "people" value="Top-10-Males">Top 10 Males<br>
-                        <input type="radio" name = "people" value="Top-10-Females">Top 10 Females<br>
-                        <input type="radio" name = "people" value="User-Entered-Names">User Entered Names<br>
-                    </form>
-                    
-                    <div id = "enter-names">
-                        <input type = "text" id = "inp" name = "text-name">
-                        <button id = "submit-name">Submit Name</button>
-                    </div>
-                </div>    
-                
-                <div id = "right"> 
-                    <div class = "questions"><em>How would you like to display the data?</em></div>
-                    <form action = "display" class = "buttons">
-                        <input type = "radio" name = "display" value = "Tables">Tables<br>
-                        <input type = "radio" name = "display" value = "Map" checked>Map<br>
-                    </form>
-                    
-                    
-                    <div id = 'last-q'>
-                        <div class = "questions"><em>How would you like the participants' icons displayed?</em></div>
-                        <form action="pick-icon" class = "buttons">
-                            <input type="radio" name = "icons" value="Pic" checked>Small Picture<br>
-                            <input type="radio" name = "icons" value="Black-Dot">Black Dot<br>
-                            <input type="radio" name = "icons" value="D-Dots">Different colored dots<br>
-                        </form>
-                        
-                        <div class = "questions"><em>Would you like any additional information near the icon?</em></div>
-                        <form action="pick-info" class = "buttons">
-                            <input type="radio" name = "icons" value="Place">Place In Race<br>
-                            <input type="radio" name = "icons" value="Initials">Initials<br>
-                            <input type="radio" name = "icons" value="Full">Full Name<br>
-                            <input type="radio" name = "icons" value="None" checked>None<br>
-                        </form>
-                    </div>
-                    <button id = "submit" onclick="location.href='app.html'">Submit</button>
                 </div>
-                
+                <button id = "submit" onclick="location.href='app.html'">Submit</button>
             </div>
         </div>    
     </body>

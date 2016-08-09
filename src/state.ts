@@ -292,7 +292,7 @@ class State
             if(state.selected.length > 0 && state.selected.indexOf(state.getItemByID(name)) == -1)
                 classID += "-deselected"
          
-            var r= $('<button type="button" class = "' + classID + '" value = "' + name + '">' + name + "></button>");  //' <img src="' + state.flags[state.getItemByID(name).affiliation].src + '
+            var r= $('<button type="button" class = "' + classID + '" value = "' + name + '">' + name + "</button>");  //' <img src="' + state.flags[state.getItemByID(name).affiliation].src + '
             
             r.click(function(e : MouseEvent) {
                 let item = state.getItemByID(r.val());
