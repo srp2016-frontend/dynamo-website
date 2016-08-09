@@ -29,15 +29,19 @@ class Bridge
 				$("#map-background").attr("src", "../img/edison.png")
 			}
             if(value) {
-                state.items = value;
-                for(let item of state.items)
-                {
-                    item.x = parseInt("" + item.x) + 20;
-                    item.y = parseInt("" + item.y) - 10;
-                }
-                state.updateSelected()
-                if(action)
-                    action();
+				if(value == null) {
+					state.items = [];
+				} else {
+					state.items = value;
+					for(let item of state.items)
+					{
+						item.x = parseInt("" + item.x) + 20;
+						item.y = parseInt("" + item.y) - 10;
+					}
+					state.updateSelected()
+					if(action)
+						action();
+				}
             } 
         })
     }
