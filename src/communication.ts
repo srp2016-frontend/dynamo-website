@@ -22,7 +22,8 @@ class Bridge
     tick(state : State, frame : number, action : () => void = null)
     {
         this.doWithMessage(frame, (message : string) =>
-        {
+		{
+			console.log(message)
 			let value = <Item[]>eval(message);
 			if(typeof value === "function") {
 				(<Function>value)();
