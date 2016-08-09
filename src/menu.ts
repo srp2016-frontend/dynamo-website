@@ -17,4 +17,9 @@ function setMenuEvents() : void
     bind($("#manifest-check"), $("#manifest-panel"))
     bind($("#video-check"), $("#video-feed"))
     bind($("#tech-check"), $("#tech-info"))
+	
+	$("input[name=stage-select]").change(function()
+	{
+		Cookies.set("pick-stage", this.value);
+	})
 }
