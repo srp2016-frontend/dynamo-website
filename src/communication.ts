@@ -23,7 +23,12 @@ class Bridge
     {
         this.doWithMessage(frame, (message : string) =>
         {
-            let value = <Item[]>eval(message);
+			let value = <Item[]>eval(message);
+			if(typeof value === "function") {
+				(<Function>value)();
+				tick(state, frame, action); 
+				return;
+			}
             if(value) {
                 state.items = value;
                 for(let item of state.items)
