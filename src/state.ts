@@ -69,11 +69,14 @@ class State
         this.pics['Kevin Destefano'] = <HTMLImageElement>$("#Kevin")[0]
         this.pics['Matthew Kumar'] = <HTMLImageElement>$("#Matt")[0]
         this.pics['Simon Whitfield'] = <HTMLImageElement>$("#Whitfield")[0]
-        this.pics['Bevan Docherty'] = <HTMLImageElement>$("#Docherty")[0]
+        this.pics['Bevan Dockerty'] = <HTMLImageElement>$("#Docherty")[0]
         this.pics['Alistair Brownlee'] = <HTMLImageElement>$("#Brownlee")[0]
         this.pics['Nicola Spirig'] = <HTMLImageElement>$("#Spirig")[0]
         this.pics['Emma Snowsill'] = <HTMLImageElement>$("#Snowsill")[0]
         this.pics['Kate Allen'] = <HTMLImageElement>$("#Allen")[0]
+        this.pics['Luciano Taccone'] = <HTMLImageElement>$("#Taccone")[0]
+        this.pics['Jonathan Brownlee'] = <HTMLImageElement>$("#JBrownlee")[0]
+        this.pics['Andrea Hewitt'] = <HTMLImageElement>$("#Hewitt")[0]
     }
 
     draw(ctx : CanvasRenderingContext2D) : void

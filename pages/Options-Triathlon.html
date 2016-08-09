@@ -16,12 +16,19 @@
             <div id = "main">
                 <br>
                 <div class = "questions"><em>How would you like the participants' icons displayed?</em></div>
-                    <form action="pick-icon" class = "buttons">
-                        <input type="radio" name = "icons" value="Pic" checked>Small Picture<br>
-                        <input type="radio" name = "icons" value="Black-Dot">Black Dot<br>
-                        <input type="radio" name = "icons" value="Aff">Affiliation<br>
-                    </form>
-                </div>
+                <form action="pick-icon" class = "buttons">
+                    <input type="radio" name = "icons" value="Pic" checked>Small Picture<br>
+                    <input type="radio" name = "icons" value="Black-Dot">Black Dot<br>
+                    <input type="radio" name = "icons" value="Aff">Affiliation<br>
+                </form>
+                
+                <div class = "questions"><em>What stage of the triathlon whould you like to view?</em></div>
+                <form action = "pick-stage" class = "buttons">
+                    <input type="radio" name = "stage" value="Swim">Swimming<br>
+                    <input type="radio" name = "stage" value="Bike">Biking<br>
+                    <input type="radio" name = "stage" value="Run">Running<br>
+                    <input type = "radio" name = "stage" value="All" checked>Entire Triathlon<br>
+                </form>  
                 <button id = "submit" onclick="location.href='app.html'">Submit</button>
             </div>
         </div>    
