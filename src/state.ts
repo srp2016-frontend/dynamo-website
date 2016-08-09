@@ -151,7 +151,6 @@ class State
                     }
 					this.missing.push(item)
 					this.items.splice(i)
-					i--;
                 }
 
             }
