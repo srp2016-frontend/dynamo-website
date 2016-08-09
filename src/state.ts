@@ -367,6 +367,13 @@ class State
          
             var r= $('<button type="button" class = "' + classID + '" value = "' + name + '">' + (i + 1) + '. ' + name + "</button>");  //' <img src="' + state.flags[state.getItemByID(name).affiliation].src + '
             
+			if (i === 0)
+				r.css('color', '#ffcc00')
+			else if (i === 1)
+				r.css('color', '#cccccc')
+			else if (i === 2)
+				r.css('color', '#e69900')
+			
             r.click(function(e : MouseEvent) {
                 let item = state.getItemByID(r.val());
                 if(e.shiftKey) 
