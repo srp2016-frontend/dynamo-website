@@ -34,7 +34,7 @@ class State
     items : Item[];
     private selected : Item[];
     private missing : Item[];
-    private bkg : HTMLImageElement;
+    public bkg : HTMLImageElement;
     public pSearch : (string) => string[];
     public time : TimeManager;
     private flags : {[key:string] : HTMLImageElement;}
