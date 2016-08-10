@@ -46,7 +46,8 @@ class State
         this.items = items;
         this.selected = [];
         this.missing = [];
-        this.bkg = <HTMLImageElement>$("#map-background")[0]
+		if(type !== "Shooter")
+	        this.bkg = <HTMLImageElement>$("#map-background")[0]
         this.flags = {}
         this.flags['Canada'] = <HTMLImageElement>$("#Canada")[0]
         this.flags['Argentina'] = <HTMLImageElement>$("#Argentina")[0]
