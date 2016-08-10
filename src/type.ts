@@ -36,7 +36,11 @@ function changeSettings()
         $("#menu-boxes").html('<input type = "checkbox" id = "search-check" checked>Searchbar</input><br/> <input type = "checkbox" id = "time-check">Time Management</input><br/>' +
         '<input type = "checkbox" id = "selection-check" checked>Selection Panel</input><br/> <input type = "checkbox" id = "map-check" checked>Virtual Map</input><br/>' +
         '<input type = "checkbox" id = "alert-check">Alert System</input><br/> <input type = "checkbox" id = "manifest-check">Manifest</input><br/> ' +
-        '<input type = "checkbox" id = "tech-check">Technology</input><br/>') 
+        '<input type = "checkbox" id = "tech-check">Technology</input><br/> <br>' +
+        '<h4>How icons are displayed</h4>' +
+		'<input type="radio" name="icon-select" class="check-buttons" value="Pic">Small Picture</input> <br>' +
+		'<input type="radio" name="icon-select" class="check-buttons" value="Aff">Affiliation</input> <br>' +
+		'<input type="radio" name="icon-select" class="check-buttons" value="Black-Dot">Black Dot</input> <br>')
         $("#video-feed").remove()
         $("#shooter-tech").css("visibility", "visible");    
         $("#map-background").attr("src", "../img/blueprint_outside.png")
