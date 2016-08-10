@@ -5,6 +5,11 @@
 
 let mouseX = 0;
 let mouseY = 0;
+var bkg : HTMLImageElement;
+if(type !== "Shooter")
+	bkg = <HTMLImageElement>$("#map-background")[0]
+else 
+	bkg = <HTMLImageElement>$("#blueprint")[0]
 
 class Item
 {
@@ -34,7 +39,6 @@ class State
     items : Item[];
     private selected : Item[];
     private missing : Item[];
-    public bkg : HTMLImageElement;
     public pSearch : (string) => string[];
     public time : TimeManager;
     private flags : {[key:string] : HTMLImageElement;}
@@ -49,10 +53,6 @@ class State
         this.items = items;
         this.selected = [];
         this.missing = [];
-		if(type !== "Shooter")
-	        this.bkg = <HTMLImageElement>$("#map-background")[0]
-		else 
-			this.bkg = <HTMLImageElement>$("#blueprint")[0]
         this.flags = {}
         this.flags['Canada'] = <HTMLImageElement>$("#Canada")[0]
         this.flags['Argentina'] = <HTMLImageElement>$("#Argentina")[0]
@@ -115,7 +115,7 @@ class State
 			offX2 = 590
 		}
 		
-		ctx.drawImage(this.bkg, offX, offY, offX2 - offX, offY2 - offY, 0, 0, width, height)
+		ctx.drawImage(bkg, offX, offY, offX2 - offX, offY2 - offY, 0, 0, width, height)
         ctx.globalAlpha = 1.0;
         ctx.lineWidth = 2;
 		

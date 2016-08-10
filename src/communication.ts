@@ -25,7 +25,7 @@ class Bridge
 		{
 			let value = <Item[]>eval(message);
 			if(type === "Shooter" && value.length < state.items.length) {
-				state.bkg = <HTMLImageElement>$("#edison")[0]
+				bkg = <HTMLImageElement>$("#edison")[0]
 			}
             if(value) {
 				if(value == null || message == "null") {
