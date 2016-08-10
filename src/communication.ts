@@ -25,8 +25,7 @@ class Bridge
 		{
 			let value = <Item[]>eval(message);
 			if(type === "Shooter" && value.length < state.items.length) {
-				console.log("switch")
-				$("#map-background").attr("src", "../img/edison.png")
+				state.bkg = <HTMLImageElement>$("#edison")[0]
 			}
             if(value) {
 				if(value == null || message == "null") {

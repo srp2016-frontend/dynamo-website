@@ -43,6 +43,5 @@ function changeSettings()
 		'<input type="radio" name="icon-select" class="check-buttons" value="Black-Dot">Black Dot</input> <br>')
         $("#video-feed").remove()
         $("#shooter-tech").css("visibility", "visible");    
-        $("#map-background").attr("src", "../img/blueprint_outside.png")
     }
 }
