@@ -24,9 +24,7 @@ function setMenuEvents() : void
 		Cookies.set("pick-stage", this.value);
 	})
 	
-	var t = $("input[value='" + Cookies.get("pick-icon") + "']")//.prop('checked', true);
-	console.log(t)
-	t.prop('checked', true)
+	$("input[value='" + Cookies.get("pick-icon") + "']").prop('checked', true);
 	$("input[name=icon-select]").change(function()
 	{
 		Cookies.set("pick-icon", this.value);

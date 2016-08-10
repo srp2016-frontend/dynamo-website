@@ -46,6 +46,7 @@ class State
 	public distTraveled : {[key:string] : number;}
 	public previousCoords : {[key:string] : number[];}
 	public leaderboard : string[];
+	public hasFinished : string[];
     
     
     constructor(items : Item[])
@@ -87,6 +88,7 @@ class State
 		this.distTraveled = {};
 		this.previousCoords = {};
 		this.leaderboard = [];
+		this.hasFinished = [];
     }
 
     draw(ctx : CanvasRenderingContext2D) : void
@@ -193,8 +195,16 @@ class State
 			}
 		if (!isSame)
 		{
-			this.leaderboard = newLeaderboard
-			this.getRoster()
+			let offset = this.hasFinished.length;
+			for (let i = 0; i < offset; i++)
+				this.leaderboard[i] = this.hasFinished[i];
+			for (let i in newLeaderboard)
+				if (this.hasFinished.indexOf(newLeaderboard[i]) == -1)
+				{
+					this.leaderboard[offset] = newLeaderboard[i];
+					offset++;
+				}
+			this.getRoster();
 		}	
     }
 
@@ -219,6 +229,7 @@ class State
                  if(missingIndex === -1) {
                     if(item.x === 434 && item.y === 509)
                     {
+						this.hasFinished.push(item.id);
                         generate_alert(item.type + " " + item.id + " has finished the race.")
                     }
                     else{
