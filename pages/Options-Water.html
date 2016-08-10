@@ -14,6 +14,21 @@
             </div>
             
             <div id = "main">
+                <div class = "questions"><em>What course would you like to view?</em></div>
+                <form action = "pick-loca" class = "buttons">
+                    <input type="radio" name = "stage" value="Egypt" checked>Egypt Air Plane Crash<br>
+                    <input type="radio" name = "stage" value="Malaysia">Malaysia Flight 370 Crash<br>
+                    <input type="radio" name = "stage" value="Bermuda">Bermuda Triangle<br>
+                </form>  
+                
+                <br/>
+                
+                <div class = "questions"><em>What would you like to identify?</em></div>
+                <form action = "pick-loca" class = "buttons">
+                    <input type="radio" name = "stage" value="People" checked>People<br>
+                    <input type="radio" name = "stage" value="Objects">Objects<br>
+                    <input type="radio" name = "stage" value="Both">People and Objects<br>
+                </form>  
                 <button id = "submit" onclick="location.href='app.html'">Submit</button>
             </div>
         </div>    
