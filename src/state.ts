@@ -51,6 +51,8 @@ class State
         this.missing = [];
 		if(type !== "Shooter")
 	        this.bkg = <HTMLImageElement>$("#map-background")[0]
+		else 
+			this.bkg = <HTMLImageElement>$("#blueprint")[0]
         this.flags = {}
         this.flags['Canada'] = <HTMLImageElement>$("#Canada")[0]
         this.flags['Argentina'] = <HTMLImageElement>$("#Argentina")[0]
