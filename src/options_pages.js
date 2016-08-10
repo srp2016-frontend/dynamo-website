@@ -6,7 +6,6 @@ $("#submit").click(function(e) {
             if(form.children[j].checked) {
                 var split = form.action.split("/")
                 Cookies.set(split[split.length - 1], form.children[j].value)
-				console.log(split)
             }
         }
     }
